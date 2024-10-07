@@ -1,25 +1,37 @@
-import {AuthConfiguration, authorize, AuthorizeResult} from 'react-native-app-auth';
 import { Text } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Image, StyleSheet, Platform } from 'react-native';
 import { useEffect, useState } from 'react';
+import { auth, remote, ApiScope, ApiConfig } from 'react-native-spotify-remote';
 
 export default function Spotify() {
     console.log('Hello from spotify.tsx')
-    // const [authState, setAuthState] = useState(defaultAuthState);
+    const spotifyConfig: ApiConfig = {
+      // clientID: '',
+      redirectURL: 'spotify-ios-quick-start:/spotify-login-callback',
+      tokenRefreshURL: 'https://accounts.spotify.com/api/token',
+      tokenSwapURL: 'https://accounts.spotify.com/api/token',
+      scopes: [ApiScope.AppRemoteControlScope, ApiScope.UserFollowReadScope],
+      showDialog: true,
+    };
 
-    const config: AuthConfiguration = {
-        clientId: '1e7c327a22964910bb370837f20dcc94', // available on the app page
-        clientSecret: '827b63d5edf5400c90874de7875f2a84', // click "show client secret" to see this
-        redirectUrl: 'com.myapp:/oauth', // the redirect you defined after creating the app
-        scopes: ['user-read-email', 'playlist-modify-public', 'user-read-private'], // the scopes you need to access
-        serviceConfiguration: {
-          authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-          tokenEndpoint: 'https://accounts.spotify.com/api/token',
-        },
-      };
+    async function playEpicSong() {
+      try {
+        const session = await auth.authorize(spotifyConfig);
+        console.log(session);
+        await remote.connect(session.accessToken);
+        await remote.playUri('spotify:track:6IA8E2Q5ttcpbuahIej074');
+        await remote.seek(58000);
+        console.log('Playing epic song');
+      }
+      catch (e) {
+        console.error("Couldn't authorize with or connect to Spotify", e);
+      }
+    }
+
+    playEpicSong();
     
     const styles = StyleSheet.create({
         reactLogo: {
@@ -30,23 +42,6 @@ export default function Spotify() {
           position: 'absolute',
         },
     });
-
-    console.log(config);
-    console.log(authorize);
-
-    const authenticate = async (): Promise<void> => {
-        try {
-          const result: AuthorizeResult = await authorize(config);
-          console.log(result)
-        }
-        catch (err) {
-          console.error('Failed to authenticate with Spotify', err);
-        }
-      };
-
-    useEffect(() => {
-        authenticate()
-    }, [])
     
     return (
         <ParallaxScrollView
