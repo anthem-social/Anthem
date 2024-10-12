@@ -10,10 +10,16 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Start the app via Expo server
 
    ```bash
-    npx expo start
+   npx expo start
+   ```
+
+   or to make an actually Dev build on your iPhone
+
+   ```bash
+   npx expo run:ios --device 
    ```
 
 In the output, you'll find options to open the app in a

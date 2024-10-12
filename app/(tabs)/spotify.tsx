@@ -9,12 +9,11 @@ import { auth, remote, ApiScope, ApiConfig } from 'react-native-spotify-remote';
 export default function Spotify() {
     console.log('Hello from spotify.tsx')
     const spotifyConfig: ApiConfig = {
-      // clientID: '',
-      redirectURL: 'spotify-ios-quick-start:/spotify-login-callback',
-      tokenRefreshURL: 'https://accounts.spotify.com/api/token',
-      tokenSwapURL: 'https://accounts.spotify.com/api/token',
-      scopes: [ApiScope.AppRemoteControlScope, ApiScope.UserFollowReadScope],
-      showDialog: true,
+      clientID: '1e7c327a22964910bb370837f20dcc94',
+      redirectURL: 'anthem:/callback',
+      tokenRefreshURL: 'http://192.168.1.138:3000/refresh',
+      tokenSwapURL: 'http://192.168.1.138:3000/swap',
+      scopes: [ApiScope.AppRemoteControlScope]
     };
 
     async function playEpicSong() {
@@ -22,16 +21,17 @@ export default function Spotify() {
         const session = await auth.authorize(spotifyConfig);
         console.log(session);
         await remote.connect(session.accessToken);
-        await remote.playUri('spotify:track:6IA8E2Q5ttcpbuahIej074');
-        await remote.seek(58000);
+        await remote.playUri('spotify:track:0GjEhVFGZW8afUYGChu3Rr');
         console.log('Playing epic song');
       }
       catch (e) {
-        console.error("Couldn't authorize with or connect to Spotify", e);
+        console.error(e);
       }
     }
 
-    playEpicSong();
+    useEffect(() => {
+      playEpicSong();
+    }, []);
     
     const styles = StyleSheet.create({
         reactLogo: {
