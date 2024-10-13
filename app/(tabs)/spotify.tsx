@@ -4,26 +4,33 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Image, StyleSheet, Platform } from 'react-native';
 import { useEffect, useState } from 'react';
-import { auth, remote, ApiScope, ApiConfig } from 'react-native-spotify-remote';
+import { authorize, AuthConfiguration, AuthorizeResult } from 'react-native-app-auth';
+import { remote, ApiScope } from 'react-native-spotify-remote';
 
 export default function Spotify() {
     console.log('Hello from spotify.tsx')
-    const spotifyConfig: ApiConfig = {
-      clientID: '1e7c327a22964910bb370837f20dcc94',
-      redirectURL: 'anthem:/callback',
-      tokenRefreshURL: 'http://192.168.1.138:3000/refresh',
-      tokenSwapURL: 'http://192.168.1.138:3000/swap',
-      scopes: [ApiScope.AppRemoteControlScope]
-    };
+
+    const config: AuthConfiguration = {
+      clientId: "1e7c327a22964910bb370837f20dcc94",
+      clientSecret: "827b63d5edf5400c90874de7875f2a84",
+      redirectUrl: "anthem:/callback",
+      scopes: [ApiScope.AppRemoteControlScope],
+      serviceConfiguration: {
+        authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+        tokenEndpoint: 'https://accounts.spotify.com/api/token',
+      }
+    }
+
 
     async function playEpicSong() {
       try {
-        const session = await auth.authorize(spotifyConfig);
-        console.log(session);
-        await remote.connect(session.accessToken);
+        const authState: AuthorizeResult = await authorize(config);
+        console.log('Auth state:', authState);
+        await remote.connect(authState.accessToken);
         await remote.playUri('spotify:track:0GjEhVFGZW8afUYGChu3Rr');
         console.log('Playing epic song');
       }
+      
       catch (e) {
         console.error(e);
       }
