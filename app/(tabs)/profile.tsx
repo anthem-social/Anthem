@@ -1,47 +1,29 @@
 import { Button, Text } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { Image, StyleSheet, Platform } from 'react-native';
 import { useEffect, useState } from 'react';
-import { auth, remote, ApiScope, ApiConfig, SpotifySession } from 'react-native-spotify-remote';
+import { auth, remote, SpotifySession } from 'react-native-spotify-remote';
 
-export default function Spotify() {
-    const [session, setSession] = useState<SpotifySession | null>(null);
-    console.log('Hello from spotify.tsx')
-    const spotifyConfig: ApiConfig = {
-      clientID: '1e7c327a22964910bb370837f20dcc94',
-      redirectURL: 'anthem:/callback',
-      tokenRefreshURL: 'http://192.168.1.143:5101/spotify/token/refresh',
-      tokenSwapURL: 'http://192.168.1.143:5101/spotify/token/swap',
-      scopes: [
-        ApiScope.UserReadCurrentlyPlayingScope,
-        ApiScope.AppRemoteControlScope,
-        ApiScope.UserFollowModifyScope,
-        ApiScope.UserFollowReadScope,
-        ApiScope.UserReadPrivateScope,
-      ]
-    };
+export default function Profile() {
+    const [session, setSession] = useState<SpotifySession>();
 
-    async function signInToSpotify() {
-      try {
-        const session = await auth.authorize(spotifyConfig);
-        if (session) {
+    useEffect(() => {
+      async function connect() {
+        auth.getSession().then((session) => {
           setSession(session);
-          remote.connect(session.accessToken);
-        }
-        console.log(session);
+          console.log("Token in profile: " + session!.accessToken);
+        });
+
+        await remote.connect(session?.accessToken!);
+        console.log("Remote: " + await remote.isConnectedAsync());
       }
-      catch (e) {
-        console.error(e);
-      }
-    }
+
+      connect()
+    }, []);
 
     async function playSunflower() {
       try {
-        if (session) {
-          await remote.playUri('spotify:track:3KkXRkHbMCARz0aVfEt68P');
-        }
+        await remote.playUri('spotify:track:3KkXRkHbMCARz0aVfEt68P');
       }
       catch (e) {
         console.error(e);
@@ -62,9 +44,11 @@ export default function Spotify() {
     async function fetchMe() {
       try {
         if (session) {
+          console.log("Fetching Me!")
           const response = await fetch('http://192.168.1.143:5101/spotify/me', {
             headers: {
               Authorization: `Bearer ${session.accessToken}`
+              // Authorization: `Bearer BQDhoIXD7XTAOsotvFW64ij_9tvX-DqcwhO5pjow0al4MxOCfJZ88eQUnRWGiw9fWFdB7umBddzUAtwz9cq7HitzspmbvKkqs89Kk7a7o8Cgv-QiNmh77s4Xt6wRTwEHv3GDr6jyaeiLjn0sUnFZ4kxNSU76FySUzl5g5zMfV7fZIKTUWPZ0p2gQ9LNWTbAVHEV-fTW96-7DqBp_ePN_Dqz4gIRsEQ`
             }
           })
           const data = await response.json();
@@ -95,11 +79,9 @@ export default function Spotify() {
                 style={styles.reactLogo}
             />}
         >
-            <Button title="Sign in to Spotify" onPress={signInToSpotify} />
             <Button title="Play Dancing Queen" onPress={playDancingQueen} />
             <Button title="Play Sunflower" onPress={playSunflower} />
             <Button title="Fetch Me" onPress={fetchMe} />
-            <ThemedText>hello world</ThemedText>
         </ParallaxScrollView>
     );
 }
