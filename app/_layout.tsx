@@ -4,10 +4,12 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import { auth, remote, ApiScope, ApiConfig, SpotifySession } from 'react-native-spotify-remote';
-import LoginScreen from './login'; // Assume you have a LoginScreen component
+import { ApiScope, ApiConfig, SpotifySession } from 'react-native-spotify-remote';
+import { getSpotifyRemoteClient  } from '@/api/client';
+
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import WelcomeScreen from './welcome';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -17,20 +19,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
-  const [session, setSession] = useState<SpotifySession | null>(null);
-  const spotifyConfig: ApiConfig = {
-      clientID: '1e7c327a22964910bb370837f20dcc94',
-      redirectURL: 'anthem:/callback',
-      tokenRefreshURL: 'http://192.168.1.143:5101/token/refresh',
-      tokenSwapURL: 'http://192.168.1.143:5101/token/swap',
-      scopes: [
-          ApiScope.UserReadCurrentlyPlayingScope,
-          ApiScope.AppRemoteControlScope,
-          ApiScope.UserFollowModifyScope,
-          ApiScope.UserFollowReadScope,
-          ApiScope.UserReadPrivateScope,
-      ]
-  };
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
     if (loaded) {
@@ -42,23 +31,21 @@ export default function RootLayout() {
     return null;
   }
 
-  async function signInToSpotify() {
-      try {
-          const session = await auth.authorize(spotifyConfig);
-          console.log("Session: " + session);
-          if (session) {
-            setSession(session);
-            remote.connect(session.accessToken);
-          }
-          console.log(session);
-      }
-      catch (e) {
-          console.error(e);
-      }
+  async function connectSpoifyAccount() {
+    const result = await getSpotifyRemoteClient();
+    if (result.IsSuccess) {
+      console.log("Connected to Spotify!")
+      setSignedIn(true)
+    }
+    else {
+      // TODO: return error screen
+      console.log("Error: " + result.ErrorMessage)
+      console.log("Origin: " + result.ErrorOrigin)
+    }
   }
 
-  if (session === null) {
-    return <LoginScreen onPress={signInToSpotify} />;
+  if (!signedIn) {
+    return <WelcomeScreen onPress={connectSpoifyAccount} />;
   }
   else {
     return (

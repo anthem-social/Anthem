@@ -1,17 +1,16 @@
 import { ThemedText } from '@/components/ThemedText';
 import React from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
-import { auth } from 'react-native-spotify-remote';
 
-interface LoginScreenProps {
+interface WelcomeProps {
   onPress: () => void;
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ onPress }) => {
+const WelcomeScreen: React.FC<WelcomeProps> = ({ onPress }) => {
   return (
     <View style={styles.container}>
         <ThemedText>Welcom to Anthem!</ThemedText>
-        <Button title="Sign in with Spotify" onPress={onPress} />
+        <Button title="Connect your Spotify account to continue" onPress={onPress} />
     </View>
   );
 };
@@ -24,4 +23,4 @@ const styles = StyleSheet.create({
     },
   });
   
-export default LoginScreen;
+export default WelcomeScreen;
