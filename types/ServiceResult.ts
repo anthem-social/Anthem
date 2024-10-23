@@ -42,6 +42,7 @@ export class ServiceResult<T> {
 
     static Failure<T>(errorMessage: string, errorOrigin: string): ServiceResult<T> {
         // TODO: Log all failed service results here
+        console.log("Error: " + errorMessage + "\nOrigin: " + errorOrigin);
         return new ServiceResult<T>(false, undefined, errorMessage, errorOrigin);
     }
 }
