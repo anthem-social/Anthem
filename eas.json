@@ -6,13 +6,19 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env" : {
+        "EXPO_PUBLIC_ANTHEM_API_URL": "http://192.168.1.143:5101"
+      }
     },
     "preview": {
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env" : {
+        "EXPO_PUBLIC_ANTHEM_API_URL": "notsureyet"
+      }
     }
   },
   "submit": {

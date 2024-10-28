@@ -1,11 +1,12 @@
-import { Button, Text } from 'react-native';
+import { Button } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { Image, StyleSheet, Linking } from 'react-native';
-import { useEffect, useState } from 'react';
 import { playTrack } from '@/api/resource';
-import { refreshSpotifySession } from '@/api/client';
+import { refreshSpotifySession, removeSpotifySession } from '@/api/client';
 import * as Keychain from 'react-native-keychain'
 import { SpotifySession, remote } from 'react-native-spotify-remote';
+import { getMe } from '@/api/me';
+import { getUser } from '@/api/user';
 
 export default function Profile() {
     async function myProfile() {
@@ -42,6 +43,7 @@ export default function Profile() {
     
     async function refreshSession() {
       try {
+        console.log('Refreshing session.');
         var result = await Keychain.getGenericPassword({ service: 'spotifySession' });
         if (result) {
           const spotifySession: SpotifySession = JSON.parse(result.password);
@@ -56,7 +58,25 @@ export default function Profile() {
     async function forgetSession() {
       try {
         console.log('Forgetting session.');
-        await Keychain.resetGenericPassword({ service: 'spotifySession' });
+        await removeSpotifySession();
+      }
+      catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function fetchMe() {
+      try {
+        await getMe();
+      }
+      catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function fetchUser() {
+      try {
+        await getUser();
       }
       catch (e) {
         console.error(e);
@@ -88,6 +108,8 @@ export default function Profile() {
             <Button title="Refresh Session" onPress={refreshSession} />
             <Button title="Forget Session" onPress={forgetSession} />
             <Button title="Connect Remote" onPress={connectRemote} />
+            <Button title="Get Me" onPress={fetchMe} />
+            <Button title="Get User" onPress={fetchUser} />
         </ParallaxScrollView>
     );
 }

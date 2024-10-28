@@ -1,15 +1,22 @@
-import { User, ResourceType } from '@/types';
+import { User } from '@/types/User';
+import { getAnthemClient } from './client';
+import { ResourceType } from '@/types/Resource';
 
-async function getUser(userId: string): Promise<User> {
-    const user: User = {
-        userId: userId,
-        alias: 'johndoe',
-        picture: 'https://example',
-        lastActive: new Date(),
-        lastTrack: {
-            type: ResourceType.Track,
-            uri: 'spotify:track:3KkXRkHbMCARz0aVfEt68P'
-        }
+export async function getUser(): Promise<User> {
+    const result = await getAnthemClient();
+
+    if (result.IsSuccess && result.Data) {
+        const client = result.Data;
+        const response = await client.get('/spotify/user');
+        const user = response.data as User;
+        console.log("User: " + JSON.stringify(user));
+        console.log("User Last Active: " + user.lastActive);
+        console.log("User Last Track Type: " + user.lastTrack.type.toString());
+        var match = user.lastTrack.type == ResourceType.Track;
+        console.log("User Last Track Matches?: " + match);
+        return user;
     }
-    return user;
+    else {
+        throw new Error(result.ErrorMessage);
+    }
 }

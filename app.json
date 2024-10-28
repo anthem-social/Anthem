@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.averyschreiner.Anthem"
+      "bundleIdentifier": "com.averyschreiner.anthem"
     },
     "android": {
       "adaptiveIcon": {

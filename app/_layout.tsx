@@ -4,12 +4,11 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import { auth, SpotifySession } from 'react-native-spotify-remote';
-import { getSpotifyRemoteClient, getSpotifySession, setSpotifySession  } from '@/api/client';
+import { SpotifySession } from 'react-native-spotify-remote';
+import { connectToSpotify } from '@/api/client';
 import * as Keychain from 'react-native-keychain';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import WelcomeScreen from './welcome';
-
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -19,7 +18,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
-  const [isSpotifySessionInKeychain, setIsSpotifySessionInKeychain] = useState(false);
+  const [hasSpotifySession, setHasSpotifySession] = useState(false);
 
   useEffect(() => {
     if (loaded) {
@@ -28,47 +27,55 @@ export default function RootLayout() {
   }, [loaded]);
 
   useEffect(() => {
-    async function checkKeychain() {
+    async function checkForSpotifySession() {
       try {
         const result = await Keychain.getGenericPassword({ service: 'spotifySession' });
         
         if (result) {
           const spotifySession: SpotifySession = JSON.parse(result.password!);
-          setIsSpotifySessionInKeychain(true);    
+          setHasSpotifySession(true);    
         }
         else {
-          setIsSpotifySessionInKeychain(false);
+          setHasSpotifySession(false);
         }
       }
       catch {
         // TODO: Show error screen
-        setIsSpotifySessionInKeychain(false);
+        setHasSpotifySession(false);
       }
     }
 
-    checkKeychain();
+    checkForSpotifySession();
   }, []);
 
-  async function initSpotifyAuth() {
-    const result = await getSpotifySession();
+  async function tryConnectToSpotify() {
+    try {
+      const result = await connectToSpotify();
 
-    if (result.IsSuccess) {
-      setIsSpotifySessionInKeychain(true)
+      if (result.IsSuccess) {
+        setHasSpotifySession(true);
+      }
+      else {
+        // TODO: Show error screen
+        setHasSpotifySession(false);
+        console.log("Error: " + result.ErrorMessage)
+        console.log("Origin: " + result.ErrorOrigin)
+      }
     }
-    else {
+    catch {
       // TODO: Show error screen
-      console.log("Error: " + result.ErrorMessage)
-      console.log("Origin: " + result.ErrorOrigin)
+      setHasSpotifySession(false);
     }
   }
 
   if (!loaded) {
     return null;
   }
-  else if (!isSpotifySessionInKeychain) {
-    return <WelcomeScreen onPress={initSpotifyAuth} />;
+  else if (!hasSpotifySession) {
+    return <WelcomeScreen onPress={tryConnectToSpotify} />;
   }
   else {
+    tryConnectToSpotify();
     return (
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack>

@@ -3,11 +3,12 @@ import { auth, remote, ApiConfig, ApiScope, SpotifyRemoteApi, SpotifySession } f
 import * as Keychain from 'react-native-keychain';  
 import axios, { AxiosInstance } from 'axios';
 
+const ANTHEM_API_URL = process.env.EXPO_PUBLIC_ANTHEM_API_URL;
 const spotifyRemoteConfig: ApiConfig = {
     clientID: '1e7c327a22964910bb370837f20dcc94',
     redirectURL: 'anthem:/callback',
-    tokenRefreshURL: 'http://192.168.1.143:5101/token/refresh',
-    tokenSwapURL: 'http://192.168.1.143:5101/token/swap',
+    tokenRefreshURL: `${ANTHEM_API_URL}/token/refresh`,
+    tokenSwapURL: `${ANTHEM_API_URL}/token/swap`,
     scopes: [
         ApiScope.UserReadCurrentlyPlayingScope,
         ApiScope.AppRemoteControlScope,
@@ -16,6 +17,103 @@ const spotifyRemoteConfig: ApiConfig = {
         ApiScope.UserReadPrivateScope,
     ],
 };
+
+export async function connectToSpotify(): Promise<ServiceResult<SpotifySession>> {
+    try {
+        // Connet to the Spotify app
+        const session = await auth.authorize(spotifyRemoteConfig);
+        await remote.connect(session.accessToken);
+
+        // Keep track of the session
+        const result = await setSpotifySession(session);
+        if (!result.IsSuccess) {
+            return ServiceResult.Failure(result.ErrorMessage!, result.ErrorOrigin!);
+        }
+
+        return ServiceResult.Success(session);
+    }
+    catch (e: any) {
+        // Disconnect from Spotify and forget the session
+        await remote.disconnect();
+        await removeSpotifySession();
+        return ServiceResult.Failure(`Failed to connect to Spotify: ${e}`, 'connectToSpotify()');
+    }
+}
+
+export async function getSpotifyRemoteClient(): Promise<ServiceResult<SpotifyRemoteApi>> {
+    const result = await getSpotifySession();
+
+    if (result.IsSuccess) {
+        return ServiceResult.Success(remote);
+    }
+    else {
+        return ServiceResult.Failure(result.ErrorMessage!, result.ErrorOrigin!);
+    }
+}
+
+export async function getAnthemClient(): Promise<ServiceResult<AxiosInstance>> {
+    const result = await getSpotifySession();
+    
+    if (result.IsSuccess) {
+        const spotifySession = result.Data!;
+        const anthemClient = axios.create({
+            baseURL: ANTHEM_API_URL,
+            headers: {
+                'Authorization': `Bearer ${spotifySession.accessToken}`,
+                // maybe others?
+            }
+        });
+
+        return ServiceResult.Success(anthemClient);
+    }
+    else {
+        return ServiceResult.Failure(result.ErrorMessage!, result.ErrorOrigin!);
+    }
+}
+
+async function getSpotifySession(): Promise<ServiceResult<SpotifySession>> {
+    const isRemoteConnected = await remote.isConnectedAsync();
+
+    if (isRemoteConnected) {
+        console.log('Remote is already connected.');
+        const result = await Keychain.getGenericPassword({ service: 'spotifySession' });
+
+        if (result) {
+            const spotifySession: SpotifySession = JSON.parse(result.password);
+            
+            if (spotifySession.expired) {
+                const refreshResult = await refreshSpotifySession(spotifySession);
+    
+                if (refreshResult.IsSuccess) {
+                    return ServiceResult.Success(refreshResult.Data!);
+                }
+                else {
+                    return ServiceResult.Failure(refreshResult.ErrorMessage!, refreshResult.ErrorOrigin!);
+                }
+            }
+            else {
+                return ServiceResult.Success(spotifySession);
+            }
+        }
+        else {
+            return ServiceResult.Failure('Remote connected but no spotifySession.', 'getSpotifySession()');
+        }
+    }
+    else {
+        return await connectToSpotify();
+    }
+}
+
+async function setSpotifySession(spotifySession: SpotifySession): Promise<ServiceResult<null>> {
+    const result = await Keychain.setGenericPassword('spotifySession', JSON.stringify(spotifySession), { service: 'spotifySession' });
+
+    if (result) {
+        return ServiceResult.Success(null);
+    }
+    else {
+        return ServiceResult.Failure('Failed to set Spotify session.', 'setSpotifySession()');
+    }
+}
 
 function getNewLocalExpirationDate(utcTimestamp: number, addSeconds: number): string {
     const expirationTimeUtc = utcTimestamp + (addSeconds * 1000);
@@ -27,6 +125,7 @@ function getNewLocalExpirationDate(utcTimestamp: number, addSeconds: number): st
     return newExpirationDate;
 }
 
+// TODO: Remove export
 export async function refreshSpotifySession(spotifySession: SpotifySession): Promise<ServiceResult<SpotifySession>> {
     try {
         const timestamp = Date.now();
@@ -54,99 +153,14 @@ export async function refreshSpotifySession(spotifySession: SpotifySession): Pro
     }
 }
 
-export async function getSpotifySession(): Promise<ServiceResult<SpotifySession>> {
-    const isRemoteConnected = await remote.isConnectedAsync();
-
-    if (isRemoteConnected) {
-        console.log('Remote is already connected.');
-        const result = await Keychain.getGenericPassword({ service: 'spotifySession' });
-
-        if (result) {
-            const spotifySession: SpotifySession = JSON.parse(result.password);
-            
-            if (spotifySession.expired) {
-                const refreshResult = await refreshSpotifySession(spotifySession);
-    
-                if (refreshResult.IsSuccess) {
-                    console.log('Refreshed GTG.');
-                    return ServiceResult.Success(refreshResult.Data!);
-                }
-                else {
-                    return ServiceResult.Failure(refreshResult.ErrorMessage!, refreshResult.ErrorOrigin!);
-                }
-            }
-            else {
-                return ServiceResult.Success(spotifySession);
-            }
-        }
-        else {
-            try {
-                const spotifySession = await auth.authorize(spotifyRemoteConfig);
-                setSpotifySession(spotifySession);
-                return ServiceResult.Success(spotifySession);
-            }
-            catch (e: any) {
-                return ServiceResult.Failure(`Failed to authorize with Spotify remote: ${e}`, 'getSpotifySession()');
-            }
-        }
-    }
-    else {    
-        try {
-            const spotifySession = await auth.authorize(spotifyRemoteConfig);
-            setSpotifySession(spotifySession);
-            return ServiceResult.Success(spotifySession);
-        }
-        catch (e: any) {
-            return ServiceResult.Failure(`Failed to authorize with Spotify remote: ${e}`, 'getSpotifySession()');
-        }
-    }
-}
-
-export async function setSpotifySession(spotifySession: SpotifySession): Promise<ServiceResult<null>> {
-    const result = await Keychain.setGenericPassword('spotifySession', JSON.stringify(spotifySession), { service: 'spotifySession' });
+// TODO: Remove export
+export async function removeSpotifySession(): Promise<ServiceResult<null>> {
+    const result = await Keychain.resetGenericPassword({ service: 'spotifySession' });
 
     if (result) {
         return ServiceResult.Success(null);
     }
     else {
-        return ServiceResult.Failure('Failed to set Spotify session.', 'setSpotifySession()');
-    }
-}
-
-export async function getSpotifyRemoteClient(): Promise<ServiceResult<SpotifyRemoteApi>> {
-    const result = await getSpotifySession();
-
-    if (result.IsSuccess) {
-        try {
-            const spotifySession  = result.Data!;
-            await remote.connect(spotifySession.accessToken);
-            return ServiceResult.Success(remote);
-        }
-        catch (e: any) {
-            return ServiceResult.Failure(`Failed to connect to Spotify remote: ${e}`, 'getSpotifyRemoteClient()');
-        }
-    }
-    else {
-        return ServiceResult.Failure(result.ErrorMessage!, result.ErrorOrigin!);
-    }
-}
-
-export async function getAnthemClient(): Promise<ServiceResult<AxiosInstance>> {
-    const result = await getSpotifySession();
-    
-    if (result.IsSuccess) {
-        const spotifySession = result.Data!;
-        const anthemClient = axios.create({
-            baseURL: 'http://192.168.1.143:5101',
-            headers: {
-                'Authorization': `Bearer ${spotifySession.accessToken}`,
-                // maybe others?
-            }
-        });
-
-        return ServiceResult.Success(anthemClient);
-    }
-    else {
-        return ServiceResult.Failure(result.ErrorMessage!, result.ErrorOrigin!);
+        return ServiceResult.Failure('Failed to remove Spotify session.', 'removeSpotifySession()');
     }
 }

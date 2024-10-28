@@ -1,4 +1,4 @@
-import { getSpotifyRemoteClient } from "./client";
+import { getAnthemClient, getSpotifyRemoteClient } from "./client";
 
 export async function playTrack(trackUri: string) {
     var result = await getSpotifyRemoteClient();
