@@ -1,5 +1,5 @@
 import { ServiceResult } from '@/types/ServiceResult';
-import { auth, remote, ApiConfig, ApiScope, SpotifyRemoteApi, SpotifySession } from 'react-native-spotify-remote';
+import { auth, remote, ApiConfig, ApiScope, SpotifyRemoteApi, SpotifySession, SpotifyRemoteEvents, PlayerContext, PlayerState } from 'react-native-spotify-remote';
 import * as Keychain from 'react-native-keychain';  
 import axios, { AxiosInstance } from 'axios';
 
@@ -44,6 +44,19 @@ export async function getSpotifyRemoteClient(): Promise<ServiceResult<SpotifyRem
     const result = await getSpotifySession();
 
     if (result.IsSuccess) {
+        remote.addListener("playerContextChanged", (context: PlayerContext) => {
+            console.log('Player context changed to: ', JSON.stringify(context));
+        });
+        remote.addListener("playerStateChanged", (state: PlayerState) => {
+            console.log('Player state changed to: ', JSON.stringify(state));
+        });
+        remote.addListener("remoteDisconnected", () => {
+            console.log('Remote disconnected.');
+        });
+        remote.addListener("remoteConnected", () => {
+            console.log('Remote connected.');
+        });
+
         return ServiceResult.Success(remote);
     }
     else {
