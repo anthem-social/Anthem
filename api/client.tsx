@@ -10,12 +10,12 @@ const spotifyRemoteConfig: ApiConfig = {
     tokenRefreshURL: `${ANTHEM_API_URL}/token/refresh`,
     tokenSwapURL: `${ANTHEM_API_URL}/token/swap`,
     scopes: [
-        ApiScope.UserReadCurrentlyPlayingScope,
         ApiScope.AppRemoteControlScope,
         ApiScope.UserFollowModifyScope,
         ApiScope.UserFollowReadScope,
-        ApiScope.UserReadPrivateScope,
-    ],
+        ApiScope.UserReadPlaybackStateScope,
+        ApiScope.UserReadPrivateScope
+    ]
 };
 
 export async function connectToSpotify(): Promise<ServiceResult<SpotifySession>> {
