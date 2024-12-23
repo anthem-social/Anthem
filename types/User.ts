@@ -3,7 +3,7 @@ import { Track } from './spotify/Track';
 export type User = {
     id: string;
     alias: string;
-    profilePictureUrl: string;
+    pictureUrl: string;
     bio: string;
     anthem: Track;
     followers: Array<string>;

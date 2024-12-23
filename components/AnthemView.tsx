@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 import Animated, { useAnimatedRef } from 'react-native-reanimated';
 import { ThemedView } from '@/components/ThemedView';
 
-interface AnthemViewProps {
+type Props = {
   children: ReactNode;
 }
 
-export default function AnthemView({ children }: AnthemViewProps) {
+export default function AnthemView({ children }: Props) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
   return (

@@ -11,6 +11,11 @@ import { Status } from '@/types/Status';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import AnthemView from '@/components/AnthemView';
+import { User } from '@/types';
+
+type Props = {
+  user: User;
+}
 
 export default function Profile() {
     const ws = useRef<WebSocket | null>(null);
