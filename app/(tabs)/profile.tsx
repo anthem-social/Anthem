@@ -6,11 +6,53 @@ import { refreshSpotifySession, removeSpotifySession } from '@/api/client';
 import * as Keychain from 'react-native-keychain'
 import { SpotifySession, remote } from 'react-native-spotify-remote';
 import { getMe } from '@/api/me';
-import { getUser } from '@/api/user';
+import { useEffect, useRef, useState } from 'react';
+import { getUser, getUserStatus } from '@/api/user';
+import { Status } from '@/types/Status';
 
 export default function Profile() {
+    const ws = useRef<WebSocket | null>(null);
+    const [trackUri, setTrackUri] = useState<string | null>(null);
+    const [alubmUri, setAlbumUri] = useState<string | null>(null);
+    
+    useEffect(() => {
+      // ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/development?userId=schreineravery-us");
+      ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/production?userId=schreineravery-us");
+
+      ws.current.onopen = () => {
+        console.log("Connected!");
+      }
+
+      ws.current.onmessage = (e) => {
+        console.log("Message:\n" + e.data);
+        var status: Status = JSON.parse(e.data);
+        setTrackUri(status.track.uri);
+        setAlbumUri(status.track.album.uri);
+      }
+
+      ws.current.onerror = (e) => {
+        console.error("Error in websocket: " + e);
+      }
+
+      ws.current.onclose = (e) => {
+        console.log("Disconnected: " + e.code + " " + e.reason + " " + e.wasClean);
+      }
+
+      return () => {
+        ws.current?.close();
+      }
+    }, []);
+
     async function myProfile() {
       Linking.openURL('spotify:user:schreineravery-us').catch(err => console.error('An error occurred', err));;
+    }
+
+    async function goToTrack() {
+      Linking.openURL(trackUri!).catch(err => console.error('An error occurred', err));
+    }
+
+    async function goToAlbum() {
+      Linking.openURL(alubmUri!).catch(err => console.error('An error occurred', err));
     }
 
     async function playSunflower() {
@@ -74,9 +116,18 @@ export default function Profile() {
       }
     }
 
-    async function fetchUser() {
+    async function handleGetUserStatus() {
       try {
-        await getUser();
+        await getUserStatus("schreineravery-us");
+      }
+      catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function handleGetUser() {
+      try {
+        await getUser("schreineravery-us");
       }
       catch (e) {
         console.error(e);
@@ -102,14 +153,18 @@ export default function Profile() {
                 style={styles.reactLogo}
             />}
         >
-            <Button title="My Profile" onPress={myProfile} />
+            <Button title="Get Status" onPress={handleGetUserStatus} />
+            <Button title="Get User" onPress={handleGetUser} />
+            <Button title="Go to Track" onPress={goToTrack} />
+            <Button title="Go to Album" onPress={goToAlbum} />
+            {/* <Button title="My Profile" onPress={myProfile} />
             <Button title="Play Dancing Queen" onPress={playDancingQueen} />
             <Button title="Play Sunflower" onPress={playSunflower} />
             <Button title="Refresh Session" onPress={refreshSession} />
             <Button title="Forget Session" onPress={forgetSession} />
             <Button title="Connect Remote" onPress={connectRemote} />
             <Button title="Get Me" onPress={fetchMe} />
-            <Button title="Get User" onPress={fetchUser} />
+            <Button title="Get User" onPress={fetchUser} /> */}
         </ParallaxScrollView>
     );
 }

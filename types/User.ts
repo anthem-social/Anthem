@@ -1,9 +1,12 @@
-import { Resource } from '@/types/Resource';
+import { Track } from './spotify/Track';
 
 export type User = {
-    userId: string;
+    id: string;
     alias: string;
-    pictureUrl: string;
-    lastActive: Date;
-    lastTrack: Resource;
+    profilePictureUrl: string;
+    bio: string;
+    anthem: Track;
+    followers: Array<string>;
+    following: Array<string>;
+    friends: Array<string>;
 }
