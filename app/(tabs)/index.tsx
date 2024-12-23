@@ -17,6 +17,34 @@ const feedData = [
 ];
 
 export default function TimelineFeed() {
+  // useEffect(() => {
+  //   ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/development?userId=schreineravery-us");
+  //   ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/production?userId=schreineravery-us");
+
+  //   ws.current.onopen = () => {
+  //     console.log("Connected!");
+  //   }
+
+  //   ws.current.onmessage = (e) => {
+  //     console.log("Message:\n" + e.data);
+  //     var status: Status = JSON.parse(e.data);
+  //     setTrackUri(status.track.uri);
+  //     setAlbumUri(status.track.album.uri);
+  //   }
+
+  //   ws.current.onerror = (e) => {
+  //     console.error("Error in websocket: " + e);
+  //   }
+
+  //   ws.current.onclose = (e) => {
+  //     console.log("Disconnected: " + e.code + " " + e.reason + " " + e.wasClean);
+  //   }
+
+  //   return () => {
+  //     ws.current?.close();
+  //   }
+  // }, []);
+  
   const renderItem = ({ item }) => (
     <ThemedView style={styles.feedItem}>
       <ThemedText type="defaultSemiBold">{item.user}</ThemedText>

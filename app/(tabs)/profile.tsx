@@ -17,34 +17,6 @@ export default function Profile() {
     const [trackUri, setTrackUri] = useState<string | null>(null);
     const [alubmUri, setAlbumUri] = useState<string | null>(null);
     
-    // useEffect(() => {
-      // ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/development?userId=schreineravery-us");
-      // ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/production?userId=schreineravery-us");
-
-    //   ws.current.onopen = () => {
-    //     console.log("Connected!");
-    //   }
-
-    //   ws.current.onmessage = (e) => {
-    //     console.log("Message:\n" + e.data);
-    //     var status: Status = JSON.parse(e.data);
-    //     setTrackUri(status.track.uri);
-    //     setAlbumUri(status.track.album.uri);
-    //   }
-
-    //   ws.current.onerror = (e) => {
-    //     console.error("Error in websocket: " + e);
-    //   }
-
-    //   ws.current.onclose = (e) => {
-    //     console.log("Disconnected: " + e.code + " " + e.reason + " " + e.wasClean);
-    //   }
-
-    //   return () => {
-    //     ws.current?.close();
-    //   }
-    // }, []);
-
     async function myProfile() {
       Linking.openURL('spotify:user:schreineravery-us').catch(err => console.error('An error occurred', err));;
     }
@@ -136,21 +108,27 @@ export default function Profile() {
       }
     }
     
-    const styles = StyleSheet.create({
-        reactLogo: {
-          height: 178,
-          width: 290,
-          bottom: 0,
-          left: 0,
-          position: 'absolute',
-        },
-    });
-    
     return (
       <AnthemView>
-        <ThemedText>
-          This is the profile tab. It shows the user's profile information.
+        <ThemedText style={styles.top}>
         </ThemedText>
       </AnthemView>
     );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    height: 70,
+    overflow: 'hidden',
+  },
+  content: {
+    flex: 1,
+    padding: 32,
+    gap: 16,
+    overflow: 'hidden',
+  },
+  top: {
+    marginTop: 16,
+  },
+});
+
