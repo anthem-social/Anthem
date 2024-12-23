@@ -68,14 +68,14 @@ export default function RootLayout() {
     }
   }
 
-  if (!loaded) {
-    return null;
-  }
-  else if (!hasSpotifySession) {
-    return <WelcomeScreen onPress={tryConnectToSpotify} />;
-  }
-  else {
-    tryConnectToSpotify();
+  // if (!loaded) {
+  //   return null;
+  // }
+  // else if (!hasSpotifySession) {
+  //   return <WelcomeScreen onPress={tryConnectToSpotify} />;
+  // }
+  // else {
+  //   tryConnectToSpotify();
     return (
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack>
@@ -84,5 +84,5 @@ export default function RootLayout() {
           </Stack>
         </ThemeProvider>
     );
-  }
+  // }
 }

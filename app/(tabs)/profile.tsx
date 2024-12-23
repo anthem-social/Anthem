@@ -1,5 +1,4 @@
 import { Button } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { Image, StyleSheet, Linking } from 'react-native';
 import { playTrack } from '@/api/resource';
 import { refreshSpotifySession, removeSpotifySession } from '@/api/client';
@@ -9,39 +8,42 @@ import { getMe } from '@/api/me';
 import { useEffect, useRef, useState } from 'react';
 import { getUser, getUserStatus } from '@/api/user';
 import { Status } from '@/types/Status';
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import AnthemView from '@/components/AnthemView';
 
 export default function Profile() {
     const ws = useRef<WebSocket | null>(null);
     const [trackUri, setTrackUri] = useState<string | null>(null);
     const [alubmUri, setAlbumUri] = useState<string | null>(null);
     
-    useEffect(() => {
+    // useEffect(() => {
       // ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/development?userId=schreineravery-us");
-      ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/production?userId=schreineravery-us");
+      // ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/production?userId=schreineravery-us");
 
-      ws.current.onopen = () => {
-        console.log("Connected!");
-      }
+    //   ws.current.onopen = () => {
+    //     console.log("Connected!");
+    //   }
 
-      ws.current.onmessage = (e) => {
-        console.log("Message:\n" + e.data);
-        var status: Status = JSON.parse(e.data);
-        setTrackUri(status.track.uri);
-        setAlbumUri(status.track.album.uri);
-      }
+    //   ws.current.onmessage = (e) => {
+    //     console.log("Message:\n" + e.data);
+    //     var status: Status = JSON.parse(e.data);
+    //     setTrackUri(status.track.uri);
+    //     setAlbumUri(status.track.album.uri);
+    //   }
 
-      ws.current.onerror = (e) => {
-        console.error("Error in websocket: " + e);
-      }
+    //   ws.current.onerror = (e) => {
+    //     console.error("Error in websocket: " + e);
+    //   }
 
-      ws.current.onclose = (e) => {
-        console.log("Disconnected: " + e.code + " " + e.reason + " " + e.wasClean);
-      }
+    //   ws.current.onclose = (e) => {
+    //     console.log("Disconnected: " + e.code + " " + e.reason + " " + e.wasClean);
+    //   }
 
-      return () => {
-        ws.current?.close();
-      }
-    }, []);
+    //   return () => {
+    //     ws.current?.close();
+    //   }
+    // }, []);
 
     async function myProfile() {
       Linking.openURL('spotify:user:schreineravery-us').catch(err => console.error('An error occurred', err));;
@@ -145,26 +147,10 @@ export default function Profile() {
     });
     
     return (
-        <ParallaxScrollView
-            headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-            headerImage={
-            <Image
-                source={require('@/assets/images/partial-react-logo.png')}
-                style={styles.reactLogo}
-            />}
-        >
-            <Button title="Get Status" onPress={handleGetUserStatus} />
-            <Button title="Get User" onPress={handleGetUser} />
-            <Button title="Go to Track" onPress={goToTrack} />
-            <Button title="Go to Album" onPress={goToAlbum} />
-            {/* <Button title="My Profile" onPress={myProfile} />
-            <Button title="Play Dancing Queen" onPress={playDancingQueen} />
-            <Button title="Play Sunflower" onPress={playSunflower} />
-            <Button title="Refresh Session" onPress={refreshSession} />
-            <Button title="Forget Session" onPress={forgetSession} />
-            <Button title="Connect Remote" onPress={connectRemote} />
-            <Button title="Get Me" onPress={fetchMe} />
-            <Button title="Get User" onPress={fetchUser} /> */}
-        </ParallaxScrollView>
+      <AnthemView>
+        <ThemedText>
+          This is the profile tab. It shows the user's profile information.
+        </ThemedText>
+      </AnthemView>
     );
 }
