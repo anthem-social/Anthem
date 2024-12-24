@@ -1,99 +1,110 @@
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import AnthemView from '@/components/AnthemView';
+import StatusCard from '@/components/StatusCard';
+import { Card, Status, Track } from '@/types';
 
-export default function TabTwoScreen() {
+const mockCard: Card = {
+  userId: 'schreineravery-us',
+  alias: 'Avery',
+  pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
+}
+
+const mockTrack: Track = {
+  uri: 'spotify:track:3KkXRkHbMCARz0aVfEt68P',
+  name: 'Sunflower - Into the Spider-Verse',
+  artists: [
+    {
+      uri: 'spotify:artist:3TVXtAsR1Inumwj472S9r4',
+      name: 'Post Malone',
+    },
+    {
+      uri: 'spotify:artist:1uNFoZAHBGtllmzznpCI3s',
+      name: 'Swae Lee',
+    },
+  ],
+  album: {
+    uri: 'spotify:album:4yP0hdKOZPNshxUOjY0cZj',
+    coverUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
+  }
+}
+
+const mockStatus: Status = {
+  userId: 'schreineravery-us',
+  track: mockTrack,
+  lastChanged: new Date()
+}
+
+export default function Social() {
   return (
     <AnthemView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText> library
-          to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/AnthemView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
+      <ThemedView style={styles.hr} />
+      <StatusCard
+        card={mockCard}
+        status={mockStatus}
+      />
+      <ThemedView style={styles.hr} />
+      <StatusCard
+        card={mockCard}
+        status={mockStatus}
+      />
+      <ThemedView style={styles.hr} />
     </AnthemView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  alias: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    paddingTop: 8,
   },
-  titleContainer: {
+  bio: {
+    fontSize: 12,
+    color: 'grey'
+  },
+  col: {
+    flexDirection: 'column',
+    gap: 2
+  },
+  container: {
+    flex: 1
+  },
+  header: {
+    borderBottomWidth: 12,
+    borderBottomColor: 'red',
+    borderStyle: 'solid',
+  },
+  hr: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
+    marginHorizontal: 4
+  },
+  joined: {
+    fontSize: 12,
+    color: 'grey',
+  },
+  picture: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderColor: 'grey',
+    borderWidth: 1,
+  },
+  row: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 28
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  userId: {
+    fontSize: 16,
+    marginBottom: 16,
   },
 });

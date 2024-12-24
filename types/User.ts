@@ -6,6 +6,7 @@ export type User = {
     pictureUrl: string;
     bio: string;
     anthem: Track;
+    joined: Date;
     followers: Array<string>;
     following: Array<string>;
     friends: Array<string>;

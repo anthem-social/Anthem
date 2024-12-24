@@ -1,22 +1,11 @@
-import { FlatList, StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
+import AnthemView from '@/components/AnthemView';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
-const feedData = [
-  {
-    id: '1',
-    user: 'User1',
-    content: 'This is the first post',
-  },
-  {
-    id: '2',
-    user: 'User2',
-    content: 'This is the second post',
-  },
-  // Add more items as needed
-];
 
 export default function TimelineFeed() {
+      // const ws = useRef<WebSocket | null>(null);
+
   // useEffect(() => {
   //   ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/development?userId=schreineravery-us");
   //   ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/production?userId=schreineravery-us");
@@ -44,33 +33,79 @@ export default function TimelineFeed() {
   //     ws.current?.close();
   //   }
   // }, []);
-  
-  const renderItem = ({ item }) => (
-    <ThemedView style={styles.feedItem}>
-      <ThemedText type="defaultSemiBold">{item.user}</ThemedText>
-      <Text>{item.content}</Text>
-      {item.image && <Image source={item.image} style={styles.feedImage} />}
-    </ThemedView>
-  );
 
+      // const [trackUri, setTrackUri] = useState<string | null>(null);
+      // const [alubmUri, setAlbumUri] = useState<string | null>(null);
+      
+      // async function myProfile() {
+      //   Linking.openURL('spotify:user:schreineravery-us').catch(err => console.error('An error occurred', err));;
+      // }
+  
+      // async function goToTrack() {
+      //   Linking.openURL(trackUri!).catch(err => console.error('An error occurred', err));
+      // }
+  
+      // async function goToAlbum() {
+      //   Linking.openURL(alubmUri!).catch(err => console.error('An error occurred', err));
+      // }
+  
+      // async function playSunflower() {
+      //   try {
+      //     await playTrack("spotify:track:3KkXRkHbMCARz0aVfEt68P")
+      //   }
+      //   catch (e) {
+      //     console.error(e);
+      //   }
+      // }
+  
+      // async function playDancingQueen() {
+      //   try {
+      //     await playTrack("spotify:track:0GjEhVFGZW8afUYGChu3Rr")
+      //   }
+      //   catch (e) {
+      //     console.error(e);
+      //   }
+      // }
+  
+      // async function connectRemote() {
+      //   try {
+      //     await remote.connect('/Axi0p4mjud06AjLBLMXaQy7050ObseTxISWTWMXp7b28eWCpfiBOmxyYGyVCITu5HcYCsAvuOBHXfkrTI+fdmqem8GpaPQ9+dPySDtAiwgxjsdUDrmB61OwfknjCth2hWbZcNN4kqkjvjGVUJvxJTw6TTjjJ4RrIG558gfRCTYJz8fl/l5eYu7NElJUU0ulTBolIX2G4nuBIXwTtx8tefFDmCtetCT7Thv9/yVcHPQ1893TJ9ie0p0HSaT7Pw6Zt/dkDMlt+fGqE1+VIFoLF/eYkVpT8oCRXnpzkXHU+D0I2C6cC45yRJn6eL3Ld+Mv');
+      //     remote.playUri('spotify:track:6CfrYuD3YRDYdYvH9jNtXY');
+      //   }
+      //   catch (e) {
+      //     console.error(e);
+      //   }
+      // }
+      
+      // async function refreshSession() {
+      //   try {
+      //     console.log('Refreshing session.');
+      //     var result = await Keychain.getGenericPassword({ service: 'spotifySession' });
+      //     if (result) {
+      //       const spotifySession: SpotifySession = JSON.parse(result.password);
+      //       await refreshSpotifySession(spotifySession);
+      //     }
+      //   }
+      //   catch (e) {
+      //     console.error(e);
+      //   }
+      // }
+  
+      // async function forgetSession() {
+      //   try {
+      //     console.log('Forgetting session.');
+      //     await removeSpotifySession();
+      //   }
+      //   catch (e) {
+      //     console.error(e);
+      //   }
+      // }
+  
   return (
-    <FlatList
-      data={feedData}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-    />
+    <AnthemView>
+      <ThemedText>
+        This is the feed
+      </ThemedText>
+    </AnthemView>
   );
 };
-
-const styles = StyleSheet.create({
-  feedItem: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  feedImage: {
-    width: '100%',
-    height: 200,
-    marginTop: 8,
-  },
-});
