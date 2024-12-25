@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import AnthemView from '@/components/AnthemView';
@@ -40,6 +39,11 @@ const mockStatus: Status = {
 export default function Social() {
   return (
     <AnthemView>
+      <ThemedView style={styles.hr} />
+      <StatusCard
+        card={mockCard}
+        status={mockStatus}
+      />
       <ThemedView style={styles.hr} />
       <StatusCard
         card={mockCard}
@@ -96,15 +100,5 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     gap: 28
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 16,
-    marginBottom: 8,
-  },
-  userId: {
-    fontSize: 16,
-    marginBottom: 16,
   },
 });

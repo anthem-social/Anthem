@@ -40,7 +40,7 @@ export async function connectToSpotify(): Promise<ServiceResult<SpotifySession>>
     }
 }
 
-export async function getSpotifyRemoteClient(): Promise<ServiceResult<SpotifyRemoteApi>> {
+export async function getSpotifyClient(): Promise<ServiceResult<SpotifyRemoteApi>> {
     const result = await getSpotifySession();
 
     if (result.IsSuccess) {

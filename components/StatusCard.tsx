@@ -1,9 +1,10 @@
-import { TouchableOpacity, StyleSheet, Image, Linking, ScrollView, Animated, Easing } from 'react-native';
-import { Card, Status, Track } from '@/types';
+import { TouchableOpacity, StyleSheet, Image, Linking, ScrollView, Animated, Easing, Dimensions } from 'react-native';
+import { Card, Status } from '@/types';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { playUri } from '@/api/spotify';
 
 type Props = {
   card: Card;
@@ -11,6 +12,54 @@ type Props = {
 }
 
 export default function StatusCard({ card, status }: Props) {
+  const scrollRef = useRef<ScrollView>(null);
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    var animation: Animated.CompositeAnimation;
+    var sequence: Animated.CompositeAnimation;
+
+    const start = () => {
+      scrollX.setValue(0);
+      animation = Animated.timing(scrollX, {
+        toValue: width,
+        duration: width * 16,
+        easing: Easing.linear,
+        useNativeDriver: true
+      });
+      sequence = Animated.sequence([
+        Animated.delay(2000),
+        animation
+      ]);
+      Animated.loop(sequence).start();
+    }
+
+    start();
+
+    return () => {
+      if (animation) {
+        animation.stop();
+      }
+    }
+  }, [width]);
+
+  useEffect(() => {
+    const listener = scrollX.addListener(({ value }) => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTo({ x: value, animated: false });
+      }
+    });
+
+    return () => {
+      scrollX.removeListener(listener);
+    }
+  }, []);
+
+  const onContentSizeChange = (w: number) => {
+    setWidth(w);
+  }
+
   const difference: number = new Date().getUTCSeconds() - status.lastChanged.getUTCSeconds();
   var color: string;
   if (difference < 300) {
@@ -24,15 +73,15 @@ export default function StatusCard({ card, status }: Props) {
     console.log('Opening DM for ' + userId);
   }
 
-  const play = (uri: string) => {
-    console.log('Playing ' + uri);
+  const play = async (uri: string) => {
+    await playUri(uri);
   }
 
   const profile = (userId: string) => {
     console.log('Opening profile for ' + userId);
   }
 
-  const spotify = async (uri: string) => {
+  const open = async (uri: string) => {
     await Linking.openURL(uri);
   }
 
@@ -48,20 +97,26 @@ export default function StatusCard({ card, status }: Props) {
           </ThemedText>
           <ThemedView style={[styles.row, { borderColor: 'red', borderWidth: 0, maxWidth: 260 }]}>
             <Icon style={styles.equalizer} name="equalizer" size={20} color={'grey'} />
-            <ScrollView horizontal={true} style={[{maxWidth: 200}]}>
-              <ThemedText style={styles.text} onPress={() => spotify(status.track.uri)}>
+            <ScrollView
+              ref={scrollRef}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              scrollEnabled={true}
+              onContentSizeChange={(w) => onContentSizeChange(w)}
+            >
+              <ThemedText style={styles.text} onPress={() => open(status.track.album.uri)}>
                 {status.track.name}
               </ThemedText>
               <ThemedText style={styles.text}> - </ThemedText>
               {status.track.artists.map((artist, index) => (
-                <ThemedText key={index} style={styles.text} onPress={() => spotify(artist.uri)}>
+                <ThemedText key={index} style={styles.text} onPress={() => open(artist.uri)}>
                   {artist.name}{index < status.track.artists.length - 1 ? ', ' : ''}
                 </ThemedText>
               ))}
             </ScrollView>
           </ThemedView>
         </ThemedView>
-        <ThemedView style={[ { borderColor: 'blue', borderWidth: 0 } ]}>
+        <ThemedView style={styles.play}>
           <Icon name="play-arrow" size={34} color={'grey'} onPress={() => play(status.track.uri)}/>
         </ThemedView>
       </ThemedView>
@@ -73,7 +128,8 @@ const styles = StyleSheet.create({
   alias: {
     fontSize: 22,
     fontWeight: 'bold',
-    paddingLeft: 3
+    paddingLeft: 3,
+    paddingTop: 4
   },
   card: {
     gap: 18,
@@ -81,7 +137,7 @@ const styles = StyleSheet.create({
   },
   col: {
     flexDirection: 'column',
-    gap: 18
+    gap: 12
   },
   equalizer: {
     paddingRight: 3,
@@ -92,6 +148,9 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 50,
     borderWidth: 2,
+  },
+  play: {
+    marginLeft: 'auto'
   },
   row: {
     flexDirection: 'row'
