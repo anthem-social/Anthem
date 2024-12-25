@@ -56,10 +56,6 @@ export default function StatusCard({ card, status }: Props) {
     }
   }, []);
 
-  const onContentSizeChange = (w: number) => {
-    setWidth(w);
-  }
-
   const difference: number = new Date().getUTCSeconds() - status.lastChanged.getUTCSeconds();
   var color: string;
   if (difference < 300) {
@@ -102,7 +98,7 @@ export default function StatusCard({ card, status }: Props) {
               horizontal
               showsHorizontalScrollIndicator={false}
               scrollEnabled={true}
-              onContentSizeChange={(w) => onContentSizeChange(w)}
+              onContentSizeChange={(w) => setWidth(w)}
             >
               <ThemedText style={styles.text} onPress={() => open(status.track.album.uri)}>
                 {status.track.name}
