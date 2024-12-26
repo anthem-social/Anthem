@@ -5,6 +5,7 @@ import { ThemedText } from './ThemedText';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useEffect, useRef, useState } from 'react';
 import { playUri } from '@/api/spotify';
+import ScrollingTrack from './ScrolligTrack';
 
 type Props = {
   card: Card;
@@ -72,10 +73,6 @@ export default function StatusCard({ card, status }: Props) {
     console.log('Opening profile for ' + userId);
   }
 
-  const open = async (uri: string) => {
-    await Linking.openURL(uri);
-  }
-
   return (
     <TouchableOpacity onPress={() => chat(card.userId)}> 
       <ThemedView style={[styles.row, styles.card]}>
@@ -86,25 +83,8 @@ export default function StatusCard({ card, status }: Props) {
           <ThemedText style={styles.alias}>
             {card.alias}
           </ThemedText>
-          <ThemedView style={[styles.row, { borderColor: 'red', borderWidth: 0, maxWidth: 260 }]}>
-            <Icon style={styles.equalizer} name="equalizer" size={20} color={'grey'} />
-            <ScrollView
-              ref={scrollRef}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              scrollEnabled={true}
-              onContentSizeChange={(w) => setWidth(w)}
-            >
-              <ThemedText style={styles.text} onPress={() => open(status.track.album.uri)}>
-                {status.track.name}
-              </ThemedText>
-              <ThemedText style={styles.text}> - </ThemedText>
-              {status.track.artists.map((artist, index) => (
-                <ThemedText key={index} style={styles.text} onPress={() => open(artist.uri)}>
-                  {artist.name}{index < status.track.artists.length - 1 ? ', ' : ''}
-                </ThemedText>
-              ))}
-            </ScrollView>
+          <ThemedView style={[styles.row, { maxWidth: Dimensions.get('window').width - 160 }]}>
+            <ScrollingTrack {...status.track} />
           </ThemedView>
         </ThemedView>
         <ThemedView style={styles.play}>
@@ -129,10 +109,6 @@ const styles = StyleSheet.create({
   col: {
     flexDirection: 'column',
     gap: 12
-  },
-  equalizer: {
-    paddingRight: 3,
-    paddingTop: 1
   },
   picture: {
     width: 60,
