@@ -13,10 +13,10 @@ type Props = {
 
 export default function StatusCard({ card, status }: Props) {
   const scrollRef = useRef<ScrollView>(null);
-  const scrollX = useRef(new Animated.Value(0)).current;
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
+    const scrollX = new Animated.Value(0);
     var animation: Animated.CompositeAnimation;
     var sequence: Animated.CompositeAnimation;
 
@@ -37,14 +37,6 @@ export default function StatusCard({ card, status }: Props) {
 
     start();
 
-    return () => {
-      if (animation) {
-        animation.stop();
-      }
-    }
-  }, [width]);
-
-  useEffect(() => {
     const listener = scrollX.addListener(({ value }) => {
       if (scrollRef.current) {
         scrollRef.current.scrollTo({ x: value, animated: false });
@@ -52,9 +44,12 @@ export default function StatusCard({ card, status }: Props) {
     });
 
     return () => {
+      if (animation) {
+        animation.stop();
+      }
       scrollX.removeListener(listener);
     }
-  }, []);
+  }, [width]);
 
   const difference: number = new Date().getUTCSeconds() - status.lastChanged.getUTCSeconds();
   var color: string;
