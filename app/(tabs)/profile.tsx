@@ -26,7 +26,7 @@ const anthem: Track = {
   }
 }
 
-// Limit to 110 chars
+// Limit bio to 110 chars
 // Change alias to nickname
 const mockUser: User = {
   id: 'schreineravery-us',
@@ -57,6 +57,36 @@ export type Props = {
 }
 
 export default function Profile({ status = mockStatus, user = mockUser, isCurrentUser = true}: Props) {
+  const now: number = Math.floor(new Date().getTime() / 1000);
+  const lastChanged = Math.floor(status.lastChanged.getTime() / 1000);
+  const difference: number = now - lastChanged;
+  const minutes: number = Math.floor(difference / 60);
+  const hours: number = Math.floor(minutes / 60);
+  const days: number = Math.floor(hours / 24);
+  const weeks: number = Math.floor(days / 7);
+  var borderColor: string = 'grey';
+  var lastActive: string;
+
+  if (weeks > 52) {
+    lastActive = "Forever ago";
+  }
+  else if (weeks > 0) {
+    lastActive = weeks + "w ago";
+  }
+  else if (days > 0) {
+    lastActive = days + "d ago";
+  }
+  else if (hours > 0) {
+    lastActive = hours + "h ago";
+  }
+  else if (minutes > 4) {
+    lastActive = minutes + "m ago";
+  }
+  else {
+    lastActive = "Now";
+    borderColor = 'green';
+  }
+
   return (
     <AnthemView>
       <ThemedView style={[styles.row, { alignItems: 'center', justifyContent: 'space-between' }]}>
@@ -67,7 +97,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
         <Icon name="more-horiz" size={30} color={'grey'} />
       </ThemedView>
       <ThemedView style={styles.row}>
-        <Image source={{ uri: user.pictureUrl }} style={styles.picture} />
+        <Image source={{ uri: user.pictureUrl }} style={[styles.picture, { borderColor: borderColor }]} />
       </ThemedView>
       <ThemedView style={styles.row}>
         <ThemedText style={styles.bio}>
@@ -83,7 +113,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
       <ThemedView style={styles.row}>
         <ThemedView style={styles.col}>
           <ThemedText>Active</ThemedText>
-          <ThemedText>15m ago</ThemedText>
+          <ThemedText>{lastActive}</ThemedText>
         </ThemedView>
         <ThemedView style={styles.col}>
           <ThemedText>Followers</ThemedText>
@@ -114,15 +144,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
-  // menu: {
-  //   marginLeft: 'auto'
-  // },
   picture: {
     width: 140,
     height: 140,
     borderRadius: 70,
-    borderColor: 'grey',
-    borderWidth: 1,
+    borderWidth: 2,
   },
   row: {
     flexDirection: 'row',
