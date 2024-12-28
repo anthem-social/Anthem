@@ -80,8 +80,8 @@ export default function StatusCard({ card, status }: Props) {
           <Image source={{ uri: card.pictureUrl }} style={[styles.picture, { borderColor: color}]} />
         </TouchableOpacity>
         <ThemedView style={styles.col}>
-          <ThemedText style={styles.alias}>
-            {card.alias}
+          <ThemedText style={styles.nickname}>
+            {card.nickname}
           </ThemedText>
           <ThemedView style={[styles.row, { maxWidth: Dimensions.get('window').width - 160 }]}>
             <ScrollingTrack {...status.track} />
@@ -96,12 +96,6 @@ export default function StatusCard({ card, status }: Props) {
 }
 
 const styles = StyleSheet.create({
-  alias: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    paddingLeft: 3,
-    paddingTop: 4
-  },
   card: {
     gap: 18,
     padding: 8
@@ -109,6 +103,12 @@ const styles = StyleSheet.create({
   col: {
     flexDirection: 'column',
     gap: 12
+  },
+  nickname: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    paddingLeft: 3,
+    paddingTop: 4
   },
   picture: {
     width: 60,

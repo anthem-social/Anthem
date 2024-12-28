@@ -27,10 +27,9 @@ const anthem: Track = {
 }
 
 // Limit bio to 110 chars
-// Change alias to nickname
 const mockUser: User = {
   id: 'schreineravery-us',
-  alias: 'Avery',
+  nickname: 'Avery',
   bio: 'the creator',
   pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f',
   anthem: anthem,
@@ -50,7 +49,7 @@ const play = async (uri: string) => {
     await playUri(uri);
 }
 
-export type Props = {
+type Props = {
   status: Status,
   user: User,
   isCurrentUser: boolean
@@ -91,8 +90,8 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
     <AnthemView>
       <ThemedView style={[styles.row, { alignItems: 'center', justifyContent: 'space-between' }]}>
         <Icon name="more-horiz" size={30} color={'transparent'} />
-        <ThemedText style={styles.alias}>
-          {user.alias}
+        <ThemedText style={styles.nickname}>
+          {user.nickname}
         </ThemedText>
         <Icon name="more-horiz" size={30} color={'grey'} />
       </ThemedView>
@@ -129,13 +128,6 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
 }
 
 const styles = StyleSheet.create({
-  alias: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    paddingTop: 8,
-    textAlign: 'center',
-    flex: 1
-  },
   bio: {
     fontSize: 14
   },
@@ -143,6 +135,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center'
+  },
+  nickname: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    paddingTop: 8,
+    textAlign: 'center',
+    flex: 1
   },
   picture: {
     width: 140,

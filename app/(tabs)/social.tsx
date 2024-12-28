@@ -7,7 +7,7 @@ import { Card, Status, Track } from '@/types';
 
 const mockCard: Card = {
   userId: 'schreineravery-us',
-  alias: 'Avery',
+  nickname: 'Avery',
   pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
 }
 
@@ -60,7 +60,7 @@ export default function Social() {
 }
 
 const styles = StyleSheet.create({
-  alias: {
+  nickname: {
     fontSize: 24,
     fontWeight: 'bold',
     paddingTop: 8,

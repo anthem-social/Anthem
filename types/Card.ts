@@ -1,6 +1,6 @@
 
 export type Card = {
     userId: string;
-    alias: string;
+    nickname: string;
     pictureUrl: string;
 }
