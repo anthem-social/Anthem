@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
 import AnthemView from '@/components/AnthemView';
 import { ThemedText } from '@/components/ThemedText';
+import Post from '@/components/Post';
+import { Card } from '@/types';
 
 
 export default function TimelineFeed() {
@@ -99,12 +101,24 @@ export default function TimelineFeed() {
   //     console.error(e);
   //   }
   // }
+
+  const mockCard: Card = {
+    userId: 'schreineravery-us',
+    nickname: 'Avery',
+    pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
+  }
   
   return (
     <AnthemView>
-      <ThemedText>
-        This is the feed
-      </ThemedText>
+      <Post card={mockCard}>
+        <ThemedText>Post content goes here.</ThemedText>
+      </Post>
+      <Post card={mockCard}>
+        <ThemedText>Post content goes here.</ThemedText>
+      </Post>
+      <Post card={mockCard}>
+        <ThemedText>Post content goes here.</ThemedText>
+      </Post>
     </AnthemView>
   );
 };

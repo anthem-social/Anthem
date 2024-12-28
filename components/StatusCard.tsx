@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   picture: {
     width: 60,
     height: 60,
-    borderRadius: 50,
+    borderRadius: 30,
     borderWidth: 2,
   },
   play: {
