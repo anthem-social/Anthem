@@ -1,4 +1,4 @@
-import { Dimensions, Image, StyleSheet } from 'react-native';
+import { Button, Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import AnthemView from '@/components/AnthemView';
 import { Status, Track, User } from '@/types';
@@ -6,6 +6,7 @@ import { ThemedView } from '@/components/ThemedView';
 import ScrollingTrack from '@/components/ScrolligTrack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { playUri } from '@/api/spotify';
+import { useState } from 'react';
 
 const anthem: Track = {
   uri: 'spotify:track:3KkXRkHbMCARz0aVfEt68P',
@@ -55,7 +56,7 @@ type Props = {
   isCurrentUser: boolean
 }
 
-export default function Profile({ status = mockStatus, user = mockUser, isCurrentUser = true}: Props) {
+export default function Profile({ status = mockStatus, user = mockUser, isCurrentUser = false}: Props) {
   const now: number = Math.floor(new Date().getTime() / 1000);
   const lastChanged = Math.floor(status.lastChanged.getTime() / 1000);
   const difference: number = now - lastChanged;
@@ -85,15 +86,49 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
     lastActive = "Now";
     borderColor = 'green';
   }
+  
+  const [showModal, setShowModal] = useState(false);
+  const isFollowing: boolean = true;
+
+  const handleFollow = () => {
+    console.log("Follow");
+  }
+
+  const handleUnfollow = () => {
+    console.log("Unfollow");
+  }
+
+  const handleEdit = () => {
+    console.log("Edit");
+  }
+
+  const follow: [string, () => void] = ["Follow", handleFollow];
+  const unfollow: [string, () => void] = ["Unfollow", handleUnfollow];
+  const edit: [string, () => void] = ["Edit", handleEdit];
+  var action: [String, () => void];
+
+  if (isCurrentUser) {
+    action = edit;
+  }
+  else if (isFollowing) {
+    action = unfollow;
+  }
+  else {
+    action = follow;
+  }
 
   return (
     <AnthemView>
       <ThemedView style={[styles.row, { alignItems: 'center', justifyContent: 'space-between' }]}>
-        <Icon name="more-horiz" size={30} color={'transparent'} />
+        <TouchableOpacity onPress={() => setShowModal(true)}>
+          <Icon name="more-horiz" size={30} color={'grey'} />
+        </TouchableOpacity>
+        <Button title={action[0].toString()} onPress={action[1]} />
+      </ThemedView>
+      <ThemedView style={styles.row}>
         <ThemedText style={styles.nickname}>
           {user.nickname}
         </ThemedText>
-        <Icon name="more-horiz" size={30} color={'grey'} />
       </ThemedView>
       <ThemedView style={styles.row}>
         <Image source={{ uri: user.pictureUrl }} style={[styles.picture, { borderColor: borderColor }]} />
@@ -123,6 +158,35 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
           <ThemedText>{user.following.length}</ThemedText>
         </ThemedView>
       </ThemedView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}>
+        <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
+          <ThemedView style={styles.overlay}>
+            <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+              <ThemedView style={styles.modal}>
+                {isCurrentUser
+                  ? <ThemedView>
+                      <ThemedView style={styles.element}>
+                        <Button title="Copy Username" onPress={() => console.log("Copy Username")} />
+                      </ThemedView>
+                    </ThemedView>
+                  : <ThemedView>
+                      <ThemedView style={styles.element}>
+                        <Button title="Chat" onPress={() => console.log("Chat")} />
+                      </ThemedView>
+                      <ThemedView style={styles.element}>
+                        <Button title="Report" onPress={() => console.log("Report")} />
+                      </ThemedView>
+                    </ThemedView>
+                }
+              </ThemedView>
+            </TouchableWithoutFeedback>
+          </ThemedView>
+        </TouchableWithoutFeedback>
+      </Modal>
     </AnthemView>
   );
 }
@@ -136,12 +200,38 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
+  element: {
+    borderColor: 'black',
+    borderRadius: 10,
+    borderWidth: 1
+  },
+  modal: {
+    flexDirection: 'column',
+    gap: 8,
+    padding: 20,
+    borderRadius: 10,
+    width: Dimensions.get('window').width * .6,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
   nickname: {
     fontSize: 26,
     fontWeight: 'bold',
     paddingTop: 8,
     textAlign: 'center',
     flex: 1
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   picture: {
     width: 140,
