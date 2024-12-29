@@ -1,10 +1,11 @@
-import { Button, Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import AnthemView from '@/components/AnthemView';
 import { Status, Track, User } from '@/types';
 import { ThemedView } from '@/components/ThemedView';
+import { ThemedButton } from '@/components/ThemedButton';
+import { ThemedIcon } from '@/components/ThemedIcon';
 import ScrollingTrack from '@/components/ScrolligTrack';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { playUri } from '@/api/spotify';
 import { useState } from 'react';
 
@@ -121,9 +122,9 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
     <AnthemView>
       <ThemedView style={[styles.row, { alignItems: 'center', justifyContent: 'space-between' }]}>
         <TouchableOpacity onPress={() => setShowModal(true)}>
-          <Icon name="more-horiz" size={30} color={'grey'} />
+          <ThemedIcon name="more-horiz" size={30} />
         </TouchableOpacity>
-        <Button title={action[0].toString()} onPress={action[1]} />
+        <ThemedButton title={action[0].toString()} onPress={action[1]} />
       </ThemedView>
       <ThemedView style={styles.row}>
         <ThemedText style={styles.nickname}>
@@ -141,7 +142,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
       <ThemedView style={styles.row}>
         <ThemedView style={[styles.row, { marginBottom: 0, maxWidth: Dimensions.get('window').width - 50 }]}>
           <ScrollingTrack {...status.track} />
-          <Icon name="play-arrow" size={24} color={'grey'} onPress={() => play(status.track.uri)}/>
+          <ThemedIcon name="play-arrow" size={24} onPress={() => play(status.track.uri)}/>
         </ThemedView>
       </ThemedView>
       <ThemedView style={styles.row}>
@@ -167,18 +168,23 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
           <ThemedView style={styles.overlay}>
             <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
               <ThemedView style={styles.modal}>
+                <ThemedView style={styles.id}>
+                  <ThemedText>ID: {user.id}</ThemedText>
+                </ThemedView>
                 {isCurrentUser
-                  ? <ThemedView>
-                      <ThemedView style={styles.element}>
-                        <Button title="Copy Username" onPress={() => console.log("Copy Username")} />
+                  ? <ThemedView style={styles.options}>
+                      <ThemedView style={[styles.element, styles.copy]}>
+                        <ThemedIcon name="content-copy" size={20} />
+                        <ThemedButton title="Copy ID" onPress={() => console.log("Copy ID")} />
                       </ThemedView>
                     </ThemedView>
-                  : <ThemedView>
-                      <ThemedView style={styles.element}>
-                        <Button title="Chat" onPress={() => console.log("Chat")} />
+                  : <ThemedView style={styles.options}>
+                      <ThemedView style={[styles.element, styles.copy]}>
+                        <ThemedIcon name="content-copy" size={20} />
+                        <ThemedButton title="Copy ID" onPress={() => console.log("Copy ID")} />
                       </ThemedView>
                       <ThemedView style={styles.element}>
-                        <Button title="Report" onPress={() => console.log("Report")} />
+                        <ThemedButton title="Chat" onPress={() => console.log("Chat")} />
                       </ThemedView>
                     </ThemedView>
                 }
@@ -200,15 +206,32 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
+  copy: {
+    flexDirection: 'row',
+    gap: 6,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   element: {
-    borderColor: 'black',
-    borderRadius: 10,
-    borderWidth: 1
+    shadowColor: 'grey',
+    shadowOpacity: .2,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowRadius: 12,
+    elevation: 5,
+    padding: 6,
+    borderRadius: 10
+  },
+  id: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 14
   },
   modal: {
-    flexDirection: 'column',
-    gap: 8,
-    padding: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
     borderRadius: 10,
     width: Dimensions.get('window').width * .6,
     shadowColor: '#000',
@@ -226,6 +249,10 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     textAlign: 'center',
     flex: 1
+  },
+  options: {
+    flexDirection: 'column',
+    gap: 10
   },
   overlay: {
     flex: 1,
