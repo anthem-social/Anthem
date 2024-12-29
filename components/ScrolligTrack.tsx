@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, Animated, Easing, StyleSheet } from 'react-native';
 import { ThemedText } from './ThemedText';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Track } from '@/types';
 import { Linking } from 'react-native';
-import { ThemedView } from './ThemedView';
+import { ThemedIcon } from './ThemedIcon';
 
 export default function ScrollingTrack(track : Track) {
   const scrollRef = useRef<ScrollView>(null);
@@ -52,7 +51,7 @@ export default function ScrollingTrack(track : Track) {
 
   return (
     <>
-      <Icon style={styles.equalizer} name="equalizer" size={20} color={'grey'} />
+      <ThemedIcon style={styles.equalizer} name="equalizer" size={20} />
       <ScrollView
         ref={scrollRef}
         horizontal

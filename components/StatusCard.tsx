@@ -1,11 +1,11 @@
-import { TouchableOpacity, StyleSheet, Image, Linking, ScrollView, Animated, Easing, Dimensions } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image, ScrollView, Animated, Easing, Dimensions } from 'react-native';
 import { Card, Status } from '@/types';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useEffect, useRef, useState } from 'react';
 import { playUri } from '@/api/spotify';
 import ScrollingTrack from './ScrolligTrack';
+import { ThemedIcon } from './ThemedIcon';
 
 type Props = {
   card: Card;
@@ -88,7 +88,7 @@ export default function StatusCard({ card, status }: Props) {
           </ThemedView>
         </ThemedView>
         <ThemedView style={styles.play}>
-          <Icon name="play-arrow" size={34} color={'grey'} onPress={() => play(status.track.uri)}/>
+          <ThemedIcon name="play-arrow" size={34} onPress={() => play(status.track.uri)}/>
         </ThemedView>
       </ThemedView>
     </TouchableOpacity>
