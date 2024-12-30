@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import AnthemView from '@/components/AnthemView';
 import StatusCard from '@/components/StatusCard';
 import { Card, Status, Track } from '@/types';
+import { ThemedIcon } from '@/components/ThemedIcon';
 
 const mockCard: Card = {
   userId: 'schreineravery-us',
@@ -39,6 +39,9 @@ const mockStatus: Status = {
 export default function Social() {
   return (
     <AnthemView>
+      <ThemedView style={styles.header}>
+        <ThemedIcon name="add" size={30} />
+      </ThemedView>
       <ThemedView style={styles.hr} />
       <StatusCard
         card={mockCard}
@@ -60,45 +63,14 @@ export default function Social() {
 }
 
 const styles = StyleSheet.create({
-  nickname: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    paddingTop: 8,
-  },
-  bio: {
-    fontSize: 12,
-    color: 'grey'
-  },
-  col: {
-    flexDirection: 'column',
-    gap: 2
-  },
-  container: {
-    flex: 1
-  },
   header: {
-    borderBottomWidth: 12,
-    borderBottomColor: 'red',
-    borderStyle: 'solid',
+    flexDirection: 'row',
+    padding: 8,
+    marginLeft: 'auto'
   },
   hr: {
     borderBottomWidth: 1,
     borderBottomColor: 'grey',
     marginHorizontal: 4
-  },
-  joined: {
-    fontSize: 12,
-    color: 'grey',
-  },
-  picture: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderColor: 'grey',
-    borderWidth: 1,
-  },
-  row: {
-    flexDirection: 'row',
-    gap: 28
-  },
+  }
 });
