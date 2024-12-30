@@ -89,7 +89,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
   }
   
   const [showModal, setShowModal] = useState(false);
-  const isFollowing: boolean = true;
+  const isFollowing: boolean = false;
 
   const handleFollow = () => {
     console.log("Follow");
@@ -174,13 +174,13 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
                 {isCurrentUser
                   ? <ThemedView style={styles.options}>
                       <ThemedView style={[styles.element, styles.copy]}>
-                        <ThemedIcon name="content-copy" size={20} />
+                        <ThemedIcon name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
                         <ThemedButton title="Copy ID" onPress={() => console.log("Copy ID")} />
                       </ThemedView>
                     </ThemedView>
                   : <ThemedView style={styles.options}>
                       <ThemedView style={[styles.element, styles.copy]}>
-                        <ThemedIcon name="content-copy" size={20} />
+                        <ThemedIcon name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
                         <ThemedButton title="Copy ID" onPress={() => console.log("Copy ID")} />
                       </ThemedView>
                       <ThemedView style={styles.element}>
@@ -214,12 +214,12 @@ const styles = StyleSheet.create({
   },
   element: {
     shadowColor: 'grey',
-    shadowOpacity: .2,
+    shadowOpacity: .3,
     shadowOffset: {
       width: 0,
       height: 1
     },
-    shadowRadius: 12,
+    shadowRadius: 10,
     elevation: 5,
     padding: 6,
     borderRadius: 10
