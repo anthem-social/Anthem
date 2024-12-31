@@ -38,7 +38,7 @@ export default function Chat() {
   return (
     <AnthemView>
       <View style={styles.header}>
-        <Icon name="add" size={30} />
+        <Icon family="MaterialIcons" name="add" size={30} />
       </View>
       <View style={styles.hr} />
       <StatusCard

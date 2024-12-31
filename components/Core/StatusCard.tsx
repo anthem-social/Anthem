@@ -2,7 +2,7 @@ import { TouchableOpacity, StyleSheet, Image, ScrollView, Animated, Easing, Dime
 import { Card, Status } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 import { playUri } from '@/api/spotify';
-import { ScrollingTrack } from '@/components/Core';
+import { ScrollingTrack } from '@/components/Core/ScrollingTrack';
 import { Text, View, Icon } from '@/components/Themed';
 
 type Props = {
@@ -86,7 +86,7 @@ export function StatusCard({ card, status }: Props) {
           </View>
         </View>
         <View style={styles.play}>
-          <Icon name="play-arrow" size={34} onPress={() => play(status.track.uri)}/>
+          <Icon family="MaterialIcons" name="play-arrow" size={34} onPress={() => play(status.track.uri)}/>
         </View>
       </View>
     </TouchableOpacity>

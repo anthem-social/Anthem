@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { Card } from '@/types';
+import { Card, Track as TrackType } from '@/types';
 import { Text } from '@/components/Themed';
 import { AnthemView, Post } from '@/components/Core';
+import { Track } from '@/components/Posts'
 
 export default function TimelineFeed() {
   // const ws = useRef<WebSocket | null>(null);
@@ -105,17 +106,32 @@ export default function TimelineFeed() {
     nickname: 'Avery',
     pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
   }
+
+  const mockTrack: TrackType = {
+    uri: 'spotify:track:3UDmHZcBTQp8Iu8droNtU1',
+    name: 'Revolution - Remastered 2009',
+    artists: [
+      {
+        uri: 'spotify:artist:3WrFJ7ztbogyGnTHbHJFl2',
+        name: 'The Beatles',
+      }
+    ],
+    album: {
+      uri: 'spotify:album:1cTeNkeINtXiaMLlashAKs',
+      coverUrl: 'https://i.scdn.co/image/ab67616d0000b2736e3d3c964df32136fb1cd594'
+    }
+  }
   
   return (
     <AnthemView>
       <Post card={mockCard}>
-        <Text>Post content goes here.</Text>
+        <Track track={mockTrack}/>
       </Post>
       <Post card={mockCard}>
-        <Text>Post content goes here.</Text>
+        <Track track={mockTrack} />
       </Post>
       <Post card={mockCard}>
-        <Text>Post content goes here.</Text>
+        <Track track={mockTrack} />
       </Post>
     </AnthemView>
   );

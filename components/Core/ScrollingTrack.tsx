@@ -50,7 +50,7 @@ export function ScrollingTrack(track : Track) {
 
   return (
     <>
-      <Icon style={styles.equalizer} name="equalizer" size={20} />
+      <Icon family="Ionicons" name="musical-notes" size={18} style={styles.equalizer} />
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -59,7 +59,7 @@ export function ScrollingTrack(track : Track) {
         onContentSizeChange={(w) => setWidth(w)}
       >
         <Text style={styles.text} onPress={() => open(track.album.uri)}>
-          {track.name}{ ' - '}
+          {track.name}{ ' - ' }
         </Text>
         {track.artists.map((artist, index) => (
           <Text key={index} style={styles.text} onPress={() => open(artist.uri)}>

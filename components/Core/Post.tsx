@@ -40,21 +40,23 @@ export function Post({card, children }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    gap: 20,
+    gap: 18,
     padding: 4,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10
   },
   container: {
     flex: 1,
-    borderColor: 'grey',
-    borderWidth: 1
+    marginVertical: 10,
+    padding: 10
   },
   nickname: {
-    fontSize: 22
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   picture: {
-    width: 48,
-    height: 48,
+    width: 42,
+    height: 42,
     borderRadius: 24,
     borderWidth: 2,
     borderColor: 'grey'

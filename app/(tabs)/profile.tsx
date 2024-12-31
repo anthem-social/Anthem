@@ -118,7 +118,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
     <AnthemView>
       <View style={[styles.row, { alignItems: 'center', justifyContent: 'space-between' }]}>
         <TouchableOpacity onPress={() => setShowModal(true)}>
-          <Icon name="more-horiz" size={30} />
+          <Icon family="MaterialIcons" name="more-horiz" size={30} />
         </TouchableOpacity>
         <Button title={action[0].toString()} onPress={action[1]} />
       </View>
@@ -138,7 +138,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
       <View style={styles.row}>
         <View style={[styles.row, { marginBottom: 0, maxWidth: Dimensions.get('window').width - 50 }]}>
           <ScrollingTrack {...status.track} />
-          <Icon name="play-arrow" size={24} onPress={() => play(status.track.uri)}/>
+          <Icon family="MaterialIcons" name="play-arrow" size={24} onPress={() => play(status.track.uri)}/>
         </View>
       </View>
       <View style={styles.row}>
@@ -170,13 +170,13 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
                 {isCurrentUser
                   ? <View style={styles.options}>
                       <View style={[styles.element, styles.copy]}>
-                        <Icon name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
+                        <Icon family="MaterialIcons" name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
                         <Button title="Copy ID" onPress={() => console.log("Copy ID")} />
                       </View>
                     </View>
                   : <View style={styles.options}>
                       <View style={[styles.element, styles.copy]}>
-                        <Icon name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
+                        <Icon family="MaterialIcons" name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
                         <Button title="Copy ID" onPress={() => console.log("Copy ID")} />
                       </View>
                       <View style={styles.element}>
