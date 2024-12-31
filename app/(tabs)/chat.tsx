@@ -36,7 +36,7 @@ const mockStatus: Status = {
   lastChanged: new Date()
 }
 
-export default function Social() {
+export default function Chat() {
   return (
     <AnthemView>
       <ThemedView style={styles.header}>

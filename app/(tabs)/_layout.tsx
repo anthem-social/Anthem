@@ -1,6 +1,5 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -15,18 +14,27 @@ export default function TabLayout() {
         headerShown: false,
       }}>
       <Tabs.Screen
-        name="index"
+        name="search"
         options={{
-          title: 'Home',
+          title: 'Search',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'musical-notes' : 'musical-notes-outline'} color={color} />
+            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="social"
+        name="index"
         options={{
-          title: 'Social',
+          title: 'Feed',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'albums' : 'albums-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: 'Chat',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'} color={color} />
           ),
