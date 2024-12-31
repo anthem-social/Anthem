@@ -50,7 +50,7 @@ export function ScrollingTrack(track : Track) {
 
   return (
     <>
-      <Icon family="Ionicons" name="musical-notes" size={18} style={styles.equalizer} />
+      <Icon family="Ionicons" name="musical-notes" size={18} style={styles.notes} />
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -72,9 +72,9 @@ export function ScrollingTrack(track : Track) {
 }
 
 const styles = StyleSheet.create({
-  equalizer: {
-    paddingRight: 3,
-    paddingTop: 1
+  notes: {
+    paddingRight: 4,
+    paddingTop: 3
   },
   text: {
     fontSize: 14
