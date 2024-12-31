@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
-import AnthemView from '@/components/AnthemView';
-import Post from '@/components/Post';
 import { Card } from '@/types';
 import { Text } from '@/components/Themed';
+import { AnthemView, Post } from '@/components/Core';
 
 export default function TimelineFeed() {
   // const ws = useRef<WebSocket | null>(null);

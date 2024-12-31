@@ -7,7 +7,7 @@ type Props = {
   children: ReactNode;
 }
 
-export default function AnthemView({ children }: Props) {
+export function AnthemView({ children }: Props) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
   return (

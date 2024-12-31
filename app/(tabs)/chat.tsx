@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
-import AnthemView from '@/components/AnthemView';
-import StatusCard from '@/components/StatusCard';
 import { Card, Status, Track } from '@/types';
 import { Icon, View } from '@/components/Themed';
+import { AnthemView, StatusCard } from '@/components/Core';
 
 const mockCard: Card = {
   userId: 'schreineravery-us',

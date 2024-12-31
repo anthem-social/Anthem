@@ -9,7 +9,7 @@ type Props = {
     children: ReactNode;
 }
 
-export default function Post({card, children }: Props) {
+export function Post({card, children }: Props) {
   const profile = (userId: string) => {
     console.log("Opening profile: " + userId);
   }

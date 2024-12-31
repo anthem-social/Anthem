@@ -4,7 +4,7 @@ import { Track } from '@/types';
 import { Linking } from 'react-native';
 import { Icon, Text } from '@/components/Themed';
 
-export default function ScrollingTrack(track : Track) {
+export function ScrollingTrack(track : Track) {
   const scrollRef = useRef<ScrollView>(null);
   const [width, setWidth] = useState(0);
 

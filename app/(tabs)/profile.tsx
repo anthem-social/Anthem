@@ -1,7 +1,6 @@
 import { Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-import AnthemView from '@/components/AnthemView';
 import { Status, Track, User } from '@/types';
-import ScrollingTrack from '@/components/ScrolligTrack';
+import { AnthemView, ScrollingTrack } from '@/components/Core';
 import { playUri } from '@/api/spotify';
 import { useState } from 'react';
 import { Button, Icon, Text, View } from '@/components/Themed';

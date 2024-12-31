@@ -2,7 +2,7 @@ import { TouchableOpacity, StyleSheet, Image, ScrollView, Animated, Easing, Dime
 import { Card, Status } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 import { playUri } from '@/api/spotify';
-import ScrollingTrack from './ScrolligTrack';
+import { ScrollingTrack } from '@/components/Core';
 import { Text, View, Icon } from '@/components/Themed';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
   status: Status;
 }
 
-export default function StatusCard({ card, status }: Props) {
+export function StatusCard({ card, status }: Props) {
   const scrollRef = useRef<ScrollView>(null);
   const [width, setWidth] = useState(0);
 
