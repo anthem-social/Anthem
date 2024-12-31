@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, Animated, Easing, StyleSheet } from 'react-native';
-import { ThemedText } from './ThemedText';
 import { Track } from '@/types';
 import { Linking } from 'react-native';
-import { ThemedIcon } from './ThemedIcon';
+import { Icon, Text } from './Themed';
 
 export default function ScrollingTrack(track : Track) {
   const scrollRef = useRef<ScrollView>(null);
@@ -51,7 +50,7 @@ export default function ScrollingTrack(track : Track) {
 
   return (
     <>
-      <ThemedIcon style={styles.equalizer} name="equalizer" size={20} />
+      <Icon style={styles.equalizer} name="equalizer" size={20} />
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -59,13 +58,13 @@ export default function ScrollingTrack(track : Track) {
         scrollEnabled={true}
         onContentSizeChange={(w) => setWidth(w)}
       >
-        <ThemedText style={styles.text} onPress={() => open(track.album.uri)}>
+        <Text style={styles.text} onPress={() => open(track.album.uri)}>
           {track.name}{ ' - '}
-        </ThemedText>
+        </Text>
         {track.artists.map((artist, index) => (
-          <ThemedText key={index} style={styles.text} onPress={() => open(artist.uri)}>
+          <Text key={index} style={styles.text} onPress={() => open(artist.uri)}>
               {artist.name}{index < track.artists.length - 1 ? ', ' : ''}
-          </ThemedText>
+          </Text>
         ))}
       </ScrollView>
     </>

@@ -1,9 +1,8 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { ThemedView } from "./ThemedView";
 import { Card } from '@/types';
 import { ReactNode } from 'react';
 import { Image } from 'react-native';
-import { ThemedText } from './ThemedText';
+import { Text, View } from './Themed';
 
 type Props = {
     card: Card;
@@ -16,26 +15,26 @@ export default function Post({card, children }: Props) {
   }
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedView style={[styles.row, styles.card]}>
+    <View style={styles.container}>
+      <View style={[styles.row, styles.card]}>
         <TouchableOpacity onPress={() => profile(card.userId)}>
           <Image source={{ uri: card.pictureUrl }} style={styles.picture} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => profile(card.userId)}>
-          <ThemedText style={styles.nickname}>
+          <Text style={styles.nickname}>
             {card.nickname}
-          </ThemedText>
+          </Text>
         </TouchableOpacity>
-      </ThemedView>
-      <ThemedView style={styles.row}>
+      </View>
+      <View style={styles.row}>
         {children}
-      </ThemedView>
-      <ThemedView style={styles.row}>
-        <ThemedText>
+      </View>
+      <View style={styles.row}>
+        <Text>
           Comments and likes here
-        </ThemedText>
-      </ThemedView>
-    </ThemedView>
+        </Text>
+      </View>
+    </View>
   );
 }
 
@@ -46,7 +45,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   container: {
-    flex: 1
+    flex: 1,
+    borderColor: 'grey',
+    borderWidth: 1
   },
   nickname: {
     fontSize: 22
@@ -60,9 +61,5 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    borderTopColor: 'grey',
-    borderBottomColor: 'grey',
-    borderTopWidth: 1,
-    borderBottomWidth: 1
   }
 });

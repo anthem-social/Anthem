@@ -1,6 +1,6 @@
-import { ThemedText } from '@/components/ThemedText';
 import React from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { View, Text, Button } from '@/components/Themed';
 
 interface WelcomeProps {
   onPress: () => void;
@@ -9,7 +9,7 @@ interface WelcomeProps {
 const WelcomeScreen: React.FC<WelcomeProps> = ({ onPress }) => {
   return (
     <View style={styles.container}>
-        <ThemedText>Welcom to Anthem!</ThemedText>
+        <Text>Welcom to Anthem!</Text>
         <Button title="Connect your Spotify account to continue" onPress={onPress} />
     </View>
   );

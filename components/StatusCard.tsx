@@ -1,11 +1,9 @@
 import { TouchableOpacity, StyleSheet, Image, ScrollView, Animated, Easing, Dimensions } from 'react-native';
 import { Card, Status } from '@/types';
-import { ThemedView } from './ThemedView';
-import { ThemedText } from './ThemedText';
 import { useEffect, useRef, useState } from 'react';
 import { playUri } from '@/api/spotify';
 import ScrollingTrack from './ScrolligTrack';
-import { ThemedIcon } from './ThemedIcon';
+import { Text, View, Icon } from './Themed';
 
 type Props = {
   card: Card;
@@ -75,22 +73,22 @@ export default function StatusCard({ card, status }: Props) {
 
   return (
     <TouchableOpacity onPress={() => chat(card.userId)}> 
-      <ThemedView style={[styles.row, styles.card]}>
+      <View style={[styles.row, styles.card]}>
         <TouchableOpacity onPress={() => profile(card.userId)}>
           <Image source={{ uri: card.pictureUrl }} style={[styles.picture, { borderColor: color}]} />
         </TouchableOpacity>
-        <ThemedView style={styles.col}>
-          <ThemedText style={styles.nickname}>
+        <View style={styles.col}>
+          <Text style={styles.nickname}>
             {card.nickname}
-          </ThemedText>
-          <ThemedView style={[styles.row, { maxWidth: Dimensions.get('window').width - 160 }]}>
+          </Text>
+          <View style={[styles.row, { maxWidth: Dimensions.get('window').width - 160 }]}>
             <ScrollingTrack {...status.track} />
-          </ThemedView>
-        </ThemedView>
-        <ThemedView style={styles.play}>
-          <ThemedIcon name="play-arrow" size={34} onPress={() => play(status.track.uri)}/>
-        </ThemedView>
-      </ThemedView>
+          </View>
+        </View>
+        <View style={styles.play}>
+          <Icon name="play-arrow" size={34} onPress={() => play(status.track.uri)}/>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 }

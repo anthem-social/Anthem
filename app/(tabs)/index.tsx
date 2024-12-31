@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
 import AnthemView from '@/components/AnthemView';
-import { ThemedText } from '@/components/ThemedText';
 import Post from '@/components/Post';
 import { Card } from '@/types';
-
+import { Text } from '@/components/Themed';
 
 export default function TimelineFeed() {
   // const ws = useRef<WebSocket | null>(null);
@@ -111,14 +110,17 @@ export default function TimelineFeed() {
   return (
     <AnthemView>
       <Post card={mockCard}>
-        <ThemedText>Post content goes here.</ThemedText>
+        <Text>Post content goes here.</Text>
       </Post>
       <Post card={mockCard}>
-        <ThemedText>Post content goes here.</ThemedText>
+        <Text>Post content goes here.</Text>
       </Post>
       <Post card={mockCard}>
-        <ThemedText>Post content goes here.</ThemedText>
+        <Text>Post content goes here.</Text>
       </Post>
     </AnthemView>
   );
 };
+
+const styles = StyleSheet.create({
+});

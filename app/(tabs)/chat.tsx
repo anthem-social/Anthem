@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { ThemedView } from '@/components/ThemedView';
 import AnthemView from '@/components/AnthemView';
 import StatusCard from '@/components/StatusCard';
 import { Card, Status, Track } from '@/types';
-import { ThemedIcon } from '@/components/ThemedIcon';
+import { Icon, View } from '@/components/Themed';
 
 const mockCard: Card = {
   userId: 'schreineravery-us',
@@ -39,25 +38,25 @@ const mockStatus: Status = {
 export default function Chat() {
   return (
     <AnthemView>
-      <ThemedView style={styles.header}>
-        <ThemedIcon name="add" size={30} />
-      </ThemedView>
-      <ThemedView style={styles.hr} />
+      <View style={styles.header}>
+        <Icon name="add" size={30} />
+      </View>
+      <View style={styles.hr} />
       <StatusCard
         card={mockCard}
         status={mockStatus}
       />
-      <ThemedView style={styles.hr} />
+      <View style={styles.hr} />
       <StatusCard
         card={mockCard}
         status={mockStatus}
       />
-      <ThemedView style={styles.hr} />
+      <View style={styles.hr} />
       <StatusCard
         card={mockCard}
         status={mockStatus}
       />
-      <ThemedView style={styles.hr} />
+      <View style={styles.hr} />
     </AnthemView>
   );
 }

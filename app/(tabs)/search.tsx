@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 import AnthemView from '@/components/AnthemView';
-import { ThemedText } from '@/components/ThemedText';
+import { Text } from '@/components/Themed';
 
 export default function Search() {
   
   return (
     <AnthemView>
-        <ThemedText>This will be the search page.</ThemedText>
+        <Text>This will be the search page.</Text>
     </AnthemView>
   );
 };

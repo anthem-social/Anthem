@@ -1,7 +1,7 @@
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, { useAnimatedRef } from 'react-native-reanimated';
-import { ThemedView } from '@/components/ThemedView';
+import { View } from '@/components/Themed';
 
 type Props = {
   children: ReactNode;
@@ -11,14 +11,14 @@ export default function AnthemView({ children }: Props) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
   return (
-    <ThemedView style={styles.container}>
+    <View style={styles.container}>
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
         <Animated.View style={styles.header} />
-        <ThemedView style={styles.content}>
+        <View style={styles.content}>
           {children}
-        </ThemedView>
+        </View>
       </Animated.ScrollView>
-    </ThemedView>
+    </View>
   );
 }
 

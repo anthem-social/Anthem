@@ -1,13 +1,10 @@
 import { Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
 import AnthemView from '@/components/AnthemView';
 import { Status, Track, User } from '@/types';
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedButton } from '@/components/ThemedButton';
-import { ThemedIcon } from '@/components/ThemedIcon';
 import ScrollingTrack from '@/components/ScrolligTrack';
 import { playUri } from '@/api/spotify';
 import { useState } from 'react';
+import { Button, Icon, Text, View } from '@/components/Themed';
 
 const anthem: Track = {
   uri: 'spotify:track:3KkXRkHbMCARz0aVfEt68P',
@@ -120,77 +117,77 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
 
   return (
     <AnthemView>
-      <ThemedView style={[styles.row, { alignItems: 'center', justifyContent: 'space-between' }]}>
+      <View style={[styles.row, { alignItems: 'center', justifyContent: 'space-between' }]}>
         <TouchableOpacity onPress={() => setShowModal(true)}>
-          <ThemedIcon name="more-horiz" size={30} />
+          <Icon name="more-horiz" size={30} />
         </TouchableOpacity>
-        <ThemedButton title={action[0].toString()} onPress={action[1]} />
-      </ThemedView>
-      <ThemedView style={styles.row}>
-        <ThemedText style={styles.nickname}>
+        <Button title={action[0].toString()} onPress={action[1]} />
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.nickname}>
           {user.nickname}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.row}>
+        </Text>
+      </View>
+      <View style={styles.row}>
         <Image source={{ uri: user.pictureUrl }} style={[styles.picture, { borderColor: borderColor }]} />
-      </ThemedView>
-      <ThemedView style={styles.row}>
-        <ThemedText style={styles.bio}>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.bio}>
           {user.bio}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.row}>
-        <ThemedView style={[styles.row, { marginBottom: 0, maxWidth: Dimensions.get('window').width - 50 }]}>
+        </Text>
+      </View>
+      <View style={styles.row}>
+        <View style={[styles.row, { marginBottom: 0, maxWidth: Dimensions.get('window').width - 50 }]}>
           <ScrollingTrack {...status.track} />
-          <ThemedIcon name="play-arrow" size={24} onPress={() => play(status.track.uri)}/>
-        </ThemedView>
-      </ThemedView>
-      <ThemedView style={styles.row}>
-        <ThemedView style={styles.col}>
-          <ThemedText>Active</ThemedText>
-          <ThemedText>{lastActive}</ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.col}>
-          <ThemedText>Followers</ThemedText>
-          <ThemedText>{user.followers.length}</ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.col}>
-          <ThemedText>Following</ThemedText>
-          <ThemedText>{user.following.length}</ThemedText>
-        </ThemedView>
-      </ThemedView>
+          <Icon name="play-arrow" size={24} onPress={() => play(status.track.uri)}/>
+        </View>
+      </View>
+      <View style={styles.row}>
+        <View style={styles.col}>
+          <Text>Active</Text>
+          <Text>{lastActive}</Text>
+        </View>
+        <View style={styles.col}>
+          <Text>Followers</Text>
+          <Text>{user.followers.length}</Text>
+        </View>
+        <View style={styles.col}>
+          <Text>Following</Text>
+          <Text>{user.following.length}</Text>
+        </View>
+      </View>
       <Modal
         animationType="slide"
         transparent={true}
         visible={showModal}
         onRequestClose={() => setShowModal(false)}>
         <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
-          <ThemedView style={styles.overlay}>
+          <View style={styles.overlay}>
             <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
-              <ThemedView style={styles.modal}>
-                <ThemedView style={styles.id}>
-                  <ThemedText>ID: {user.id}</ThemedText>
-                </ThemedView>
+              <View style={styles.modal}>
+                <View style={styles.id}>
+                  <Text>ID: {user.id}</Text>
+                </View>
                 {isCurrentUser
-                  ? <ThemedView style={styles.options}>
-                      <ThemedView style={[styles.element, styles.copy]}>
-                        <ThemedIcon name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
-                        <ThemedButton title="Copy ID" onPress={() => console.log("Copy ID")} />
-                      </ThemedView>
-                    </ThemedView>
-                  : <ThemedView style={styles.options}>
-                      <ThemedView style={[styles.element, styles.copy]}>
-                        <ThemedIcon name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
-                        <ThemedButton title="Copy ID" onPress={() => console.log("Copy ID")} />
-                      </ThemedView>
-                      <ThemedView style={styles.element}>
-                        <ThemedButton title="Chat" onPress={() => console.log("Chat")} />
-                      </ThemedView>
-                    </ThemedView>
+                  ? <View style={styles.options}>
+                      <View style={[styles.element, styles.copy]}>
+                        <Icon name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
+                        <Button title="Copy ID" onPress={() => console.log("Copy ID")} />
+                      </View>
+                    </View>
+                  : <View style={styles.options}>
+                      <View style={[styles.element, styles.copy]}>
+                        <Icon name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
+                        <Button title="Copy ID" onPress={() => console.log("Copy ID")} />
+                      </View>
+                      <View style={styles.element}>
+                        <Button title="Chat" onPress={() => console.log("Chat")} />
+                      </View>
+                    </View>
                 }
-              </ThemedView>
+              </View>
             </TouchableWithoutFeedback>
-          </ThemedView>
+          </View>
         </TouchableWithoutFeedback>
       </Modal>
     </AnthemView>
