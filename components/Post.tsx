@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Card } from '@/types';
 import { ReactNode } from 'react';
 import { Image } from 'react-native';
-import { Text, View } from './Themed';
+import { Text, View } from '@/components/Themed';
 
 type Props = {
     card: Card;

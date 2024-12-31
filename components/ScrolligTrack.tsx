@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, Animated, Easing, StyleSheet } from 'react-native';
 import { Track } from '@/types';
 import { Linking } from 'react-native';
-import { Icon, Text } from './Themed';
+import { Icon, Text } from '@/components/Themed';
 
 export default function ScrollingTrack(track : Track) {
   const scrollRef = useRef<ScrollView>(null);

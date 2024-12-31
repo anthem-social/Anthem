@@ -3,7 +3,7 @@ import { Card, Status } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 import { playUri } from '@/api/spotify';
 import ScrollingTrack from './ScrolligTrack';
-import { Text, View, Icon } from './Themed';
+import { Text, View, Icon } from '@/components/Themed';
 
 type Props = {
   card: Card;
