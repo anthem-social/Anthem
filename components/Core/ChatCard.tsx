@@ -12,7 +12,7 @@ type Props = {
 
 export function ChatCard({ card, status }: Props) {
   const scrollRef = useRef<ScrollView>(null);
-  const [width, setWidth] = useState(0);
+  var width: number = 0;
 
   useEffect(() => {
     const scrollX = new Animated.Value(0);
@@ -48,7 +48,7 @@ export function ChatCard({ card, status }: Props) {
       }
       scrollX.removeListener(listener);
     }
-  }, [width]);
+  }, []);
 
   const difference: number = new Date().getUTCSeconds() - new Date(status.lastChanged).getUTCSeconds();
   var color: string;
