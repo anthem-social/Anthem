@@ -1,6 +1,5 @@
-import { TouchableOpacity, StyleSheet, Image, ScrollView, Animated, Easing, Dimensions } from 'react-native';
+import { Dimensions, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import { Card, Status } from '@/types';
-import { useEffect, useRef, useState } from 'react';
 import { playUri } from '@/api/spotify';
 import { TrackCard } from '@/components/Core/TrackCard';
 import { Text, View, Icon } from '@/components/Themed';
@@ -70,9 +69,9 @@ const styles = StyleSheet.create({
     paddingTop: 4
   },
   picture: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 64,
+    height: 64,
+    borderRadius: 2,
     borderWidth: 2,
   },
   play: {
