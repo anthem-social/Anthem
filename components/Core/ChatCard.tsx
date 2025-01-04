@@ -11,45 +11,6 @@ type Props = {
 }
 
 export function ChatCard({ card, status }: Props) {
-  const scrollRef = useRef<ScrollView>(null);
-  var width: number = 0;
-
-  useEffect(() => {
-    const scrollX = new Animated.Value(0);
-    var animation: Animated.CompositeAnimation;
-    var sequence: Animated.CompositeAnimation;
-
-    const start = () => {
-      scrollX.setValue(0);
-      animation = Animated.timing(scrollX, {
-        toValue: width,
-        duration: width * 16,
-        easing: Easing.linear,
-        useNativeDriver: true
-      });
-      sequence = Animated.sequence([
-        Animated.delay(2000),
-        animation
-      ]);
-      Animated.loop(sequence).start();
-    }
-
-    start();
-
-    const listener = scrollX.addListener(({ value }) => {
-      if (scrollRef.current) {
-        scrollRef.current.scrollTo({ x: value, animated: false });
-      }
-    });
-
-    return () => {
-      if (animation) {
-        animation.stop();
-      }
-      scrollX.removeListener(listener);
-    }
-  }, []);
-
   const difference: number = new Date().getUTCSeconds() - new Date(status.lastChanged).getUTCSeconds();
   var color: string;
   if (difference < 300) {
