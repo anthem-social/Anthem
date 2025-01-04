@@ -1,7 +1,7 @@
 import { Text, View } from "@/components/Themed";
 import { Dimensions, Image, StyleSheet } from "react-native";
 import { Track as TrackType } from "@/types";
-import { ScrollingTrack } from "../Core";
+import { TrackCard } from "../Core";
 
 type Props = {
     track: TrackType;
@@ -12,7 +12,7 @@ export function Track({ track }: Props) {
         <View style={styles.container}>
             <Image source={{ uri: track.album.coverUrl }} style={styles.cover} />
             <View>
-                <ScrollingTrack {...track} />
+                <TrackCard {...track} />
             </View>
         </View>
     )

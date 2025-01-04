@@ -1,6 +1,6 @@
 import { Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { Status, Track, User } from '@/types';
-import { AnthemView, ScrollingTrack } from '@/components/Core';
+import { AnthemView, TrackCard } from '@/components/Core';
 import { playUri } from '@/api/spotify';
 import { useState } from 'react';
 import { Button, Icon, Text, View } from '@/components/Themed';
@@ -137,7 +137,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
       </View>
       <View style={styles.row}>
         <View style={[styles.row, { marginBottom: 0, maxWidth: Dimensions.get('window').width - 50 }]}>
-          <ScrollingTrack {...status.track} />
+          <TrackCard {...status.track} />
           <Icon family="MaterialIcons" name="play-arrow" size={24} onPress={() => play(status.track.uri)}/>
         </View>
       </View>

@@ -2,7 +2,7 @@ import { TouchableOpacity, StyleSheet, Image, ScrollView, Animated, Easing, Dime
 import { Card, Status } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 import { playUri } from '@/api/spotify';
-import { ScrollingTrack } from '@/components/Core/ScrollingTrack';
+import { TrackCard } from '@/components/Core/TrackCard';
 import { Text, View, Icon } from '@/components/Themed';
 
 type Props = {
@@ -82,7 +82,7 @@ export function StatusCard({ card, status }: Props) {
             {card.nickname}
           </Text>
           <View style={[styles.row, { maxWidth: Dimensions.get('window').width - 160 }]}>
-            <ScrollingTrack {...status.track} />
+            <TrackCard {...status.track} />
           </View>
         </View>
         <View style={styles.play}>
