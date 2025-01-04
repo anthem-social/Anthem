@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Track } from '@/types';
 import { Linking } from 'react-native';
 import { Icon, Text, View } from '@/components/Themed';
 
-export function TrackCard(track : Track) {
+export function TrackCard(track: Track) {
   const open = async (uri: string) => {
     await Linking.openURL(uri);
   };
@@ -17,7 +17,7 @@ export function TrackCard(track : Track) {
       <View style={styles.col}>
         <View style={styles.row}>
           <Icon family="Ionicons" name="disc-outline" size={16} style={styles.icon} />
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
+          <ScrollView style={{ maxWidth: " 78%" }} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
             <Text style={styles.text} onPress={() => open(track.uri)}>
               {track.name}
             </Text>
@@ -25,9 +25,9 @@ export function TrackCard(track : Track) {
         </View>
         <View style={styles.row}>
           <Icon family="Ionicons" name="person-circle-outline" size={16} style={styles.icon} />
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
+          <ScrollView style={{ maxWidth: "78%" }} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
             {track.artists.map((artist, index) => (
-              <Text key={index} style={styles.text} onPress={() => open(artist.uri)}>
+              <Text key={index} style={styles.text} onPress={() => open(artist.uri)} numberOfLines={1}>
                   {artist.name}{index < track.artists.length - 1 ? ', ' : ''}
               </Text>
             ))}
