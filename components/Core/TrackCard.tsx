@@ -1,80 +1,60 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, Animated, Easing, StyleSheet } from 'react-native';
+import { Animated, Easing, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Track } from '@/types';
 import { Linking } from 'react-native';
-import { Icon, Text } from '@/components/Themed';
+import { Icon, Text, View } from '@/components/Themed';
 
 export function TrackCard(track : Track) {
-  const scrollRef = useRef<ScrollView>(null);
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    const scrollX = new Animated.Value(0);
-    var animation: Animated.CompositeAnimation;
-    var sequence: Animated.CompositeAnimation;
-
-    const start = () => {
-      scrollX.setValue(0);
-      animation = Animated.timing(scrollX, {
-        toValue: width,
-        duration: width * 16,
-        easing: Easing.linear,
-        useNativeDriver: true
-      });
-      sequence = Animated.sequence([
-        Animated.delay(2000),
-        animation
-      ]);
-      Animated.loop(sequence).start();
-    };
-
-    start();
-
-    const listener = scrollX.addListener(({ value }) => {
-      if (scrollRef.current) {
-        scrollRef.current.scrollTo({ x: value, animated: false });
-      }
-    });
-
-    return () => {
-      if (animation) {
-        animation.stop();
-      }
-      scrollX.removeListener(listener);
-    };
-  }, [width]);
-
   const open = async (uri: string) => {
     await Linking.openURL(uri);
   };
 
   return (
-    <>
-      <Icon family="Ionicons" name="musical-notes" size={18} style={styles.notes} />
-      <ScrollView
-        ref={scrollRef}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        scrollEnabled={true}
-        onContentSizeChange={(w) => setWidth(w)}
-      >
-        <Text style={styles.text} onPress={() => open(track.album.uri)}>
-          {track.name}{ ' - ' }
-        </Text>
-        {track.artists.map((artist, index) => (
-          <Text key={index} style={styles.text} onPress={() => open(artist.uri)}>
-              {artist.name}{index < track.artists.length - 1 ? ', ' : ''}
-          </Text>
-        ))}
-      </ScrollView>
-    </>
+    <View style={[styles.row, { gap: 4}]}>
+      <TouchableOpacity onPress={() => open(track.album.uri)}>
+        <Image source={{ uri: track.album.coverUrl }} style={styles.cover} />
+      </TouchableOpacity>
+      <View style={styles.col}>
+        <View style={styles.row}>
+          <Icon family="Ionicons" name="disc-outline" size={16} style={styles.icon} />
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
+            <Text style={styles.text} onPress={() => open(track.uri)}>
+              {track.name}
+            </Text>
+          </ScrollView>
+        </View>
+        <View style={styles.row}>
+          <Icon family="Ionicons" name="person-circle-outline" size={16} style={styles.icon} />
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
+            {track.artists.map((artist, index) => (
+              <Text key={index} style={styles.text} onPress={() => open(artist.uri)}>
+                  {artist.name}{index < track.artists.length - 1 ? ', ' : ''}
+              </Text>
+            ))}
+          </ScrollView>
+        </View>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  notes: {
-    paddingRight: 4,
-    paddingTop: 3
+  col: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    gap: 4
+  },
+  cover: {
+    width: 64,
+    height: 64,
+    borderRadius: 2,
+  },
+  icon: {
+    paddingTop: 4,
+    paddingHorizontal: 5
+  },
+  row: {
+    flexDirection: 'row'
   },
   text: {
     fontSize: 14
