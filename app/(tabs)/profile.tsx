@@ -135,11 +135,11 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
           {user.bio}
         </Text>
       </View>
-      <View style={styles.row}>
-        <View style={[styles.row, { marginBottom: 0, maxWidth: Dimensions.get('window').width - 50 }]}>
+      <View style={[styles.row, { alignContent: 'center', flex: 1, paddingLeft: 10 }]}>
+        <View style={[styles.row, { maxWidth: "88%" }]}>
           <TrackCard {...status.track} />
-          <Icon family="MaterialIcons" name="play-arrow" size={24} onPress={() => play(status.track.uri)}/>
         </View>
+        <Icon style={[styles.play]} family="Ionicons" name="play-circle-outline" size={36} onPress={() => play(status.track.uri)}/>
       </View>
       <View style={styles.row}>
         <View style={styles.col}>
@@ -224,6 +224,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 14
+  },
+  play: {
+    paddingTop: 14
   },
   modal: {
     paddingVertical: 16,
