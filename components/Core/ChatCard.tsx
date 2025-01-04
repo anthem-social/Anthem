@@ -10,7 +10,7 @@ type Props = {
   status: Status;
 }
 
-export function StatusCard({ card, status }: Props) {
+export function ChatCard({ card, status }: Props) {
   const scrollRef = useRef<ScrollView>(null);
   const [width, setWidth] = useState(0);
 

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Card, Status, Track } from '@/types';
 import { Icon, View } from '@/components/Themed';
-import { AnthemView, StatusCard } from '@/components/Core';
+import { AnthemView, ChatCard } from '@/components/Core';
 import { useEffect, useRef, useState } from 'react';
 
 const mockCard: Card = {
@@ -71,17 +71,17 @@ export default function Chat() {
         <Icon family="MaterialIcons" name="add" size={30} />
       </View>
       <View style={styles.hr} />
-      <StatusCard
+      <ChatCard
         card={mockCard}
         status={status ?? mockStatus}
       />
       <View style={styles.hr} />
-      <StatusCard
+      <ChatCard
         card={mockCard}
         status={status ?? mockStatus}
       />
       <View style={styles.hr} />
-      <StatusCard
+      <ChatCard
         card={mockCard}
         status={status ?? mockStatus}
       />
