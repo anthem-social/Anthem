@@ -50,7 +50,7 @@ export function StatusCard({ card, status }: Props) {
     }
   }, [width]);
 
-  const difference: number = new Date().getUTCSeconds() - status.lastChanged.getUTCSeconds();
+  const difference: number = new Date().getUTCSeconds() - new Date(status.lastChanged).getUTCSeconds();
   var color: string;
   if (difference < 300) {
     color = 'green';

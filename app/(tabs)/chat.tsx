@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Card, Status, Track } from '@/types';
 import { Icon, View } from '@/components/Themed';
 import { AnthemView, StatusCard } from '@/components/Core';
+import { useEffect, useRef, useState } from 'react';
 
 const mockCard: Card = {
   userId: 'schreineravery-us',
@@ -35,6 +36,35 @@ const mockStatus: Status = {
 }
 
 export default function Chat() {
+  const ws = useRef<WebSocket | null>(null);
+  const [status, setStatus] = useState<Status | null>(null);
+
+  useEffect(() => {
+    ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/production?userId=schreineravery-us");
+
+    ws.current.onopen = () => {
+      console.log("Connected!");
+    }
+
+    ws.current.onmessage = (e) => {
+      console.log("Message:\n" + e.data);
+      var status: Status = JSON.parse(e.data);
+      setStatus(status);
+    }
+
+    ws.current.onerror = (e) => {
+      console.error("Error in websocket: " + e);
+    }
+
+    ws.current.onclose = (e) => {
+      console.log("Disconnected: " + e.code + " " + e.reason + " " + e.wasClean);
+    }
+
+    return () => {
+      ws.current?.close();
+    }
+  }, []);
+  
   return (
     <AnthemView>
       <View style={styles.header}>
@@ -43,17 +73,17 @@ export default function Chat() {
       <View style={styles.hr} />
       <StatusCard
         card={mockCard}
-        status={mockStatus}
+        status={status ?? mockStatus}
       />
       <View style={styles.hr} />
       <StatusCard
         card={mockCard}
-        status={mockStatus}
+        status={status ?? mockStatus}
       />
       <View style={styles.hr} />
       <StatusCard
         card={mockCard}
-        status={mockStatus}
+        status={status ?? mockStatus}
       />
       <View style={styles.hr} />
     </AnthemView>
