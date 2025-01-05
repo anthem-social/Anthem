@@ -7,7 +7,7 @@ type Props = {
     track: TrackType;
 }
 
-export function Track({ track }: Props) {
+export function TrackPost({ track }: Props) {
     return (
         <View style={styles.container}>
             <Image source={{ uri: track.album.coverUrl }} style={styles.cover} />
