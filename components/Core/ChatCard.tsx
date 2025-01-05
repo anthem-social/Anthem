@@ -50,7 +50,8 @@ export function ChatCard({ card, status }: Props) {
 const styles = StyleSheet.create({
   card: {
     paddingHorizontal: 10,
-    paddingVertical: 6
+    paddingTop: 6,
+    paddingBottom: 8
   },
   col: {
     flexDirection: 'column',
