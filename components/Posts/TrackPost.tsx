@@ -32,13 +32,8 @@ export function TrackPost(props: Props) {
   return (
     <Post card={props.card}>
       <View style={styles.container}>
-        <View style={styles.box}>
-          <TouchableOpacity onPress={() => open(props.track.album.uri)}>
-            <Image source={{ uri: props.track.album.coverUrl }} style={styles.cover} />
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.row, { paddingHorizontal: 4}]}>
-          <View style={[styles.col, { flex: 1, paddingTop: 4 }]}>
+        <View style={[styles.row, { paddingHorizontal: 4, paddingVertical: 6 }]}>
+          <View style={styles.col}>
             <View style={styles.row}>
               <Icon family="Ionicons" name="disc-outline" size={16} style={styles.icon} />
               <ScrollView style={styles.scroll} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
@@ -58,13 +53,11 @@ export function TrackPost(props: Props) {
               </ScrollView>
             </View>
           </View>
-          <View style={styles.col}>
-            {playing ?
-              <Icon family="Ionicons" name="pause-circle-outline" size={38} onPress={() => toggle(props.track.uri)}/>
-              :
-              <Icon family="Ionicons" name="play-circle-outline" size={38} onPress={() => toggle(props.track.uri)}/>
-            }
-          </View>
+        </View>
+        <View style={styles.box}>
+          <TouchableOpacity onPress={() => toggle(props.track.uri)}>
+            <Image source={{ uri: props.track.album.coverUrl }} style={styles.cover} />
+          </TouchableOpacity>
         </View>
       </View>
     </Post>
@@ -82,13 +75,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignContent: 'center',
-    gap: 4
+    gap: 0
   },
   container: {
     display: 'flex',
     width: '100%',
-    gap: 4,
-    padding: 0
+    gap: 4
   },
   cover: {
     width: 300,
