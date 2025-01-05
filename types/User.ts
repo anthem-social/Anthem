@@ -2,6 +2,7 @@ import { Track } from './spotify/Track';
 
 export type User = {
     id: string;
+    premium: boolean;
     nickname: string;
     pictureUrl: string;
     bio: string;

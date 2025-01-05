@@ -76,7 +76,7 @@ export default function Chat() {
         status={status ?? mockStatus}
       />
       <View style={styles.hr} />
-      <ChatCard
+      {/* <ChatCard
         card={mockCard}
         status={status ?? mockStatus}
       />
@@ -85,7 +85,7 @@ export default function Chat() {
         card={mockCard}
         status={status ?? mockStatus}
       />
-      <View style={styles.hr} />
+      <View style={styles.hr} /> */}
     </AnthemView>
   );
 }
