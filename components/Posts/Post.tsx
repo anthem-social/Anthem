@@ -135,7 +135,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginVertical: 12
+    marginVertical: 12,
+    borderTopWidth: 1,
+    borderColor: 'grey',
+    paddingTop: 6,
   },
   icon: {
     paddingLeft: 20,
