@@ -16,16 +16,14 @@ export function Post({card, children }: Props) {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.row, styles.card]}>
-        <TouchableOpacity onPress={() => profile(card.userId)}>
+      <TouchableOpacity onPress={() => profile(card.userId)}>
+        <View style={[styles.row, styles.card]}>
           <Image source={{ uri: card.pictureUrl }} style={styles.picture} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => profile(card.userId)}>
           <Text style={styles.nickname}>
             {card.nickname}
           </Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
       <View style={styles.row}>
         {children}
       </View>
