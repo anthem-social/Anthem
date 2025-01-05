@@ -1,9 +1,10 @@
 import React from 'react';
-import { Dimensions, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card, Track } from '@/types';
 import { Linking } from 'react-native';
 import { Icon, Text, View } from '@/components/Themed';
-import { playUri } from '@/api/spotify';
+import { pause, playUri } from '@/api/spotify';
+import { Post } from './Post';
 
 type Props = {
   card: Card,
@@ -11,47 +12,62 @@ type Props = {
 }
 
 export function TrackPost(props: Props) {
+  const [playing, setPlaying] = React.useState(false);
+  
   const open = async (uri: string) => {
     await Linking.openURL(uri);
   };
 
-  const play = async (uri: string) => {
-    await playUri(uri);
+  const toggle = async (uri: string) => {
+    if (playing) {
+      await pause();
+      setPlaying(false);
+    }
+    else {
+      await playUri(uri);
+      setPlaying(true);
+    }
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.box}>
-        <TouchableOpacity onPress={() => open(props.track.album.uri)}>
-          <Image source={{ uri: props.track.album.coverUrl }} style={styles.cover} />
-        </TouchableOpacity>
-      </View>
-      <View style={[styles.row, { paddingHorizontal: 4}]}>
-        <View style={[styles.col, { flex: 1, paddingTop: 4 }]}>
-          <View style={styles.row}>
-            <Icon family="Ionicons" name="disc-outline" size={16} style={styles.icon} />
-            <ScrollView style={styles.scroll} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
-              <Text style={styles.text} onPress={() => open(props.track.uri)}>
-                {props.track.name}
-              </Text>
-            </ScrollView>
-          </View>
-          <View style={styles.row}>
-            <Icon family="Ionicons" name="person-circle-outline" size={16} style={styles.icon} />
-            <ScrollView style={styles.scroll} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
-              {props.track.artists.map((artist, index) => (
-                <Text key={index} style={styles.text} onPress={() => open(artist.uri)} numberOfLines={1}>
-                  {artist.name}{index < props.track.artists.length - 1 ? ', ' : ''}
+    <Post card={props.card}>
+      <View style={styles.container}>
+        <View style={styles.box}>
+          <TouchableOpacity onPress={() => open(props.track.album.uri)}>
+            <Image source={{ uri: props.track.album.coverUrl }} style={styles.cover} />
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.row, { paddingHorizontal: 4}]}>
+          <View style={[styles.col, { flex: 1, paddingTop: 4 }]}>
+            <View style={styles.row}>
+              <Icon family="Ionicons" name="disc-outline" size={16} style={styles.icon} />
+              <ScrollView style={styles.scroll} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
+                <Text style={styles.text} onPress={() => open(props.track.uri)}>
+                  {props.track.name}
                 </Text>
-              ))}
-            </ScrollView>
+              </ScrollView>
+            </View>
+            <View style={styles.row}>
+              <Icon family="Ionicons" name="person-circle-outline" size={16} style={styles.icon} />
+              <ScrollView style={styles.scroll} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
+                {props.track.artists.map((artist, index) => (
+                  <Text key={index} style={styles.text} onPress={() => open(artist.uri)} numberOfLines={1}>
+                    {artist.name}{index < props.track.artists.length - 1 ? ', ' : ''}
+                  </Text>
+                ))}
+              </ScrollView>
+            </View>
+          </View>
+          <View style={styles.col}>
+            {playing ?
+              <Icon family="Ionicons" name="pause-circle-outline" size={38} onPress={() => toggle(props.track.uri)}/>
+              :
+              <Icon family="Ionicons" name="play-circle-outline" size={38} onPress={() => toggle(props.track.uri)}/>
+            }
           </View>
         </View>
-        <View style={styles.col}>
-          <Icon family="Ionicons" name="play-circle-outline" size={32} onPress={() => play(props.track.uri)}/>
-        </View>
       </View>
-    </View>
+    </Post>
   );
 }
 

@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { Card, Track as TrackType } from '@/types';
 import { Text } from '@/components/Themed';
-import { AnthemView, Post } from '@/components/Core';
-import { Track } from '@/components/Posts'
+import { AnthemView } from '@/components/Core';
+import { TrackPost } from '@/components/Posts'
 
 export default function TimelineFeed() {
   // const ws = useRef<WebSocket | null>(null);
@@ -124,15 +124,9 @@ export default function TimelineFeed() {
   
   return (
     <AnthemView>
-      <Post card={mockCard}>
-        <Track track={mockTrack}/>
-      </Post>
-      <Post card={mockCard}>
-        <Track track={mockTrack} />
-      </Post>
-      <Post card={mockCard}>
-        <Track track={mockTrack} />
-      </Post>
+      <TrackPost track={mockTrack} card={mockCard} />
+      <TrackPost track={mockTrack} card={mockCard} />
+      <TrackPost track={mockTrack} card={mockCard} />
     </AnthemView>
   );
 };
