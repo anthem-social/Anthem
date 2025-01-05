@@ -26,6 +26,7 @@ const anthem: Track = {
 // Limit bio to 110 chars
 const mockUser: User = {
   id: 'schreineravery-us',
+  premium: true,
   nickname: 'Avery',
   bio: 'the creator',
   pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f',
