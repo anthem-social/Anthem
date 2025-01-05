@@ -31,12 +31,12 @@ export function ChatCard({ card, status }: Props) {
       <View style={[styles.row, styles.card]}>
         <View style={styles.col}>
           <View style={[styles.row, { alignItems: 'center' }]}>
-            <Icon style={[styles.dot, { color: color }]} family="Octicons" name="dot-fill" size={18} />
             <TouchableOpacity onPress={() => profile(card.userId)}>
               <Text style={styles.nickname}>
                 {card.nickname}
               </Text>
             </TouchableOpacity>
+            <Icon style={[styles.dot, { color: color }]} family="Octicons" name="dot-fill" size={18} />
           </View>
           <View style={[styles.row]}>
             <TrackCard {...status.track} />
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     gap: 12
   },
   dot: {
-    paddingRight: 16
+    paddingLeft: 12
   },
   nickname: {
     fontSize: 24,
