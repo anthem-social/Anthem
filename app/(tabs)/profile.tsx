@@ -1,7 +1,6 @@
 import { Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { Status, Track, User } from '@/types';
 import { AnthemView, TrackCard } from '@/components/Core';
-import { playUri } from '@/api/spotify';
 import { useState } from 'react';
 import { Button, Icon, Text, View } from '@/components/Themed';
 
@@ -41,10 +40,6 @@ const mockStatus: Status = {
   userId: 'schreineravery-us',
   track: anthem,
   lastChanged: new Date()
-}
-
-const play = async (uri: string) => {
-    await playUri(uri);
 }
 
 type Props = {
@@ -135,11 +130,8 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
           {user.bio}
         </Text>
       </View>
-      <View style={[styles.row, { alignContent: 'center', flex: 1, paddingLeft: 10 }]}>
-        <View style={[styles.row, { maxWidth: "88%" }]}>
-          <TrackCard {...status.track} />
-        </View>
-        <Icon style={[styles.play]} family="Ionicons" name="play-circle-outline" size={36} onPress={() => play(status.track.uri)}/>
+      <View style={styles.row}>
+        <TrackCard {...status.track} />
       </View>
       <View style={styles.row}>
         <View style={styles.col}>
