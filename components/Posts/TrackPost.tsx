@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card, Track } from '@/types';
 import { Linking } from 'react-native';
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export function TrackPost(props: Props) {
-  const [playing, setPlaying] = React.useState(false);
+  const [playing, setPlaying] = useState(false);
   
   const open = async (uri: string) => {
     await Linking.openURL(uri);
