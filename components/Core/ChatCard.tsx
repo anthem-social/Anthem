@@ -36,7 +36,7 @@ export function ChatCard({ card, status }: Props) {
                 {card.nickname}
               </Text>
             </TouchableOpacity>
-            <Icon style={[styles.dot, { color: color }]} family="Octicons" name="dot-fill" size={18} />
+            <Icon style={[styles.dot, { color: color }]} family="Octicons" name="dot-fill" size={14} />
           </View>
           <View style={[styles.row]}>
             <TrackCard {...status.track} />
@@ -50,8 +50,7 @@ export function ChatCard({ card, status }: Props) {
 const styles = StyleSheet.create({
   card: {
     gap: 18,
-    padding: 6,
-    paddingLeft: 12
+    padding: 10
   },
   col: {
     flexDirection: 'column',
@@ -63,8 +62,7 @@ const styles = StyleSheet.create({
   nickname: {
     fontSize: 24,
     fontWeight: 'bold',
-    paddingLeft: 3,
-    paddingTop: 4
+    paddingLeft: 2
   },
   picture: {
     width: 64,
