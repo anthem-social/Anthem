@@ -12,7 +12,11 @@ export function AnthemView({ children }: Props) {
 
   return (
     <View style={styles.container}>
-      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+      <Animated.ScrollView
+        ref={scrollRef}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        >
         <Animated.View style={styles.header} />
         <View style={styles.content}>
           {children}
