@@ -11,3 +11,15 @@ export async function playUri(uri: string): Promise<void> {
 
     await client.playUri(uri);
 }
+
+export async function pause(): Promise<void> {
+    var result = await getSpotifyClient();
+
+    if (result.Data == null || result.IsFailure) {
+        return;
+    }
+
+    var client = result.Data;
+
+    await client.pause();
+}
