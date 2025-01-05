@@ -49,20 +49,19 @@ export function ChatCard({ card, status }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    gap: 18,
-    padding: 10
+    paddingHorizontal: 10,
+    paddingVertical: 6
   },
   col: {
     flexDirection: 'column',
-    gap: 12
+    gap: 8
   },
   dot: {
     paddingLeft: 12
   },
   nickname: {
     fontSize: 24,
-    fontWeight: 'bold',
-    paddingLeft: 2
+    fontWeight: 'bold'
   },
   picture: {
     width: 64,
