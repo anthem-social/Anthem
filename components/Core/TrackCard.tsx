@@ -49,11 +49,12 @@ export function TrackCard(track: Track) {
         </View>
       </View>
       <View style={styles.col}>
-        {playing ?
-          <Icon family="Ionicons" name="pause-circle-outline" size={38} onPress={() => toggle(track.uri)}/>
-          :
-          <Icon family="Ionicons" name="play-circle-outline" size={38} onPress={() => toggle(track.uri)}/>
-        }
+        <Icon
+          family="Ionicons"
+          name={playing ? "pause-circle-outline" : "play-circle-outline"}
+          size={38}
+          onPress={() => toggle(track.uri)}
+        />
       </View>
     </View>
   );
