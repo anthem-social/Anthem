@@ -112,40 +112,42 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
 
   return (
     <AnthemView>
-      <View style={[styles.row, { alignItems: 'center', justifyContent: 'space-between' }]}>
-        <TouchableOpacity onPress={() => setShowModal(true)}>
-          <Icon family="MaterialIcons" name="more-horiz" size={30} />
-        </TouchableOpacity>
-        <Button title={action[0].toString()} onPress={action[1]} />
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.nickname}>
-          {user.nickname}
-        </Text>
-      </View>
-      <View style={styles.row}>
-        <Image source={{ uri: user.pictureUrl }} style={[styles.picture, { borderColor: borderColor }]} />
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.bio}>
-          {user.bio}
-        </Text>
-      </View>
-      <View style={styles.row}>
-        <TrackCard {...status.track} />
-      </View>
-      <View style={styles.row}>
-        <View style={styles.col}>
-          <Text>Active</Text>
-          <Text>{lastActive}</Text>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => setShowModal(true)}>
+            <Icon family="MaterialIcons" name="more-horiz" size={30} />
+          </TouchableOpacity>
+          <Button title={action[0].toString()} onPress={action[1]} />
         </View>
-        <View style={styles.col}>
-          <Text>Followers</Text>
-          <Text>{user.followers.length}</Text>
+        <View style={styles.row}>
+          <Text style={styles.nickname}>
+            {user.nickname}
+          </Text>
         </View>
-        <View style={styles.col}>
-          <Text>Following</Text>
-          <Text>{user.following.length}</Text>
+        <View style={styles.row}>
+          <Image source={{ uri: user.pictureUrl }} style={[styles.picture, { borderColor: borderColor }]} />
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.bio}>
+            {user.bio}
+          </Text>
+        </View>
+        <View style={styles.row}>
+          <TrackCard {...status.track} />
+        </View>
+        <View style={styles.row}>
+          <View style={styles.col}>
+            <Text>Active</Text>
+            <Text>{lastActive}</Text>
+          </View>
+          <View style={styles.col}>
+            <Text>Followers</Text>
+            <Text>{user.followers.length}</Text>
+          </View>
+          <View style={styles.col}>
+            <Text>Following</Text>
+            <Text>{user.following.length}</Text>
+          </View>
         </View>
       </View>
       <Modal
@@ -195,6 +197,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
+  container: {
+    padding: 6
+  },
   copy: {
     flexDirection: 'row',
     gap: 6,
@@ -212,6 +217,11 @@ const styles = StyleSheet.create({
     elevation: 5,
     padding: 6,
     borderRadius: 10
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   id: {
     flexDirection: 'row',

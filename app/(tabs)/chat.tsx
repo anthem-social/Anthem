@@ -67,30 +67,35 @@ export default function Chat() {
   
   return (
     <AnthemView>
-      <View style={styles.header}>
-        <Icon family="MaterialIcons" name="add" size={30} />
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Icon family="MaterialIcons" name="add" size={30} />
+        </View>
+        <View style={styles.hr} />
+        <ChatCard
+          card={mockCard}
+          status={status ?? mockStatus}
+        />
+        <View style={styles.hr} />
+        {/* <ChatCard
+          card={mockCard}
+          status={status ?? mockStatus}
+        />
+        <View style={styles.hr} />
+        <ChatCard
+          card={mockCard}
+          status={status ?? mockStatus}
+        />
+        <View style={styles.hr} /> */}
       </View>
-      <View style={styles.hr} />
-      <ChatCard
-        card={mockCard}
-        status={status ?? mockStatus}
-      />
-      <View style={styles.hr} />
-      {/* <ChatCard
-        card={mockCard}
-        status={status ?? mockStatus}
-      />
-      <View style={styles.hr} />
-      <ChatCard
-        card={mockCard}
-        status={status ?? mockStatus}
-      />
-      <View style={styles.hr} /> */}
     </AnthemView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 2
+  },
   header: {
     flexDirection: 'row',
     padding: 8,

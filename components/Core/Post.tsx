@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginVertical: 10,
-    padding: 10
   },
   nickname: {
     fontSize: 20,

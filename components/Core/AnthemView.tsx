@@ -24,7 +24,7 @@ export function AnthemView({ children }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   header: {
     height: 52,
@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 12,
+    // padding: 12,
+    padding: 0,
     gap: 4,
     overflow: 'hidden',
   },
