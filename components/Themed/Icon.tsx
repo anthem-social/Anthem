@@ -13,10 +13,9 @@ type Props = {
   onPress?: () => void;
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
-export function Icon({ lightColor, darkColor, type = 'default', ...rest }: Props) {
+export function Icon({ lightColor, darkColor, ...rest }: Props) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
   
   let Icon;
