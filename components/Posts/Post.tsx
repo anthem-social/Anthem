@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Card } from '@/types';
 import { ReactNode } from 'react';
 import { Image } from 'react-native';
-import { Text, View } from '@/components/Themed';
+import { Icon, Text, View } from '@/components/Themed';
 
 type Props = {
     card: Card;
@@ -29,9 +29,25 @@ export function Post({card, children }: Props) {
       <View style={styles.row}>
         {children}
       </View>
-      <View style={styles.row}>
-        <Text>
-          Comments and likes here
+      <View style={styles.buttons}>
+        <Icon family="Ionicons" name="heart-outline" size={22} style={styles.icon} />
+        <Text style={styles.stats}>
+          137k
+        </Text>
+        <Icon family="Ionicons" name="chatbox-outline" size={22} style={styles.icon} />
+        <Text style={styles.stats}>
+          4.1k
+        </Text>
+        <Icon family="Ionicons" name="share-social-outline" size={22} style={styles.icon} />
+      </View>
+      <View style={[styles.row, { paddingLeft: 8, marginTop: 6 }]}>
+        <TouchableOpacity onPress={() => profile(card.userId)}>
+          <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+            {card.nickname}
+          </Text>
+        </TouchableOpacity>
+        <Text style={styles.caption}>
+          This would be the caption of the post.
         </Text>
       </View>
     </View>
@@ -39,15 +55,31 @@ export function Post({card, children }: Props) {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    gap: 18,
-    padding: 4,
+  buttons: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10
+    marginLeft: 'auto',
+    marginTop: 10,
+    marginRight: 4
+  },
+  caption: {
+    fontSize: 14,
+    marginLeft: 6,
+  },
+  card: {
+    gap: 14,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+    marginBottom: 4,
+    marginTop: 10
   },
   container: {
     flex: 1,
-    marginVertical: 10,
+    marginVertical: 12
+  },
+  icon: {
+    paddingLeft: 20,
+    paddingRight: 6
   },
   nickname: {
     fontSize: 20,
@@ -62,5 +94,8 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+  },
+  stats: {
+    fontSize: 14,
   }
 });
