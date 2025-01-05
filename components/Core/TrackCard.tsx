@@ -3,15 +3,24 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Track } from '@/types';
 import { Linking } from 'react-native';
 import { Icon, Text, View } from '@/components/Themed';
-import { playUri } from '@/api/spotify';
+import { pause, playUri } from '@/api/spotify';
 
 export function TrackCard(track: Track) {
+  const [playing, setPlaying] = React.useState(false);
+
   const open = async (uri: string) => {
     await Linking.openURL(uri);
   };
 
-  const play = async (uri: string) => {
+  const toggle = async (uri: string) => {
+    if (playing) {
+      await pause();
+      setPlaying(false);
+    }
+    else {
       await playUri(uri);
+      setPlaying(true);
+    }
   }
 
   return (
@@ -40,7 +49,11 @@ export function TrackCard(track: Track) {
         </View>
       </View>
       <View style={styles.col}>
-        <Icon family="Ionicons" name="play-circle-outline" size={32} onPress={() => play(track.uri)}/>
+        {playing ?
+          <Icon family="Ionicons" name="pause-circle-outline" size={38} onPress={() => toggle(track.uri)}/>
+          :
+          <Icon family="Ionicons" name="play-circle-outline" size={38} onPress={() => toggle(track.uri)}/>
+        }
       </View>
     </View>
   );
