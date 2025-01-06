@@ -49,7 +49,8 @@ export function ChatCard({ card, status }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    paddingHorizontal: 10,
+    paddingRight: 10,
+    paddingLeft: 16,
     paddingTop: 6,
     paddingBottom: 8
   },
