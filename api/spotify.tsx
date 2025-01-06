@@ -1,7 +1,7 @@
-import { getSpotifyClient } from './client';
+import { getSpotifyRemoteClient } from '@/api/clients';
 
 export async function playUri(uri: string): Promise<void> {
-    var result = await getSpotifyClient();
+    var result = await getSpotifyRemoteClient();
 
     if (result.Data == null || result.IsFailure) {
         return;
@@ -13,7 +13,7 @@ export async function playUri(uri: string): Promise<void> {
 }
 
 export async function pause(): Promise<void> {
-    var result = await getSpotifyClient();
+    var result = await getSpotifyRemoteClient();
 
     if (result.Data == null || result.IsFailure) {
         return;

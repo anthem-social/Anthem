@@ -1,5 +1,5 @@
 import { ServiceResult } from '@/types/ServiceResult';
-import { auth, remote, ApiConfig, ApiScope, SpotifyRemoteApi, SpotifySession, SpotifyRemoteEvents, PlayerContext, PlayerState } from 'react-native-spotify-remote';
+import { auth, remote, ApiConfig, ApiScope, SpotifyRemoteApi, SpotifySession, PlayerContext, PlayerState } from 'react-native-spotify-remote';
 import * as Keychain from 'react-native-keychain';  
 import axios, { AxiosInstance } from 'axios';
 
@@ -40,7 +40,7 @@ export async function connectToSpotify(): Promise<ServiceResult<SpotifySession>>
     }
 }
 
-export async function getSpotifyClient(): Promise<ServiceResult<SpotifyRemoteApi>> {
+export async function getSpotifyRemoteClient(): Promise<ServiceResult<SpotifyRemoteApi>> {
     const result = await getSpotifySession();
 
     if (result.IsSuccess) {

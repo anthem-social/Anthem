@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { SpotifySession } from 'react-native-spotify-remote';
-import { connectToSpotify } from '@/api/client';
+import { connectToSpotify } from '@/api/clients';
 import * as Keychain from 'react-native-keychain';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import WelcomeScreen from './welcome';

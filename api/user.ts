@@ -1,5 +1,5 @@
 import { Status } from '@/types';
-import { getAnthemClient } from './client';
+import { getAnthemClient } from './clients';
 import { User } from '@/types';
 
 export async function getUser(userId: string): Promise<User> {
