@@ -1,17 +1,20 @@
 export class ServiceResult<T> {
     private readonly isSuccess: boolean;
     private readonly data?: T;
+    private readonly error?: Error;
     private readonly errorMessage?: string;
     private readonly errorOrigin?: string;
 
     constructor(
         isSuccess: boolean,
         data?: T,
+        error?: Error,
         errorMessage?: string,
         errorOrigin?: string
     ) {
         this.isSuccess = isSuccess;
         this.data = data;
+        this.error = error;
         this.errorMessage = errorMessage;
         this.errorOrigin = errorOrigin;
     }
@@ -28,6 +31,10 @@ export class ServiceResult<T> {
         return this.data;
     }
 
+    get Error(): Error | undefined {
+        return this.error;
+    }
+
     get ErrorMessage(): string | undefined {
         return this.errorMessage;
     }
@@ -40,9 +47,9 @@ export class ServiceResult<T> {
         return new ServiceResult<T>(true, data);
     }
 
-    static Failure<T>(errorMessage: string, errorOrigin: string): ServiceResult<T> {
+    static Failure<T>(error: Error, errorMessage: string, errorOrigin: string): ServiceResult<T> {
         // TODO: Log all failed service results here
         console.log("Error: " + errorMessage + "\nOrigin: " + errorOrigin);
-        return new ServiceResult<T>(false, undefined, errorMessage, errorOrigin);
+        return new ServiceResult<T>(false, undefined, error, errorMessage, errorOrigin);
     }
 }
