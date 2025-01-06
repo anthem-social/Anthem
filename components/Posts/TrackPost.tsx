@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card, Track } from '@/types';
 import { Linking } from 'react-native';
 import { Icon, Text, View } from '@/components/Themed';
-import { pause, playUri } from '@/api/spotify';
+import { pause, playUri } from '@/api/spotifyRemote';
 import { Post } from './Post';
 import Svg, { Path } from 'react-native-svg';
 

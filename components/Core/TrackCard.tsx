@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Track } from '@/types';
 import { Linking } from 'react-native';
 import { Icon, Text, View } from '@/components/Themed';
-import { pause, playUri } from '@/api/spotify';
+import { pause, playUri } from '@/api/spotifyRemote';
 
 export function TrackCard(track: Track) {
   const [playing, setPlaying] = React.useState(false);
