@@ -66,7 +66,7 @@ export function Post({card, children }: Props) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={[styles.row, { paddingLeft: 8, marginTop: 6 }]}>
+      <View style={[styles.row, { paddingLeft: 8, marginTop: 8 }]}>
         <TouchableOpacity onPress={() => profile(card.userId)}>
           <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
             {card.nickname}
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginVertical: 12,
+    marginVertical: 8,
     borderTopWidth: 1,
     borderColor: '#444444',
     paddingTop: 6,
