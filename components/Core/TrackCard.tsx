@@ -25,6 +25,11 @@ export function TrackCard(track: Track) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.spotify_icon_container}>
+        <TouchableOpacity onPress={() => open("spotify://")}>
+          <Image source={require("@/assets/images/Spotify_Primary_Logo_RGB_Green.png")} style={styles.spotify_icon} />
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity onPress={() => open(track.album.uri)}>
         <Image source={{ uri: track.album.coverUrl }} style={styles.cover} />
       </TouchableOpacity>
@@ -65,29 +70,48 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignContent: 'center',
-    gap: 4
+    gap: 4,
+    backgroundColor: 'transparent'
   },
   container: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
     flexDirection: 'row',
-    gap: 4
+    backgroundColor: '#303030',
+    borderRadius: 4,
+    paddingHorizontal: 4
   },
   cover: {
     width: 64,
     height: 64,
     borderRadius: 2,
+    backgroundColor: 'transparent'
   },
   icon: {
     paddingTop: 4,
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
+    backgroundColor: 'transparent'
   },
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    backgroundColor: 'transparent'
   },
   scroll: {
-    width: "68%"
+    width: "68%",
+    backgroundColor: 'transparent'
+  },
+  spotify_icon: {
+    width: 21,
+    height: 21,
+    marginRight: 4,
+    backgroundColor: 'transparent'
+  },
+  spotify_icon_container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
   },
   text: {
     fontSize: 14
