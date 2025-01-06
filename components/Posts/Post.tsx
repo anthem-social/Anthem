@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     marginLeft: 'auto',
-    marginTop: 10,
-    marginRight: 10
+    marginTop: 12,
+    marginRight: 12
   },
   caption: {
     fontSize: 14,
