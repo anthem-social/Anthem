@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity} from 'react-native';
 import { Card, Status } from '@/types';
 import { TrackCard } from '@/components/Core/TrackCard';
 import { Text, View, Icon } from '@/components/Themed';
@@ -49,9 +49,8 @@ export function ChatCard({ card, status }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    paddingRight: 10,
-    paddingLeft: 16,
-    paddingTop: 6,
+    paddingHorizontal: 6,
+    paddingTop: 8,
     paddingBottom: 8
   },
   col: {
