@@ -1,7 +1,7 @@
-import { ServiceResult } from "@/api/a";
 import { auth, remote, ApiConfig, ApiScope, SpotifyRemoteApi, SpotifySession, PlayerContext, PlayerState } from "react-native-spotify-remote";
 import * as Keychain from "react-native-keychain";  
 import axios, { AxiosInstance } from "axios";
+import { ServiceResult } from "./ServiceResult";
 
 const ANTHEM_API_URL = process.env.EXPO_PUBLIC_ANTHEM_API_URL;
 const spotifyRemoteConfig: ApiConfig = {
@@ -21,7 +21,7 @@ const spotifyRemoteConfig: ApiConfig = {
 export async function connectToSpotify(): Promise<ServiceResult<SpotifySession>> {
     try {
         const session = await auth.authorize(spotifyRemoteConfig);
-
+        
         await remote.connect(session.accessToken);
 
         const result = await setSpotifySession(session);
