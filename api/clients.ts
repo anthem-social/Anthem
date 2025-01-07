@@ -1,4 +1,4 @@
-import { ServiceResult } from "@/api/ServiceResult";
+import { ServiceResult } from "@/api/a";
 import { auth, remote, ApiConfig, ApiScope, SpotifyRemoteApi, SpotifySession, PlayerContext, PlayerState } from "react-native-spotify-remote";
 import * as Keychain from "react-native-keychain";  
 import axios, { AxiosInstance } from "axios";
