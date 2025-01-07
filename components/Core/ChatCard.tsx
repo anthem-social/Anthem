@@ -1,7 +1,7 @@
-import { Image, StyleSheet, TouchableOpacity} from 'react-native';
-import { Card, Status } from '@/types';
-import { TrackCard } from '@/components/Core/TrackCard';
-import { Text, View, Icon } from '@/components/Themed';
+import { Image, StyleSheet, TouchableOpacity} from "react-native";
+import { Card, Status } from "@/types";
+import { TrackCard } from "@/components/Core/TrackCard";
+import { Text, View, Icon } from "@/components/Themed";
 
 type Props = {
   card: Card;
@@ -12,25 +12,25 @@ export function ChatCard({ card, status }: Props) {
   const difference: number = new Date().getUTCSeconds() - new Date(status.lastChanged).getUTCSeconds();
   var color: string;
   if (difference < 130) {
-    color = 'green';
+    color = "green";
   }
   else {
-    color = 'grey';
+    color = "grey";
   }
 
   const chat = (userId: string) => {
-    console.log('Opening DM for ' + userId);
+    console.log("Opening DM for " + userId);
   }
 
   const profile = (userId: string) => {
-    console.log('Opening profile for ' + userId);
+    console.log("Opening profile for " + userId);
   }
 
   return (
     <TouchableOpacity onPress={() => chat(card.userId)}> 
       <View style={[styles.row, styles.card]}>
         <View style={styles.col}>
-          <View style={[styles.row, { alignItems: 'center' }]}>
+          <View style={[styles.row, { alignItems: "center" }]}>
             <TouchableOpacity onPress={() => profile(card.userId)}>
               <Text style={styles.nickname}>
                 {card.nickname}
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8
   },
   col: {
-    flexDirection: 'column',
+    flexDirection: "column",
     gap: 8
   },
   dot: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   nickname: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   picture: {
     width: 64,
@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   play: {
-    marginLeft: 'auto'
+    marginLeft: "auto"
   },
   row: {
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   text: {
     fontSize: 14

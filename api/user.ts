@@ -1,13 +1,13 @@
-import { Status } from '@/types';
-import { getAnthemClient } from './clients';
-import { User } from '@/types';
+import { Status } from "@/types";
+import { getAnthemClient } from "./clients";
+import { User } from "@/types";
 
 export async function getUser(userId: string): Promise<User> {
     const result = await getAnthemClient();
 
     if (result.IsSuccess && result.Data) {
         const client = result.Data;
-        const response = await client.get('/user/' + userId);
+        const response = await client.get("/user/" + userId);
         console.log(response.data);
         const user = response.data as User;
         return user;
@@ -22,7 +22,7 @@ export async function getUserStatus(userId: string): Promise<Status> {
 
     if (result.IsSuccess && result.Data) {
         const client = result.Data;
-        const response = await client.get('/status/' + userId);
+        const response = await client.get("/status/" + userId);
         console.log(response.data);
         const status = response.data as Status;
 

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, Track } from '@/types';
-import { Linking } from 'react-native';
-import { Icon, Text, View } from '@/components/Themed';
-import { pause, playUri } from '@/api/spotifyRemote';
-import { Post } from './Post';
-import Svg, { Path } from 'react-native-svg';
+import React, { useState } from "react";
+import { Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { Card, Track } from "@/types";
+import { Linking } from "react-native";
+import { Icon, Text, View } from "@/components/Themed";
+import { pause, playUri } from "@/api/spotifyRemote";
+import { Post } from "./Post";
+import Svg, { Path } from "react-native-svg";
 
 type Props = {
   card: Card,
@@ -47,7 +47,7 @@ export function TrackPost(props: Props) {
   return (
     <Post card={props.card}>
       <View style={styles.container}>
-        <View style={[styles.row, { paddingHorizontal: 4, paddingVertical: 6, alignItems: 'center' }]}>
+        <View style={[styles.row, { paddingHorizontal: 4, paddingVertical: 6, alignItems: "center" }]}>
           <View style={[styles.col, { flex: 1 }]}>
             <View style={styles.row}>
               <Icon family="Ionicons" name="disc-outline" size={16} style={styles.icon} />
@@ -62,7 +62,7 @@ export function TrackPost(props: Props) {
               <ScrollView style={styles.scroll} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
                 {props.track.artists.map((artist, index) => (
                   <Text key={index} style={styles.text} onPress={() => open(artist.uri)} numberOfLines={1}>
-                    {artist.name}{index < props.track.artists.length - 1 ? ', ' : ''}
+                    {artist.name}{index < props.track.artists.length - 1 ? ", " : ""}
                   </Text>
                 ))}
               </ScrollView>
@@ -103,20 +103,20 @@ export function TrackPost(props: Props) {
 
 const styles = StyleSheet.create({
   box: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
   },
   col: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignContent: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignContent: "center",
     gap: 0
   },
   container: {
-    display: 'flex',
-    width: '100%',
+    display: "flex",
+    width: "100%",
     gap: 4
   },
   cover: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   save: {
     paddingRight: 14

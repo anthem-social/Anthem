@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { AnthemView } from '@/components/Core';
-import { Text } from '@/components/Themed';
+import { StyleSheet } from "react-native";
+import { AnthemView } from "@/components/Core";
+import { Text } from "@/components/Themed";
 
 export default function Search() {
   

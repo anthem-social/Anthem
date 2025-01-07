@@ -1,9 +1,9 @@
-import React from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { Track } from '@/types';
-import { Linking } from 'react-native';
-import { Icon, Text, View } from '@/components/Themed';
-import { pause, playUri } from '@/api/spotifyRemote';
+import React from "react";
+import { Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { Track } from "@/types";
+import { Linking } from "react-native";
+import { Icon, Text, View } from "@/components/Themed";
+import { pause, playUri } from "@/api/spotifyRemote";
 
 export function TrackCard(track: Track) {
   const [playing, setPlaying] = React.useState(false);
@@ -47,7 +47,7 @@ export function TrackCard(track: Track) {
           <ScrollView style={styles.scroll} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
             {track.artists.map((artist, index) => (
               <Text key={index} style={styles.text} onPress={() => open(artist.uri)} numberOfLines={1}>
-                  {artist.name}{index < track.artists.length - 1 ? ', ' : ''}
+                  {artist.name}{index < track.artists.length - 1 ? ", " : ""}
               </Text>
             ))}
           </ScrollView>
@@ -67,18 +67,18 @@ export function TrackCard(track: Track) {
 
 const styles = StyleSheet.create({
   col: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignContent: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignContent: "center",
     gap: 4,
-    backgroundColor: 'transparent'
+    backgroundColor: "transparent"
   },
   container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '100%',
-    flexDirection: 'row',
-    backgroundColor: '#303030',
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+    flexDirection: "row",
+    backgroundColor: "#303030",
     borderRadius: 4,
     paddingHorizontal: 4
   },
@@ -86,32 +86,32 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 2,
-    backgroundColor: 'transparent'
+    backgroundColor: "transparent"
   },
   icon: {
     paddingTop: 4,
     paddingHorizontal: 5,
-    backgroundColor: 'transparent'
+    backgroundColor: "transparent"
   },
   row: {
-    flexDirection: 'row',
-    backgroundColor: 'transparent'
+    flexDirection: "row",
+    backgroundColor: "transparent"
   },
   scroll: {
     width: "68%",
-    backgroundColor: 'transparent'
+    backgroundColor: "transparent"
   },
   spotify_icon: {
     width: 21,
     height: 21,
     marginRight: 4,
-    backgroundColor: 'transparent'
+    backgroundColor: "transparent"
   },
   spotify_icon_container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'transparent'
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent"
   },
   text: {
     fontSize: 14

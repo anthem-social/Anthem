@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
-import { Card, Track as TrackType } from '@/types';
-import { Text } from '@/components/Themed';
-import { AnthemView } from '@/components/Core';
-import { TrackPost } from '@/components/Posts'
+import { StyleSheet } from "react-native";
+import { Card, Track as TrackType } from "@/types";
+import { Text } from "@/components/Themed";
+import { AnthemView } from "@/components/Core";
+import { TrackPost } from "@/components/Posts"
 
 export default function TimelineFeed() {
   // const ws = useRef<WebSocket | null>(null);
@@ -38,15 +38,15 @@ export default function TimelineFeed() {
   // }, []);
   
   // async function myProfile() {
-  //   Linking.openURL('spotify:user:schreineravery-us').catch(err => console.error('An error occurred', err));;
+  //   Linking.openURL("spotify:user:schreineravery-us").catch(err => console.error("An error occurred", err));;
   // }
 
   // async function goToTrack() {
-  //   Linking.openURL(trackUri!).catch(err => console.error('An error occurred', err));
+  //   Linking.openURL(trackUri!).catch(err => console.error("An error occurred", err));
   // }
 
   // async function goToAlbum() {
-  //   Linking.openURL(alubmUri!).catch(err => console.error('An error occurred', err));
+  //   Linking.openURL(alubmUri!).catch(err => console.error("An error occurred", err));
   // }
 
   // async function playSunflower() {
@@ -69,8 +69,8 @@ export default function TimelineFeed() {
 
   // async function connectRemote() {
   //   try {
-  //     await remote.connect('/Axi0p4mjud06AjLBLMXaQy7050ObseTxISWTWMXp7b28eWCpfiBOmxyYGyVCITu5HcYCsAvuOBHXfkrTI+fdmqem8GpaPQ9+dPySDtAiwgxjsdUDrmB61OwfknjCth2hWbZcNN4kqkjvjGVUJvxJTw6TTjjJ4RrIG558gfRCTYJz8fl/l5eYu7NElJUU0ulTBolIX2G4nuBIXwTtx8tefFDmCtetCT7Thv9/yVcHPQ1893TJ9ie0p0HSaT7Pw6Zt/dkDMlt+fGqE1+VIFoLF/eYkVpT8oCRXnpzkXHU+D0I2C6cC45yRJn6eL3Ld+Mv');
-  //     remote.playUri('spotify:track:6CfrYuD3YRDYdYvH9jNtXY');
+  //     await remote.connect("/Axi0p4mjud06AjLBLMXaQy7050ObseTxISWTWMXp7b28eWCpfiBOmxyYGyVCITu5HcYCsAvuOBHXfkrTI+fdmqem8GpaPQ9+dPySDtAiwgxjsdUDrmB61OwfknjCth2hWbZcNN4kqkjvjGVUJvxJTw6TTjjJ4RrIG558gfRCTYJz8fl/l5eYu7NElJUU0ulTBolIX2G4nuBIXwTtx8tefFDmCtetCT7Thv9/yVcHPQ1893TJ9ie0p0HSaT7Pw6Zt/dkDMlt+fGqE1+VIFoLF/eYkVpT8oCRXnpzkXHU+D0I2C6cC45yRJn6eL3Ld+Mv");
+  //     remote.playUri("spotify:track:6CfrYuD3YRDYdYvH9jNtXY");
   //   }
   //   catch (e) {
   //     console.error(e);
@@ -79,8 +79,8 @@ export default function TimelineFeed() {
   
   // async function refreshSession() {
   //   try {
-  //     console.log('Refreshing session.');
-  //     var result = await Keychain.getGenericPassword({ service: 'spotifySession' });
+  //     console.log("Refreshing session.");
+  //     var result = await Keychain.getGenericPassword({ service: "spotifySession" });
   //     if (result) {
   //       const spotifySession: SpotifySession = JSON.parse(result.password);
   //       await refreshSpotifySession(spotifySession);
@@ -93,7 +93,7 @@ export default function TimelineFeed() {
 
   // async function forgetSession() {
   //   try {
-  //     console.log('Forgetting session.');
+  //     console.log("Forgetting session.");
   //     await removeSpotifySession();
   //   }
   //   catch (e) {
@@ -102,23 +102,23 @@ export default function TimelineFeed() {
   // }
 
   const mockCard: Card = {
-    userId: 'schreineravery-us',
-    nickname: 'Avery',
-    pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
+    userId: "schreineravery-us",
+    nickname: "Avery",
+    pictureUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f"
   }
 
   const mockTrack: TrackType = {
-    uri: 'spotify:track:3UDmHZcBTQp8Iu8droNtU1',
-    name: 'Revolution - Remastered 2009',
+    uri: "spotify:track:3UDmHZcBTQp8Iu8droNtU1",
+    name: "Revolution - Remastered 2009",
     artists: [
       {
-        uri: 'spotify:artist:3WrFJ7ztbogyGnTHbHJFl2',
-        name: 'The Beatles',
+        uri: "spotify:artist:3WrFJ7ztbogyGnTHbHJFl2",
+        name: "The Beatles",
       }
     ],
     album: {
-      uri: 'spotify:album:1cTeNkeINtXiaMLlashAKs',
-      coverUrl: 'https://i.scdn.co/image/ab67616d0000b2736e3d3c964df32136fb1cd594'
+      uri: "spotify:album:1cTeNkeINtXiaMLlashAKs",
+      coverUrl: "https://i.scdn.co/image/ab67616d0000b2736e3d3c964df32136fb1cd594"
     }
   }
   

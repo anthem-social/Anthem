@@ -1,4 +1,4 @@
-import { Track } from './spotify/Track';
+import { Track } from "./spotify/Track";
 
 export type User = {
     id: string;

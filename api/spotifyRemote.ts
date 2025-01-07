@@ -1,4 +1,4 @@
-import { getSpotifyRemoteClient } from '@/api/clients';
+import { getSpotifyRemoteClient } from "@/api/clients";
 
 export async function playUri(uri: string): Promise<void> {
     var result = await getSpotifyRemoteClient();

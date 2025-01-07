@@ -1,36 +1,36 @@
-import { StyleSheet } from 'react-native';
-import { Card, Status, Track } from '@/types';
-import { Icon, View } from '@/components/Themed';
-import { AnthemView, ChatCard } from '@/components/Core';
-import { useEffect, useRef, useState } from 'react';
+import { StyleSheet } from "react-native";
+import { Card, Status, Track } from "@/types";
+import { Icon, View } from "@/components/Themed";
+import { AnthemView, ChatCard } from "@/components/Core";
+import { useEffect, useRef, useState } from "react";
 
 const mockCard: Card = {
-  userId: 'schreineravery-us',
-  nickname: 'Avery',
-  pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
+  userId: "schreineravery-us",
+  nickname: "Avery",
+  pictureUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f"
 }
 
 const mockTrack: Track = {
-  uri: 'spotify:track:3KkXRkHbMCARz0aVfEt68P',
-  name: 'Sunflower - Into the Spider-Verse',
+  uri: "spotify:track:3KkXRkHbMCARz0aVfEt68P",
+  name: "Sunflower - Into the Spider-Verse",
   artists: [
     {
-      uri: 'spotify:artist:3TVXtAsR1Inumwj472S9r4',
-      name: 'Post Malone',
+      uri: "spotify:artist:3TVXtAsR1Inumwj472S9r4",
+      name: "Post Malone",
     },
     {
-      uri: 'spotify:artist:1uNFoZAHBGtllmzznpCI3s',
-      name: 'Swae Lee',
+      uri: "spotify:artist:1uNFoZAHBGtllmzznpCI3s",
+      name: "Swae Lee",
     },
   ],
   album: {
-    uri: 'spotify:album:4yP0hdKOZPNshxUOjY0cZj',
-    coverUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
+    uri: "spotify:album:4yP0hdKOZPNshxUOjY0cZj",
+    coverUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f"
   }
 }
 
 const mockStatus: Status = {
-  userId: 'schreineravery-us',
+  userId: "schreineravery-us",
   track: mockTrack,
   lastChanged: new Date()
 }
@@ -97,13 +97,13 @@ const styles = StyleSheet.create({
     padding: 2
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 8,
-    marginLeft: 'auto'
+    marginLeft: "auto"
   },
   hr: {
     borderBottomWidth: 1,
-    borderBottomColor: 'grey',
+    borderBottomColor: "grey",
     marginHorizontal: 4
   }
 });

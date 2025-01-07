@@ -1,9 +1,9 @@
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import Octicons from 'react-native-vector-icons/Octicons';
+import Ionicon from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import Octicons from "react-native-vector-icons/Octicons";
 
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 type Props = {
   style?: any;
@@ -16,20 +16,20 @@ type Props = {
 };
 
 export function Icon({ lightColor, darkColor, ...rest }: Props) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
   
   let Icon;
   switch (rest.family) {
-    case 'Ionicons':
+    case "Ionicons":
       Icon = Ionicon;
       break;
-    case 'MaterialCommunityIcons':
+    case "MaterialCommunityIcons":
       Icon = MaterialCommunityIcon;
       break;
-    case 'MaterialIcons':
+    case "MaterialIcons":
       Icon = MaterialIcon;
       break;
-    case 'Octicons':
+    case "Octicons":
       Icon = Octicons;
       break;
     default:

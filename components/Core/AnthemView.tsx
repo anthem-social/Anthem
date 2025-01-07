@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
-import { StyleSheet } from 'react-native';
-import Animated, { useAnimatedRef } from 'react-native-reanimated';
-import { View } from '@/components/Themed';
+import type { ReactNode } from "react";
+import { StyleSheet } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { View } from "@/components/Themed";
 
 type Props = {
   children: ReactNode;
@@ -32,13 +32,13 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 52,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   content: {
     flex: 1,
     // padding: 12,
     padding: 0,
     gap: 4,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
 });

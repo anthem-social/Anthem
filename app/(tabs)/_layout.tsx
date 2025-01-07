@@ -1,8 +1,8 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { Tabs } from "expo-router";
+import React from "react";
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -11,7 +11,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
         tabBarStyle: {
           paddingTop: 10,
@@ -22,36 +22,36 @@ export default function TabLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: '',
+          title: "",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} size={iconSize} />
+            <TabBarIcon name={focused ? "search" : "search-outline"} color={color} size={iconSize} />
           ),
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
-          title: '',
+          title: "",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'albums' : 'albums-outline'} color={color} size={iconSize} />
+            <TabBarIcon name={focused ? "albums" : "albums-outline"} color={color} size={iconSize} />
           ),
         }}
       />
       <Tabs.Screen
         name="chat"
         options={{
-          title: '',
+          title: "",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'} color={color} size={iconSize} />
+            <TabBarIcon name={focused ? "chatbox-ellipses" : "chatbox-ellipses-outline"} color={color} size={iconSize} />
           ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: '',
+          title: "",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} size={iconSize} />
+            <TabBarIcon name={focused ? "person" : "person-outline"} color={color} size={iconSize} />
           ),
         }}
       />

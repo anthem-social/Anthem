@@ -1,9 +1,9 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Card } from '@/types';
-import { ReactNode, useState } from 'react';
-import { Image } from 'react-native';
-import { Icon, Text, View } from '@/components/Themed';
-import React from 'react';
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { Card } from "@/types";
+import { ReactNode, useState } from "react";
+import { Image } from "react-native";
+import { Icon, Text, View } from "@/components/Themed";
+import React from "react";
 
 type Props = {
     card: Card;
@@ -68,7 +68,7 @@ export function Post({card, children }: Props) {
       </View>
       <View style={[styles.row, { paddingLeft: 8, marginTop: 8 }]}>
         <TouchableOpacity onPress={() => profile(card.userId)}>
-          <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+          <Text style={{ fontWeight: "bold", fontSize: 15 }}>
             {card.nickname}
           </Text>
         </TouchableOpacity>
@@ -82,8 +82,8 @@ export function Post({card, children }: Props) {
 
 const styles = StyleSheet.create({
   buttons: {
-    flexDirection: 'row',
-    marginLeft: 'auto',
+    flexDirection: "row",
+    marginLeft: "auto",
     marginTop: 12,
     marginRight: 12
   },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   card: {
     gap: 14,
     paddingHorizontal: 8,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 4,
     marginTop: 10
   },
@@ -102,31 +102,31 @@ const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 8,
     borderTopWidth: 1,
-    borderColor: '#444444',
+    borderColor: "#444444",
     paddingTop: 6,
   },
   icon: {
     paddingLeft: 20,
     paddingRight: 6,
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   nickname: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   pair: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   picture: {
     width: 42,
     height: 42,
     borderRadius: 24,
     borderWidth: 1,
-    borderColor: 'grey'
+    borderColor: "grey"
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   stats: {
     fontSize: 14,

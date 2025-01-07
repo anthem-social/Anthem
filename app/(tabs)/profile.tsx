@@ -1,44 +1,44 @@
-import { Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-import { Status, Track, User } from '@/types';
-import { AnthemView, TrackCard } from '@/components/Core';
-import { useState } from 'react';
-import { Button, Icon, Text, View } from '@/components/Themed';
+import { Dimensions, Image, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { Status, Track, User } from "@/types";
+import { AnthemView, TrackCard } from "@/components/Core";
+import { useState } from "react";
+import { Button, Icon, Text, View } from "@/components/Themed";
 
 const anthem: Track = {
-  uri: 'spotify:track:3KkXRkHbMCARz0aVfEt68P',
-  name: 'Sunflower - Into the Spider-Verse',
+  uri: "spotify:track:3KkXRkHbMCARz0aVfEt68P",
+  name: "Sunflower - Into the Spider-Verse",
   artists: [
     {
-      uri: 'spotify:artist:3TVXtAsR1Inumwj472S9r4',
-      name: 'Post Malone',
+      uri: "spotify:artist:3TVXtAsR1Inumwj472S9r4",
+      name: "Post Malone",
     },
     {
-      uri: 'spotify:artist:1uNFoZAHBGtllmzznpCI3s',
-      name: 'Swae Lee',
+      uri: "spotify:artist:1uNFoZAHBGtllmzznpCI3s",
+      name: "Swae Lee",
     },
   ],
   album: {
-    uri: 'spotify:album:4yP0hdKOZPNshxUOjY0cZj',
-    coverUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f'
+    uri: "spotify:album:4yP0hdKOZPNshxUOjY0cZj",
+    coverUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f"
   }
 }
 
 // Limit bio to 110 chars
 const mockUser: User = {
-  id: 'schreineravery-us',
+  id: "schreineravery-us",
   premium: true,
-  nickname: 'Avery',
-  bio: 'the creator',
-  pictureUrl: 'https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f',
+  nickname: "Avery",
+  bio: "the creator",
+  pictureUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f",
   anthem: anthem,
   joined: new Date(),
-  followers: ['schreineravery-us'],
-  following: ['schreineravery-us'],
-  friends: ['schreineravery-us'],
+  followers: ["schreineravery-us"],
+  following: ["schreineravery-us"],
+  friends: ["schreineravery-us"],
 }
 
 const mockStatus: Status = {
-  userId: 'schreineravery-us',
+  userId: "schreineravery-us",
   track: anthem,
   lastChanged: new Date()
 }
@@ -57,7 +57,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
   const hours: number = Math.floor(minutes / 60);
   const days: number = Math.floor(hours / 24);
   const weeks: number = Math.floor(days / 7);
-  var borderColor: string = 'grey';
+  var borderColor: string = "grey";
   var lastActive: string;
 
   if (weeks > 52) {
@@ -77,7 +77,7 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
   }
   else {
     lastActive = "Now";
-    borderColor = 'green';
+    borderColor = "green";
   }
   
   const [showModal, setShowModal] = useState(false);
@@ -165,13 +165,13 @@ export default function Profile({ status = mockStatus, user = mockUser, isCurren
                 {isCurrentUser
                   ? <View style={styles.options}>
                       <View style={[styles.element, styles.copy]}>
-                        <Icon family="MaterialIcons" name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
+                        <Icon family="MaterialIcons" name="filter-none" size={20} style={{ transform:  [{ rotate: "90deg" }] }} />
                         <Button title="Copy ID" onPress={() => console.log("Copy ID")} />
                       </View>
                     </View>
                   : <View style={styles.options}>
                       <View style={[styles.element, styles.copy]}>
-                        <Icon family="MaterialIcons" name="filter-none" size={20} style={{ transform:  [{ rotate: '90deg' }] }} />
+                        <Icon family="MaterialIcons" name="filter-none" size={20} style={{ transform:  [{ rotate: "90deg" }] }} />
                         <Button title="Copy ID" onPress={() => console.log("Copy ID")} />
                       </View>
                       <View style={styles.element}>
@@ -194,20 +194,20 @@ const styles = StyleSheet.create({
   },
   col: {
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center'
+    flexDirection: "column",
+    alignItems: "center"
   },
   container: {
     padding: 6
   },
   copy: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 6,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
   element: {
-    shadowColor: 'grey',
+    shadowColor: "grey",
     shadowOpacity: .3,
     shadowOffset: {
       width: 0,
@@ -219,13 +219,13 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   id: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginBottom: 14
   },
   play: {
@@ -235,8 +235,8 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 10,
-    width: Dimensions.get('window').width * .6,
-    shadowColor: '#000',
+    width: Dimensions.get("window").width * .6,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2
@@ -247,20 +247,20 @@ const styles = StyleSheet.create({
   },
   nickname: {
     fontSize: 26,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     paddingTop: 8,
-    textAlign: 'center',
+    textAlign: "center",
     flex: 1
   },
   options: {
-    flexDirection: 'column',
+    flexDirection: "column",
     gap: 10
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center"
   },
   picture: {
     width: 140,
@@ -269,8 +269,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginBottom: 10,
   }
 });
