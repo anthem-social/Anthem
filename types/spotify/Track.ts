@@ -2,8 +2,8 @@ import { Album } from "./Album";
 import { Artist } from "./Artist";
 
 export type Track = {
-    uri: string;
-    name: string;
-    artists: Array<Artist>;
     album: Album;
+    artists: Array<Artist>;
+    name: string;
+    uri: string;
 }

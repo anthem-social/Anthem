@@ -1,12 +1,12 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { Icon } from "@/components/Themed/Icon";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const iconSize = 30;
+  const iconSize = 26;
 
   return (
     <Tabs
@@ -14,17 +14,17 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
         tabBarStyle: {
-          paddingTop: 10,
+          paddingTop: 12,
           paddingBottom: 16,
-          height: 84
+          height: 74
         }
       }}>
       <Tabs.Screen
         name="search"
         options={{
           title: "",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "search" : "search-outline"} color={color} size={iconSize} />
+          tabBarIcon: ({ focused }) => (
+            <Icon name={focused ? "search" : "search-outline"} family="Ionicons" size={iconSize} />
           ),
         }}
       />
@@ -32,8 +32,17 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "albums" : "albums-outline"} color={color} size={iconSize} />
+          tabBarIcon: ({ focused }) => (
+            <Icon name={focused ? "home-sharp" : "home-outline"} family="Ionicons" size={iconSize} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="create"
+        options={{
+          title: "",
+          tabBarIcon: ({ focused }) => (
+            <Icon name={focused ? "plussquare" : "plussquareo"} family="AntDesign" size={iconSize} />
           ),
         }}
       />
@@ -41,8 +50,8 @@ export default function TabLayout() {
         name="chat"
         options={{
           title: "",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "chatbox-ellipses" : "chatbox-ellipses-outline"} color={color} size={iconSize} />
+          tabBarIcon: ({ focused }) => (
+            <Icon name={focused ? "chatbox-ellipses" : "chatbox-ellipses-outline"} family="Ionicons" size={iconSize} />
           ),
         }}
       />
@@ -50,8 +59,8 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "person" : "person-outline"} color={color} size={iconSize} />
+          tabBarIcon: ({ focused }) => (
+            <Icon name={focused ? "person" : "person-outline"} family="Ionicons" size={iconSize} />
           ),
         }}
       />

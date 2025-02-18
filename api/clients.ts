@@ -7,8 +7,8 @@ const ANTHEM_API_URL = process.env.EXPO_PUBLIC_ANTHEM_API_URL;
 const spotifyRemoteConfig: ApiConfig = {
     clientID: "1e7c327a22964910bb370837f20dcc94",
     redirectURL: "anthem:/callback",
-    tokenRefreshURL: `${ANTHEM_API_URL}/token/refresh`,
-    tokenSwapURL: `${ANTHEM_API_URL}/token/swap`,
+    tokenRefreshURL: `${ANTHEM_API_URL}/spotify/refresh`,
+    tokenSwapURL: `${ANTHEM_API_URL}/spotify/swap`,
     scopes: [ // TODO: Remove scopes that are not needed
         ApiScope.AppRemoteControlScope,
         ApiScope.UserFollowModifyScope,
@@ -23,6 +23,7 @@ export async function connectToSpotify(): Promise<ServiceResult<SpotifySession>>
         const session = await auth.authorize(spotifyRemoteConfig);
         
         await remote.connect(session.accessToken);
+        // await remote.playUri("7cctPQS83y620UQtMd1ilL") // Play silence
 
         const result = await setSpotifySession(session);
 

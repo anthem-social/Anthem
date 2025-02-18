@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Touchable, TouchableOpacity } from "react-native";
 import { Card, Status, Track } from "@/types";
 import { Icon, View } from "@/components/Themed";
 import { AnthemView, ChatCard } from "@/components/Core";
@@ -15,17 +15,20 @@ const mockTrack: Track = {
   name: "Sunflower - Into the Spider-Verse",
   artists: [
     {
+      imageUrl: null,
       uri: "spotify:artist:3TVXtAsR1Inumwj472S9r4",
       name: "Post Malone",
     },
     {
+      imageUrl: null,
       uri: "spotify:artist:1uNFoZAHBGtllmzznpCI3s",
       name: "Swae Lee",
     },
   ],
   album: {
+    imageUrl: "the album image url",
+    name: "the album name",
     uri: "spotify:album:4yP0hdKOZPNshxUOjY0cZj",
-    coverUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f"
   }
 }
 
@@ -35,12 +38,15 @@ const mockStatus: Status = {
   lastChanged: new Date()
 }
 
+const statusWebsocketUrl = process.env.EXPO_PUBLIC_STATUS_WEBSOCKET_URL;
+const userId = "schreineravery-us";
+
 export default function Chat() {
   const ws = useRef<WebSocket | null>(null);
   const [status, setStatus] = useState<Status | null>(null);
 
   useEffect(() => {
-    ws.current = new WebSocket("wss://wda44qensj.execute-api.us-east-1.amazonaws.com/production?userId=schreineravery-us");
+    ws.current = new WebSocket(`${statusWebsocketUrl}?userId=${userId}`);
 
     ws.current.onopen = () => {
       console.log("Connected!");
@@ -64,11 +70,19 @@ export default function Chat() {
       ws.current?.close();
     }
   }, []);
+
+  const handleSearch = () => {
+    
+    console.log("Searching...");
+  }
   
   return (
     <AnthemView>
       <View style={styles.container}>
         <View style={styles.header}>
+          <TouchableOpacity onPress={handleSearch}>
+            <Icon family="MaterialIcons" name="search" size={30} />
+          </TouchableOpacity>
           <Icon family="MaterialIcons" name="add" size={30} />
         </View>
         <View style={styles.hr} />
@@ -98,8 +112,9 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    padding: 8,
-    marginLeft: "auto"
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    justifyContent: "space-between"
   },
   hr: {
     borderBottomWidth: 1,

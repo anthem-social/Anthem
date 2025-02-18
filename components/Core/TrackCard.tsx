@@ -31,7 +31,7 @@ export function TrackCard(track: Track) {
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={() => open(track.album.uri)}>
-        <Image source={{ uri: track.album.coverUrl }} style={styles.cover} />
+        <Image source={{ uri: track.album.imageUrl }} style={styles.cover} />
       </TouchableOpacity>
       <View style={[styles.col, { flex: 1 }]}>
         <View style={styles.row}>

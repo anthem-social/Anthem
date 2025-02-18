@@ -10,7 +10,7 @@ type Props = {
     children: ReactNode;
 }
 
-export function Post({card, children }: Props) {
+export function Post({card, children}: Props) {
   const [liked, setLiked] = useState(false);
 
   const comment = (postId: string) => {
@@ -66,7 +66,7 @@ export function Post({card, children }: Props) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={[styles.row, { paddingLeft: 8, marginTop: 8 }]}>
+      <View style={[styles.row, { paddingLeft: 8, marginTop: 8}]}>
         <TouchableOpacity onPress={() => profile(card.userId)}>
           <Text style={{ fontWeight: "bold", fontSize: 15 }}>
             {card.nickname}
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   caption: {
     fontSize: 14,
-    marginLeft: 6,
+    marginLeft: 10,
   },
   card: {
     gap: 14,

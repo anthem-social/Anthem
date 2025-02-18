@@ -9,17 +9,20 @@ const anthem: Track = {
   name: "Sunflower - Into the Spider-Verse",
   artists: [
     {
+      imageUrl: null,
       uri: "spotify:artist:3TVXtAsR1Inumwj472S9r4",
       name: "Post Malone",
     },
     {
+      imageUrl: null,
       uri: "spotify:artist:1uNFoZAHBGtllmzznpCI3s",
       name: "Swae Lee",
     },
   ],
   album: {
+    imageUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f",
+    name: "the album name",
     uri: "spotify:album:4yP0hdKOZPNshxUOjY0cZj",
-    coverUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f"
   }
 }
 

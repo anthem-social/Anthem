@@ -112,13 +112,15 @@ export default function TimelineFeed() {
     name: "Revolution - Remastered 2009",
     artists: [
       {
+        imageUrl: null,
         uri: "spotify:artist:3WrFJ7ztbogyGnTHbHJFl2",
         name: "The Beatles",
       }
     ],
     album: {
+      name: "The Beatles (Remastered)",
       uri: "spotify:album:1cTeNkeINtXiaMLlashAKs",
-      coverUrl: "https://i.scdn.co/image/ab67616d0000b2736e3d3c964df32136fb1cd594"
+      imageUrl: "https://i.scdn.co/image/ab67616d0000b2736e3d3c964df32136fb1cd594"
     }
   }
   

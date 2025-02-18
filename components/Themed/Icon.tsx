@@ -1,3 +1,4 @@
+import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
@@ -20,6 +21,9 @@ export function Icon({ lightColor, darkColor, ...rest }: Props) {
   
   let Icon;
   switch (rest.family) {
+    case "AntDesign":
+      Icon = AntDesign;
+      break;
     case "Ionicons":
       Icon = Ionicon;
       break;

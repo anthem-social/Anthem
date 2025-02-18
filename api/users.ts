@@ -7,8 +7,8 @@ export async function getUser(userId: string): Promise<User> {
 
     if (result.IsSuccess && result.Data) {
         const client = result.Data;
-        const response = await client.get("/user/" + userId);
-        console.log(response.data);
+        const response = await client.get("/users/" + userId);
+        // console.log(response.data);
         const user = response.data as User;
         return user;
     }

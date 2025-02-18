@@ -93,7 +93,7 @@ export function TrackPost(props: Props) {
         </View>
         <View style={styles.box}>
           <TouchableOpacity onPress={() => toggle(props.track.uri)}>
-            <Image source={{ uri: props.track.album.coverUrl }} style={styles.cover} />
+            <Image source={{ uri: props.track.album.imageUrl }} style={styles.cover} />
           </TouchableOpacity>
         </View>
       </View>
