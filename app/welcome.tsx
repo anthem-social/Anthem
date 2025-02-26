@@ -22,14 +22,12 @@ const WelcomeScreen: React.FC<WelcomeProps> = ({ onPress }) => {
       }
 
       const initialUrl = await Linking.getInitialURL();
-      console.log("initialUrl", initialUrl);
 
       if (initialUrl == null) {
         return;
       }
 
       const isOpen = initialUrl.includes("spotify:");
-      console.log("isOpen", isOpen);
       setSpotifyIsOpen(isOpen);
     }
 

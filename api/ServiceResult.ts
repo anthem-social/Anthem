@@ -1,7 +1,7 @@
 export class ServiceResult<T> {
     private readonly isSuccess: boolean;
     private readonly data?: T;
-    private readonly error?: Error;
+    private readonly error?: any;
     private readonly errorMessage?: string;
     private readonly errorOrigin?: string;
 
@@ -47,9 +47,9 @@ export class ServiceResult<T> {
         return new ServiceResult<T>(true, data);
     }
 
-    static Failure<T>(errorMessage: string, errorOrigin: string, error?: Error): ServiceResult<T> {
+    static Failure<T>(errorMessage: string, errorOrigin: string, error?: any): ServiceResult<T> {
         // TODO: Log all failed service results here
-        if (error)
+        if (error && error instanceof Error)
         {
             console.log("Error: " + error.name);
             console.log("Message: " + error.message);

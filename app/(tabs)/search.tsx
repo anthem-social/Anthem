@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 import { AnthemView } from "@/components/Core";
 import { Button, Text, View } from "@/components/Themed";
-import { getUser } from "@/api/users";
-import { searchAlbums, searchArtists, searchTracks } from "@/api/search";
+import { get } from "@/api/users";
+import { searchAlbums, searchArtists, searchTracks } from "@/api/spotify";
 import { Search as Searchy } from "@/components/Core";
 
 export default function Search() {

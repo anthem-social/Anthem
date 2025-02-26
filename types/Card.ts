@@ -1,6 +1,5 @@
-
 export type Card = {
-    userId: string;
-    nickname: string;
-    pictureUrl: string;
+  userId: string;
+  nickname: string | null;
+  pictureUrl: string | null;
 }

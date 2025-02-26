@@ -1,54 +1,80 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Card } from "@/types";
-import { ReactNode, useState } from "react";
+import { PostCard } from "@/types";
+import { ReactNode, useEffect, useState } from "react";
 import { Image } from "react-native";
 import { Icon, Text, View } from "@/components/Themed";
 import React from "react";
+import { createLike, removeLike } from "@/api/posts"
 
 type Props = {
-    card: Card;
-    children: ReactNode;
+  children: ReactNode;
+  postCard: PostCard;
 }
 
-export function Post({card, children}: Props) {
-  const [liked, setLiked] = useState(false);
+export function Post(props: Props) {
+  const [liked, setLiked] = useState(props.postCard.like ? true : false);
+  const [likeCount, setLikeCount] = useState(props.postCard.post.totalLikes);
+  const [likeId, setLikeId] = useState<string | null>(props.postCard.like ? props.postCard.like.id : null);
+  const post = props.postCard.post;
+  const card = props.postCard.card;
 
   const comment = (postId: string) => {
     console.log("Commenting on post");
-  }
-  
-  const toggleLike = (postId: string) => {
-    var previous = liked;
-
-    if (previous) {
-      console.log("Unliked");
-    }
-    else {
-      console.log("Liked");
-    }
-
-    setLiked(!previous);
   }
 
   const profile = (userId: string) => {
     console.log("Opening profile");
   }
+  
+  const toggleLike = async (postId: string) => {
+    var isLiked = liked;
+    setLiked(!isLiked);
+
+    if (isLiked && likeId) {
+      setLikeCount(likeCount - 1);
+      var unlikeResponse = await removeLike(postId, likeId);
+
+      if (unlikeResponse.IsFailure) {
+        console.log("Failed to unlike post!");
+        return;
+      }
+
+      setLikeId(null);
+      console.log("Unliked");
+    }
+    else {
+      setLikeCount(likeCount + 1);
+      var likeResponse = await createLike(postId);
+
+      if (likeResponse.IsFailure || !likeResponse.Data) {
+        console.log("Failed to like post!");
+        return;
+      }
+
+      setLikeId(likeResponse.Data.id);
+      console.log("Liked");
+    }
+  }
+
+  useEffect(() => {
+    setLiked(likeId ? true : false);
+  }, [likeId]);
 
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => profile(card.userId)}>
         <View style={[styles.row, styles.card]}>
-          <Image source={{ uri: card.pictureUrl }} style={styles.picture} />
+          <Image source={{ uri: card.pictureUrl! }} style={styles.picture} />
           <Text style={styles.nickname}>
             {card.nickname}
           </Text>
         </View>
       </TouchableOpacity>
       <View style={styles.row}>
-        {children}
+        {props.children}
       </View>
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.pair} onPress={() => toggleLike("")}>
+        <TouchableOpacity style={styles.pair} onPress={() => toggleLike(post.id)}>
           <Icon
             family="Ionicons"
             name={liked ? "heart" : "heart-outline"}
@@ -56,13 +82,13 @@ export function Post({card, children}: Props) {
             style={styles.icon}
           />
           <Text style={styles.stats}>
-            137k
+            {likeCount}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.pair} onPress={() => comment("")}>
           <Icon family="Ionicons" name="chatbox-outline" darkColor={"white"} size={22} style={styles.icon} />
           <Text style={styles.stats}>
-            4.8k
+            {post.totalComments}
           </Text>
         </TouchableOpacity>
       </View>
@@ -73,7 +99,7 @@ export function Post({card, children}: Props) {
           </Text>
         </TouchableOpacity>
         <Text style={styles.caption}>
-          This would be the caption of the post.
+          {post.caption}
         </Text>
       </View>
     </View>
@@ -126,7 +152,7 @@ const styles = StyleSheet.create({
     borderColor: "grey"
   },
   row: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
   stats: {
     fontSize: 14,

@@ -4,8 +4,9 @@ import { useState } from "react";
 import DropDownPicker, { ThemeNameType } from 'react-native-dropdown-picker';
 import TrackPostCreate from "@/components/Posts/TrackPostCreate";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { create } from "@/api/post";
+import { create } from "@/api/posts";
 import { ContentType } from "@/types";
+import { Confirm } from "@/components";
 
 export default function Create() {
   const theme = useThemeColor({ light: "LIGHT", dark: "DARK" }, "text");
@@ -13,27 +14,39 @@ export default function Create() {
   const pickerBgColor = useThemeColor({ light: "grey", dark: "#444444" }, "background");
   const [caption, setCaption] = useState("");
   const [clearCount, setClearCount] = useState(0);
+  const [confirmHandler, setConfirmHandler] = useState<() => void>(() => () => {});
   const [content, setContent] = useState<object>();
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [openConfirm, setOpenConfirm] = useState<boolean>(false);
+  const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [type, setType] = useState<ContentType>(ContentType.Track);
   const [types, setTypes] = useState([
     {label: 'Song', value: ContentType.Track},
     {label: 'Top 5', value: ContentType.TopFive}
   ]);
 
-  const handleClear = () => {
+  const confirm = (handler: () => void) => {
+    setConfirmHandler(() => handler);
+    setOpenConfirm(true);
+  }
+
+  const clearPost = () => {
     setCaption("");
     setClearCount(count => count + 1);
     setContent(undefined);
   }
 
-  const handleCreate = async () => {
+  const createPost = async () => {
     try {
+      setLoading(true);
       var result = await create(caption, JSON.stringify(content), ContentType.Track);
 
       if (result.IsFailure) {
         console.error(result.ErrorMessage);
       }
+
+      clearPost();
+      setLoading(false);
     }
     catch (error) {
       console.error(error);
@@ -44,7 +57,7 @@ export default function Create() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View style={styles.header}>
-            <Text style={styles.title}>Create a Post</Text>
+          <Text style={styles.title}>Create a Post</Text>
         </View>
         <DropDownPicker
           open={openDropdown}
@@ -69,8 +82,8 @@ export default function Create() {
           theme={theme as ThemeNameType}
         />
         <View style={styles.row}>
-          {type === "track" && <TrackPostCreate clearCount={clearCount} contentSetter={setContent} />}
-          {/* {type === "top5" && <Top5PostCreate />} */}
+          {type === ContentType.Track && <TrackPostCreate clearCount={clearCount} contentSetter={setContent} />}
+          {/* {type === ContentType.TopFive && <TopFivePostCreate />} */}
         </View>
         <TextInput
           style={styles.textInput}
@@ -81,9 +94,20 @@ export default function Create() {
           value={caption}
         />
         <View style={styles.buttonsRow}>
-          <Button title="Clear" color="red" onPress={handleClear} />
-          <Button title="Create" color="" onPress={handleCreate} />
+          <Button title="Clear" color="red" onPress={() => confirm(clearPost)} />
+          <Button title="Create" color="" onPress={() => confirm(createPost)} />
         </View>
+        {openConfirm &&
+          <Confirm
+            onCancel={() => {
+              setOpenConfirm(false)
+            }}
+            onConfirm={() => {
+              confirmHandler();
+              setOpenConfirm(false);
+            }}
+          /> 
+        }
       </View>
     </TouchableWithoutFeedback>
   );
@@ -100,7 +124,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 12,
     paddingTop: 40,
-    gap: 20,
+    gap: 24,
     flex: 1
   },
   header: {

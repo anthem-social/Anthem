@@ -7,12 +7,13 @@ const ANTHEM_API_URL = process.env.EXPO_PUBLIC_ANTHEM_API_URL;
 const spotifyRemoteConfig: ApiConfig = {
     clientID: "1e7c327a22964910bb370837f20dcc94",
     redirectURL: "anthem:/callback",
-    tokenRefreshURL: `${ANTHEM_API_URL}/spotify/refresh`,
-    tokenSwapURL: `${ANTHEM_API_URL}/spotify/swap`,
+    tokenRefreshURL: `${ANTHEM_API_URL}/spotify/token/refresh`,
+    tokenSwapURL: `${ANTHEM_API_URL}/spotify/token/swap`,
     scopes: [ // TODO: Remove scopes that are not needed
         ApiScope.AppRemoteControlScope,
         ApiScope.UserFollowModifyScope,
         ApiScope.UserFollowReadScope,
+        ApiScope.UserLibraryModifyScope,
         ApiScope.UserReadPlaybackStateScope,
         ApiScope.UserReadPrivateScope
     ]

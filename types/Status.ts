@@ -1,4 +1,4 @@
-import { Track } from "./spotify/Track";
+import { Track } from "@/types";
 
 export type Status = {
     userId: string;

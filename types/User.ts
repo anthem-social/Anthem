@@ -1,4 +1,4 @@
-import { Track } from "./spotify/Track";
+import { Track } from "@/types";
 
 export type User = {
     id: string;
@@ -11,4 +11,9 @@ export type User = {
     followers: Array<string>;
     following: Array<string>;
     friends: Array<string>;
+}
+
+export type UserPage = {
+    users: User[];
+    lastEvaluatedKey: string | null;
 }
