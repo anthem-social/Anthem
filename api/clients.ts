@@ -28,9 +28,8 @@ export async function connectToSpotify(): Promise<ServiceResult<SpotifySession>>
 
         const result = await setSpotifySession(session);
 
-        if (!result.IsSuccess) {
+        if (!result.IsSuccess)
             return ServiceResult.Failure(result.ErrorMessage!, result.ErrorOrigin!);
-        }
 
         return ServiceResult.Success(session);
     }
@@ -44,25 +43,24 @@ export async function connectToSpotify(): Promise<ServiceResult<SpotifySession>>
 export async function getSpotifyRemoteClient(): Promise<ServiceResult<SpotifyRemoteApi>> {
     const result = await getSpotifySession();
 
-    if (result.IsFailure) {
+    if (result.IsFailure)
         return ServiceResult.Failure(result.ErrorMessage!, result.ErrorOrigin!);
-    }
 
-    remote.addListener("playerContextChanged", (context: PlayerContext) => {
-        console.log("Player context changed to: ", JSON.stringify(context));
-    });
+    // remote.addListener("playerContextChanged", (context: PlayerContext) => {
+    //     // console.log("Player context changed to: ", JSON.stringify(context));
+    // });
     
-    remote.addListener("playerStateChanged", (state: PlayerState) => {
-        console.log("Player state changed to: ", JSON.stringify(state));
-    });
+    // remote.addListener("playerStateChanged", (state: PlayerState) => {
+    //     // console.log("Player state changed to: ", JSON.stringify(state));
+    // });
 
-    remote.addListener("remoteDisconnected", () => {
-        console.log("Remote disconnected.");
-    });
+    // remote.addListener("remoteDisconnected", () => {
+    //     // console.log("Remote disconnected.");
+    // });
 
-    remote.addListener("remoteConnected", () => {
-        console.log("Remote connected.");
-    });
+    // remote.addListener("remoteConnected", () => {
+    //     // console.log("Remote connected.");
+    // });
 
     return ServiceResult.Success(remote);
 }
@@ -70,9 +68,8 @@ export async function getSpotifyRemoteClient(): Promise<ServiceResult<SpotifyRem
 export async function getAnthemClient(): Promise<ServiceResult<AxiosInstance>> {
     const result = await getSpotifySession();
 
-    if (result.IsFailure) {
+    if (result.IsFailure)
         return ServiceResult.Failure(result.ErrorMessage!, result.ErrorOrigin!);
-    }
     
     const spotifySession = result.Data!;
     const anthemClient = axios.create({
@@ -89,25 +86,22 @@ export async function getAnthemClient(): Promise<ServiceResult<AxiosInstance>> {
 async function getSpotifySession(): Promise<ServiceResult<SpotifySession>> {
     const connected: boolean = await remote.isConnectedAsync();
 
-    if (!connected) {
+    if (!connected)
         return await connectToSpotify();
-    }
 
-    console.log("Remote is already connected.");
+    // console.log("Remote is already connected.");
     const result = await Keychain.getGenericPassword({ service: "spotifySession" });
 
-    if (!result) {
+    if (!result)
         return ServiceResult.Failure("Remote connected but no session.", "getSpotifySession()");
-    }
 
     const spotifySession: SpotifySession = JSON.parse(result.password);
     
     if (spotifySession.expired) {
         const refreshResult = await refreshSpotifySession(spotifySession);
 
-        if (refreshResult.IsFailure) {
+        if (refreshResult.IsFailure)
             return ServiceResult.Failure(refreshResult.ErrorMessage!, refreshResult.ErrorOrigin!);
-        }
 
         return ServiceResult.Success(refreshResult.Data!);
     }
@@ -118,9 +112,8 @@ async function getSpotifySession(): Promise<ServiceResult<SpotifySession>> {
 async function setSpotifySession(spotifySession: SpotifySession): Promise<ServiceResult<null>> {
     const result = await Keychain.setGenericPassword("spotifySession", JSON.stringify(spotifySession), { service: "spotifySession" });
 
-    if (!result) {
+    if (!result)
         return ServiceResult.Failure("Failed to set.", "setSpotifySession()");
-    }
 
     return ServiceResult.Success(null);
 }
@@ -165,9 +158,8 @@ export async function refreshSpotifySession(spotifySession: SpotifySession): Pro
 export async function removeSpotifySession(): Promise<ServiceResult<null>> {
     const result = await Keychain.resetGenericPassword({ service: "spotifySession" });
 
-    if (!result) {
+    if (!result)
         return ServiceResult.Failure("Failed to remove.", "removeSpotifySession()");
-    }
 
     return ServiceResult.Success(null);
 }

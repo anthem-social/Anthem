@@ -92,16 +92,18 @@ export function Post(props: Props) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={[styles.row, { paddingLeft: 8, marginTop: 8}]}>
-        <TouchableOpacity onPress={() => profile(card.userId)}>
-          <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-            {card.nickname}
+      {post.caption && (
+        <View style={[styles.row, { paddingLeft: 8, marginTop: 8}]}>
+          <TouchableOpacity onPress={() => profile(card.userId)}>
+            <Text style={{ fontWeight: "bold", fontSize: 15 }}>
+              {card.nickname}
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.caption}>
+            {post.caption}
           </Text>
-        </TouchableOpacity>
-        <Text style={styles.caption}>
-          {post.caption}
-        </Text>
-      </View>
+        </View>
+      )}
     </View>
   );
 }
@@ -116,6 +118,10 @@ const styles = StyleSheet.create({
   caption: {
     fontSize: 14,
     marginLeft: 10,
+    flexShrink: 1,
+    flexWrap: "wrap",
+    lineHeight: 20,
+    paddingTop: 2
   },
   card: {
     gap: 14,
@@ -126,10 +132,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginVertical: 8,
-    borderTopWidth: 1,
+    borderBottomWidth: 1,
     borderColor: "#444444",
     paddingTop: 6,
+    paddingBottom: 14    
   },
   icon: {
     paddingLeft: 20,

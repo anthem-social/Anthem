@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Track } from "@/types";
 import { Linking } from "react-native";
@@ -9,17 +9,19 @@ import { saveTrack, unsaveTrack } from "@/api/spotify";
 
 type Props = {
   track: Track;
+  inView: boolean;
 }
 
 export function TrackPost(props: Props) {
   const [playing, setPlaying] = useState(false);
+  const [pressed, setPressed] = useState(false);
   const [saved, setSaved] = useState(false);
   
   const open = async (uri: string) => {
     await Linking.openURL(uri);
   };
 
-  const toggle = async (uri: string) => {
+  const togglePlay = async (uri: string) => {
     if (playing) {
       await pause();
       setPlaying(false);
@@ -57,8 +59,25 @@ export function TrackPost(props: Props) {
     setSaved(!previous);
   }
 
+  const onViewChange = async (inView: boolean) => {
+    if (inView) {
+      console.log("Playing " + props.track.name);
+      await playUri(props.track.uri);
+      setPlaying(true);
+    }
+    else {
+      console.log("Pausing " + props.track.name);
+      await pause();
+      setPlaying(false);
+    }
+  }
+
+  useEffect( () => {
+    onViewChange(props.inView);
+  }, [props.inView]);
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onTouchEnd={() => console.log("Touched ended for " + props.track.name)}>
       <View style={[styles.row, { paddingHorizontal: 4, paddingVertical: 6, alignItems: "center" }]}>
         <View style={[styles.col, { flex: 1 }]}>
           <View style={styles.row}>
@@ -70,7 +89,7 @@ export function TrackPost(props: Props) {
             </ScrollView>
           </View>
           <View style={styles.row}>
-            <Icon family="Ionicons" name="person-circle-outline" size={16} style={styles.icon} />
+            <Icon family="Ionicons`" name="person-circle-outline" size={16} style={styles.icon} />
             <ScrollView style={styles.scroll} horizontal showsHorizontalScrollIndicator={false} scrollEnabled={true}>
               {props.track.artists.map((artist, index) => (
                 <Text key={index} style={styles.text} onPress={() => open(artist.uri)} numberOfLines={1}>
@@ -104,8 +123,20 @@ export function TrackPost(props: Props) {
         </View>
       </View>
       <View style={styles.box}>
-        <TouchableOpacity onPress={() => toggle(props.track.uri)}>
+        <TouchableOpacity
+          onPressIn={() => setPressed(true)}
+          onPressOut={() => setPressed(false)}
+          onPress={() => togglePlay(props.track.uri)}
+          activeOpacity={0.3}
+          delayPressIn={10}
+          delayPressOut={10}
+        >
           <Image source={{ uri: props.track.album.imageUrl }} style={styles.cover} />
+          {pressed && (
+            <View style={styles.iconOverlay}>
+              <Icon family="Ionicons" name={playing ? "pause" : "play"} size={100} />
+            </View>
+          )}
         </TouchableOpacity>
       </View>
     </View>
@@ -113,6 +144,16 @@ export function TrackPost(props: Props) {
 }
 
 const styles = StyleSheet.create({
+  iconOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent"
+  },
   box: {
     display: "flex",
     justifyContent: "center",

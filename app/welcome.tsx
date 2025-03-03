@@ -14,7 +14,7 @@ const WelcomeScreen: React.FC<WelcomeProps> = ({ onPress }) => {
   useEffect(() => {
     async function gatherInfo() {
       const isInstalled = await Linking.canOpenURL("spotify://");
-      console.log("isInstalled", isInstalled);
+      // console.log("isInstalled", isInstalled);
       setSpotifyInstalled(isInstalled);
 
       if (!isInstalled) {

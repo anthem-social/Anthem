@@ -6,7 +6,7 @@ import TrackPostCreate from "@/components/Posts/TrackPostCreate";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { create } from "@/api/posts";
 import { ContentType } from "@/types";
-import { Confirm } from "@/components";
+import { Alert, Confirm, Loading } from "@/components";
 
 export default function Create() {
   const theme = useThemeColor({ light: "LIGHT", dark: "DARK" }, "text");
@@ -19,6 +19,7 @@ export default function Create() {
   const [loading, setLoading] = useState<boolean>(false);
   const [openConfirm, setOpenConfirm] = useState<boolean>(false);
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean | null>(null);
   const [type, setType] = useState<ContentType>(ContentType.Track);
   const [types, setTypes] = useState([
     {label: 'Song', value: ContentType.Track},
@@ -42,11 +43,13 @@ export default function Create() {
       var result = await create(caption, JSON.stringify(content), ContentType.Track);
 
       if (result.IsFailure) {
+        setSuccess(false);
         console.error(result.ErrorMessage);
       }
 
       clearPost();
       setLoading(false);
+      setSuccess(true);
     }
     catch (error) {
       console.error(error);
@@ -97,6 +100,7 @@ export default function Create() {
           <Button title="Clear" color="red" onPress={() => confirm(clearPost)} />
           <Button title="Create" color="" onPress={() => confirm(createPost)} />
         </View>
+        {loading && <Loading fullScreen size="large" />}
         {openConfirm &&
           <Confirm
             onCancel={() => {
@@ -108,6 +112,8 @@ export default function Create() {
             }}
           /> 
         }
+        {success && <Alert text="Post created successfully!" duration={10000} type="success" />}
+        {success == false && <Alert text="Failed to create post." duration={10000} type="error" />}
       </View>
     </TouchableWithoutFeedback>
   );

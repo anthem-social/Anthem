@@ -48,7 +48,7 @@ export default function RootLayout() {
     checkForSpotifySession();
   }, []);
 
-  async function tryConnectToSpotify() {
+  const tryConnectToSpotify = async () => {
     try {
       const result = await connectToSpotify();
 
@@ -75,7 +75,6 @@ export default function RootLayout() {
     return <WelcomeScreen onPress={tryConnectToSpotify} />;
   }
   else {
-    tryConnectToSpotify();
     return (
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
           <Stack>

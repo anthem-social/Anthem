@@ -1,89 +1,143 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, ViewToken } from "react-native";
 import { ContentType, PostCard, Track } from "@/types";
-import { Button, View } from "@/components/Themed";
+import { Text, View } from "@/components/Themed";
 import { TrackPost } from "@/components/Posts"
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Post } from "@/components/Posts/Post";
-import { Loading } from "@/components";
 import { getFeed } from "@/api/users";
 
 export default function TimelineFeed() {
-  // const mockCard: Card = {
-  //   userId: "schreineravery-us",
-  //   nickname: "Avery",
-  //   pictureUrl: "https://i.scdn.co/image/ab67616d0000b273e2e352d89826aef6dbd5ff8f"
-  // }
-
-  // const mockTrack: TrackType = {
-  //   uri: "spotify:track:3UDmHZcBTQp8Iu8droNtU1",
-  //   name: "Revolution - Remastered 2009",
-  //   artists: [
-  //     {
-  //       imageUrl: null,
-  //       uri: "spotify:artist:3WrFJ7ztbogyGnTHbHJFl2",
-  //       name: "The Beatles",
-  //     }
-  //   ],
-  //   album: {
-  //     name: "The Beatles (Remastered)",
-  //     uri: "spotify:album:1cTeNkeINtXiaMLlashAKs",
-  //     imageUrl: "https://i.scdn.co/image/ab67616d0000b2736e3d3c964df32136fb1cd594"
-  //   }
-  // }
-  const [lastEvaluatedKey, setLastEvaluatedKey] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [allCaughtUp, setAllCaughtUp] = useState<boolean>(false);
   const [feed, setFeed] = useState<PostCard[]>([]);
+  const [itemIdInView, setItemIdInView] = useState<string | null>(null);
+  const [lastEvaluatedKey, setLastEvaluatedKey] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const fetchPage = async () => {
+  const getNextPage = async (lastEvaluatedKey: string | null) => {
     try {
-      setLoading(true);
+      if (lastEvaluatedKey == null) {
+        console.log("No more pages to fetch");
+        return;
+      }
+
+      console.log("Fetching next page " + lastEvaluatedKey);
+
       var results =  await getFeed(lastEvaluatedKey);
 
       if (results.IsFailure || results.Data == null) {
+        // TODO: Show error page
         console.error(results.ErrorMessage);
         return;
       }
 
-      setFeed([...feed, ...results.Data.posts]);
+      setFeed([...results.Data.posts, ...feed]);
       setLastEvaluatedKey(results.Data.lastEvaluatedKey);
-      setLoading(false);
     }
     catch (error) {
       console.error(error);
     }
   }
 
+  const onViewableItemsChanged = (viewableItems: ViewToken[]) => {
+    const viewableItemsIds = viewableItems.map((item) => item.key);
+    console.log("Viewable items: " + viewableItemsIds);
+    setItemIdInView(viewableItemsIds[0]);
+  }
+
+  const renderItem = useCallback(({ item }: { item: PostCard }) => {
+    const inView = item.post.id == itemIdInView;
+    return (
+      <Post postCard={item}>
+        {item.post.contentType == ContentType.Track && <TrackPost inView={inView} track={JSON.parse(item.post.content) as Track} />}
+      </Post>
+    );
+  }
+  , [itemIdInView]);
+
+  const refresh = async () => {
+    try {
+      setRefreshing(true);
+      setAllCaughtUp(false);
+      setFeed([]);
+      setLastEvaluatedKey(null);
+
+      var results =  await getFeed(null);
+
+      if (results.IsFailure || !results.Data) {
+        // TODO: Show error page
+        console.error(results.ErrorMessage);
+        return;
+      }
+
+      if (results.Data.lastEvaluatedKey == null)
+        setAllCaughtUp(true);
+      
+      setFeed(results.Data.posts);
+      setLastEvaluatedKey(results.Data.lastEvaluatedKey);
+      setRefreshing(false);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      refresh();
+    }
+    , 2000);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Button title="Fetch Feed" onPress={fetchPage} />
-      </View>
-      {loading ? (
-        <Loading />
-      ) : (
-        <FlatList
-          style={{ flex: 1 }}
-          data={feed}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({ item }) => (
-            <Post postCard={item}>
-              {item.post.contentType == ContentType.Track && <TrackPost track={JSON.parse(item.post.content) as Track} />}
-            </Post>
-          )}
-        />
-      )}
+      <FlatList
+        data={feed}
+        keyExtractor={(postCard, _) => postCard.post.id}
+        renderItem={renderItem}
+        refreshing={refreshing}
+        onRefresh={refresh}
+        onEndReached={() => getNextPage(lastEvaluatedKey)}
+        onEndReachedThreshold={0.2}
+        onViewableItemsChanged={(item) => onViewableItemsChanged(item.viewableItems)}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 100,
+          minimumViewTime: 200
+        }}
+        ListHeaderComponent={
+          <View style={styles.header}>
+            <Text style={styles.title}>Anthem</Text>
+          </View>
+        }
+        ListFooterComponent={
+          allCaughtUp ? (
+            <Text style={styles.allCaughtUp}>You're all caught up!  🎉</Text>
+          ) : null
+        }
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  allCaughtUp: {
+    fontSize: 16,
+    textAlign: "center",
+    paddingVertical: 20
+  },
   container: {
-    flex: 1
+    flex: 1,
+    paddingTop: 50
   },
   header: {
-    padding: 16,
-    justifyContent: "center",
     alignItems: "center",
-    marginTop: 52
+    borderBottomWidth: 1,
+    borderBottomColor: "#444444",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginTop: 10,
+    paddingTop: 2,
+    paddingBottom: 8
   }
 });
